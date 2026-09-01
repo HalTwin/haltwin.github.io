@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sterling</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Silkscreen:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap">
+</head>
+<body>
+<style>
+  :root{
+    --paper:#FAF6EC; --paper-2:#F3EEDF; --card:#FFFDF7;
+    --ink:#111014; --ink-2:#55524A; --ink-3:#8C877A;
+    --line:#E2DBC8;
+    --cyan:#25B8D8; --teal:#2FBFA3; --green:#55C462; --lime:#9ACB3B;
+    --amber:#D8B62B; --orange:#EE9A2F; --coral:#F26D4F; --pink:#F2439B;
+    --mintd:#1C8A46; --goldd:#C77E1B;
+    --maxw:1120px;
+    --gradtext:linear-gradient(90deg,#25B8D8,#2FBFA3 16%,#55C462 32%,#9ACB3B 46%,#D8B62B 60%,#EE9A2F 72%,#F26D4F 86%,#F2439B);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Space Grotesk","Noto Sans SC",system-ui,sans-serif;font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px}
+  h1,h2,h3{margin:0;font-weight:700;text-wrap:balance}
+  .px{font-family:"Pixelify Sans","Noto Sans SC",sans-serif;letter-spacing:.005em}
+  .sk{font-family:"Silkscreen","Noto Sans SC",monospace;letter-spacing:.06em}
+  .mono{font-family:"Space Mono","Noto Sans SC",monospace}
+  a{color:inherit;text-decoration:none}
+  svg.spr{shape-rendering:crispEdges;flex:none}
+
+  /* 像素工艺基元 */
+  .n6{clip-path:polygon(0 6px,6px 6px,6px 0,calc(100% - 6px) 0,calc(100% - 6px) 6px,100% 6px,100% calc(100% - 6px),calc(100% - 6px) calc(100% - 6px),calc(100% - 6px) 100%,6px 100%,6px calc(100% - 6px),0 calc(100% - 6px))}
+  .n8{clip-path:polygon(0 8px,8px 8px,8px 0,calc(100% - 8px) 0,calc(100% - 8px) 8px,100% 8px,100% calc(100% - 8px),calc(100% - 8px) calc(100% - 8px),calc(100% - 8px) 100%,8px 100%,8px calc(100% - 8px),0 calc(100% - 8px))}
+  .checker{background-image:conic-gradient(#111014 25%,transparent 0 50%,#111014 0 75%,transparent 0);background-size:4px 4px}
+  .checker-l{background-image:conic-gradient(#FFFDF7 25%,transparent 0 50%,#FFFDF7 0 75%,transparent 0);background-size:4px 4px;background-position:2px 2px}
+  .band15{background:linear-gradient(90deg,
+    #25B8D8 0 6.7%,#2ABCBE 6.7% 13.4%,#2FBFA3 13.4% 20%,#42C283 20% 26.7%,
+    #55C462 26.7% 33.4%,#78C84F 33.4% 40%,#9ACB3B 40% 46.7%,#BAC133 46.7% 53.4%,
+    #D8B62B 53.4% 60%,#E3A82D 60% 66.7%,#EE9A2F 66.7% 73.4%,#F0843F 73.4% 80%,
+    #F26D4F 80% 86.7%,#F25875 86.7% 93.4%,#F2439B 93.4% 100%)}
+  .gtext{background:var(--gradtext);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  /* 扫描线(全站,克制) */
+  .scan{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.32;
+    background:repeating-linear-gradient(0deg,rgba(17,16,20,.05) 0 1px,transparent 1px 3px)}
+  @media(prefers-reduced-motion:reduce){.marq .track{animation:none}}
+
+  /* 按钮:双层缺角 + 硬像素影 + 按压 */
+  .pbtn{display:inline-block;filter:drop-shadow(5px 5px 0 #111014);transition:filter .08s,transform .08s;cursor:pointer;border:0;background:none;padding:0}
+  .pbtn>span{display:inline-block;background:#111014;padding:3px}
+  .pbtn>span>span{display:inline-block;padding:12px 20px;font-family:"Silkscreen","Noto Sans SC",monospace;font-weight:700;font-size:11px;letter-spacing:.05em;color:#111014}
+  .pbtn.grad>span>span{background:linear-gradient(90deg,#25B8D8 0 6.7%,#2ABCBE 6.7% 13.4%,#2FBFA3 13.4% 20%,#42C283 20% 26.7%,#55C462 26.7% 33.4%,#78C84F 33.4% 40%,#9ACB3B 40% 46.7%,#BAC133 46.7% 53.4%,#D8B62B 53.4% 60%,#E3A82D 60% 66.7%,#EE9A2F 66.7% 73.4%,#F0843F 73.4% 80%,#F26D4F 80% 86.7%,#F25875 86.7% 93.4%,#F2439B 93.4% 100%)}
+  .pbtn.ghost>span{padding:2px}
+  .pbtn.ghost>span>span{background:var(--card);color:var(--ink)}
+  .pbtn.ghost{filter:drop-shadow(4px 4px 0 #C9C2AE)}
+  .pbtn:hover{transform:translate(2px,2px);filter:drop-shadow(3px 3px 0 #111014)}
+  .pbtn.ghost:hover{filter:drop-shadow(2px 2px 0 #C9C2AE)}
+  .pbtn:active{transform:translate(5px,5px);filter:drop-shadow(0 0 0 #111014)}
+  .pbtn:focus-visible{outline:2px solid var(--pink);outline-offset:3px}
+
+  /* 像素小 chip */
+  .chip{display:inline-flex;align-items:center;gap:8px;font-family:"Silkscreen","Noto Sans SC",monospace;font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;border:2px solid #111014;background:var(--card);padding:5px 9px;color:var(--ink-2)}
+
+  /* 章节头 */
+  section{padding:84px 0;border-bottom:3px solid #111014}
+  .cap{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  .cap .no{font-family:"Silkscreen",monospace;font-size:10px;color:#FFFDF7;background:#111014;padding:4px 8px;letter-spacing:.1em}
+  .cap .lb{font-family:"Silkscreen",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+  h2{font-family:"Pixelify Sans","Noto Sans SC",sans-serif;font-size:clamp(30px,4.6vw,46px);line-height:1.06}
+  .lead{margin:14px 0 0;font-size:clamp(15px,1.9vw,17.5px);color:var(--ink-2);max-width:64ch}
+  b.ink{color:var(--ink)}
+
+  /* 导航 */
+  nav{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(8px);border-bottom:3px solid #111014}
+  .nav-in{display:flex;align-items:center;gap:18px;height:68px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:"Pixelify Sans",sans-serif;font-weight:700;font-size:27px}
+  .nav-links{display:flex;gap:22px;margin-left:auto;font-family:"Silkscreen",monospace;font-size:9.5px;letter-spacing:.08em;color:var(--ink-2)}
+  .nav-links a:hover{color:var(--pink)}
+  .langtoggle{font-family:"Silkscreen","Noto Sans SC",monospace;font-size:10px;cursor:pointer;background:var(--card);border:2px solid #111014;padding:7px 10px;color:var(--ink)}
+  .langtoggle:hover{background:#111014;color:var(--paper)}
+  @media(max-width:900px){.nav-links{display:none}}
+
+  /* HERO */
+  .hero{position:relative;border-bottom:3px solid #111014;overflow:hidden}
+  .hero .glow{position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(560px 380px at 6% 4%,rgba(37,184,216,.15),transparent 66%),
+               radial-gradient(660px 430px at 92% 26%,rgba(238,154,47,.17),transparent 70%),
+               radial-gradient(740px 480px at 52% 110%,rgba(242,67,155,.13),transparent 72%)}
+  .hero-in{position:relative;padding:64px 0 40px;display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:start}
+  @media(max-width:960px){.hero-in{grid-template-columns:1fr}.hero-art{display:none}}
+  h1{font-family:"Pixelify Sans","Noto Sans SC",sans-serif;font-size:clamp(44px,6.5vw,76px);line-height:1.02;font-weight:700}
+  .hero .sub{margin:20px 0 0;font-size:clamp(15px,2vw,18.5px);color:var(--ink-2);max-width:56ch}
+  .hero .row{display:flex;gap:16px;margin-top:28px;flex-wrap:wrap;align-items:center}
+  .hero .chips{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}
+  .hero-art{position:relative;min-height:400px}
+
+  /* 跑马灯 + 抖动地平线 */
+  .marq{border-top:3px solid #111014;background:#111014;overflow:hidden;white-space:nowrap}
+  .marq .track{display:inline-block;padding:10px 0;font-family:"Silkscreen",monospace;font-size:9.5px;letter-spacing:.1em;color:var(--paper);animation:mscroll 44s steps(176) infinite}
+  .marq .track span{margin:0 20px}
+  .marq .track b{color:var(--green);font-weight:400}
+  @keyframes mscroll{to{transform:translateX(-50%)}}
+  .horizon{position:relative;height:120px;border-top:3px solid #111014}
+  .horizon .d1{position:absolute;inset:0;opacity:.26}
+  .horizon .d2{position:absolute;inset:0;opacity:.1}
+
+  /* 卡片:双层缺角 */
+  .pcard{filter:drop-shadow(6px 6px 0 #111014)}
+  .pcard>.b{background:#111014;padding:3px}
+  .pcard .in{background:var(--card)}
+  .pcard.soft{filter:drop-shadow(4px 4px 0 #C9C2AE)}
+
+  /* 统计 */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:36px}
+  .stat .in{padding:24px}
+  .stat .n{font-family:"Pixelify Sans",sans-serif;font-weight:700;font-size:52px;line-height:1}
+  .stat.c .n{color:var(--cyan)}.stat.p .n{color:var(--pink)}.stat.o .n{color:var(--goldd)}
+  .stat .l{margin-top:10px;font-size:13.5px;color:var(--ink-2);line-height:1.5}
+  @media(max-width:760px){.stats{grid-template-columns:1fr}}
+
+  /* 收入层账本 */
+  .layers{margin-top:36px}
+  .layers .in{overflow:hidden}
+  .layer{display:grid;grid-template-columns:56px 1fr auto;gap:18px;align-items:center;padding:18px 22px;border-bottom:2px solid var(--line)}
+  .layer:last-child{border-bottom:0}
+  .layer:hover{background:var(--paper-2)}
+  .layer h3{font-size:18px;font-weight:600}
+  .layer .d{font-size:13px;color:var(--ink-2);margin-top:3px;line-height:1.55}
+  .tag{font-family:"Silkscreen","Noto Sans SC",monospace;font-size:8px;letter-spacing:.06em;padding:4px 8px;border:2px solid #111014;white-space:nowrap;text-transform:uppercase}
+  .tag.moat{background:var(--amber);color:#111014}
+  .tag.sig{background:var(--paper-2);color:var(--ink-2)}
+  @media(max-width:720px){.layer{grid-template-columns:44px 1fr}.layer .tag{grid-column:2;justify-self:start;margin-top:6px}}
+
+  /* 收入表卡片(产品表面) */
+  .grid-2{display:grid;grid-template-columns:1.02fr .98fr;gap:40px;align-items:center;margin-top:26px}
+  @media(max-width:900px){.grid-2{grid-template-columns:1fr;gap:30px}}
+  .stmt-hd{position:relative;border-bottom:3px solid #111014}
+  .stmt-hd .g{position:absolute;inset:0;opacity:.28}
+  .stmt-hd .c{position:absolute;inset:0;opacity:.08}
+  .stmt-hd .fl{position:relative;display:flex;justify-content:space-between;align-items:flex-start;padding:15px 18px 12px}
+  .stmt-as{font-family:"Pixelify Sans",sans-serif;font-weight:700;font-size:27px;line-height:1;display:flex;align-items:center;gap:9px}
+  .stmt-pv{font-family:"Space Mono",monospace;font-size:9.5px;color:var(--ink-2);margin-top:6px}
+  .stmt-st{text-align:right;font-family:"Silkscreen",monospace}
+  .stmt-st .k{font-size:7px;letter-spacing:.12em;color:var(--ink-3)}
+  .stmt-st .v{font-size:10px;color:var(--goldd);margin-top:4px}
+  .r{display:grid;grid-template-columns:26px 1fr auto;gap:3px 12px;align-items:baseline;padding:12px 18px;border-bottom:2px solid var(--line)}
+  .r .nm{font-weight:600;font-size:14px}
+  .r .bst{font-family:"Silkscreen",monospace;font-size:7.5px;letter-spacing:.06em;color:#FFFDF7;background:var(--pink);border:2px solid #111014;padding:2px 5px;margin-left:6px}
+  .r .apy{font-family:"Space Mono",monospace;font-weight:700;font-size:15px;text-align:right}
+  .r.h{background:linear-gradient(90deg,rgba(216,182,43,.16),transparent 70%)}
+  .r.h .apy{color:var(--goldd);font-size:19px}
+  .r .m{grid-column:2;font-family:"Space Mono",monospace;font-size:9px;color:var(--ink-3)}
+  .r .rt{grid-column:3;text-align:right;font-family:"Space Mono",monospace;font-size:8.5px;color:var(--ink-3)}
+  .rail{display:flex;flex-wrap:wrap;gap:6px;padding:12px 18px;border-bottom:3px solid #111014}
+  .rc{font-family:"Silkscreen",monospace;font-size:7.5px;letter-spacing:.04em;padding:3px 7px;border:2px solid #111014;text-transform:uppercase}
+  .rc b{color:var(--mintd);font-weight:400}.rc.w b{color:var(--goldd)}
+  .tot{position:relative;background:#111014}
+  .tot .c{position:absolute;inset:0;opacity:.16;filter:invert(1)}
+  .tot .fl{position:relative;padding:14px 18px;display:flex;justify-content:space-between;align-items:center}
+  .tot .k{font-family:"Silkscreen",monospace;font-size:9.5px;letter-spacing:.1em;color:var(--paper)}
+  .tot .k small{display:block;font-size:6.5px;letter-spacing:.12em;color:var(--green);margin-top:4px}
+  .tot .v{font-family:"Pixelify Sans",sans-serif;font-weight:700;font-size:38px;line-height:1;color:var(--green)}
+  .stmt-cta{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 18px}
+  .stmt-cta .nt{font-family:"Space Mono",monospace;font-size:8.5px;color:var(--ink-3);text-align:right;line-height:1.4}
+  .stmt-rcpt{padding:9px 18px;border-top:3px solid #111014;font-family:"Space Mono",monospace;font-size:8.5px;color:var(--ink-3);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+  .stmt-rcpt .hh{color:var(--mintd)}
+
+  /* 可信三印记(内层网格由内联样式给出,勿在 .in 上重复设 grid) */
+  .proof3{display:grid;gap:14px;margin-top:8px}
+  .pf h3{font-size:17px;font-weight:600}
+  .pf p{margin:4px 0 0;font-size:13px;color:var(--ink-2);line-height:1.55}
+  .pf .no{font-family:"Silkscreen",monospace;font-size:16px;color:var(--pink);padding-top:2px}
+
+  /* 稳定币两卡 */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:36px}
+  .sc .in{padding:22px}
+  .sc .t{font-family:"Silkscreen",monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+  .sc.moat .t{color:var(--goldd)}
+  .sc h3{font-family:"Pixelify Sans","Noto Sans SC",sans-serif;font-size:22px;margin:8px 0 6px}
+  .sc p{margin:0;font-size:13.5px;color:var(--ink-2);line-height:1.55}
+  .sc .num{font-family:"Silkscreen",monospace;font-size:8.5px;letter-spacing:.04em;color:var(--goldd);margin-top:12px;text-transform:uppercase}
+  .sc.moat .in{background:linear-gradient(180deg,rgba(216,182,43,.14),rgba(216,182,43,0)),var(--card)}
+  @media(max-width:760px){.grid2{grid-template-columns:1fr}}
+
+  /* 步骤 */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:36px}
+  .step .in{padding:20px}
+  .step .no{font-family:"Silkscreen",monospace;font-size:9px;color:var(--pink);letter-spacing:.1em}
+  .step h3{font-size:17px;margin:10px 0 6px}
+  .step p{margin:0;font-size:13px;color:var(--ink-2);line-height:1.5}
+  @media(max-width:760px){.steps{grid-template-columns:1fr}}
+
+  /* SKU 账本 */
+  .sku{margin-top:36px}
+  .lrow{display:grid;grid-template-columns:1.2fr 1.8fr auto;gap:16px;padding:13px 20px;border-bottom:2px solid var(--line);align-items:baseline}
+  .lrow:last-child{border-bottom:0}
+  .lrow.hd{background:var(--paper-2);border-bottom:3px solid #111014}
+  .lrow.hd span{font-family:"Silkscreen",monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+  .lrow .sn{font-weight:600;font-size:14.5px}
+  .lrow .sd{font-family:"Space Mono","Noto Sans SC",monospace;font-size:10.5px;color:var(--ink-3)}
+  .lrow .sp{font-family:"Pixelify Sans",sans-serif;font-weight:700;font-size:19px;text-align:right;color:var(--pink);white-space:nowrap}
+  .lrow .sp.free{color:var(--mintd);font-size:15px}
+  .lrow:hover{background:var(--paper-2)}
+  @media(max-width:720px){.lrow{grid-template-columns:1fr auto}.lrow .sd{grid-column:1 / -1}}
+
+  /* Roadmap = 关卡选择 */
+  .road{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:36px}
+  .ph .in{padding:18px}
+  .ph .p{font-family:"Silkscreen",monospace;font-size:9px;letter-spacing:.1em;color:var(--ink)}
+  .ph h3{font-family:"Pixelify Sans","Noto Sans SC",sans-serif;font-size:18px;margin:10px 0 6px}
+  .ph p{margin:0;font-size:11.5px;color:var(--ink-2);font-family:"Space Mono","Noto Sans SC",monospace;line-height:1.5}
+  .ph.on .in{background:#111014;color:var(--paper)}
+  .ph.on .p{color:var(--green)}
+  .ph.on p{color:#C9C4B6}
+  .ph .lock{float:right;opacity:.55}
+  @media(max-width:860px){.road{grid-template-columns:1fr 1fr}}
+
+  /* JOIN */
+  .band{position:relative;background:#111014;color:var(--paper);padding:56px 40px;text-align:center;overflow:hidden}
+  .band .c{position:absolute;inset:0;opacity:.12;filter:invert(1)}
+  .band .gb{position:absolute;left:0;right:0;top:0;height:8px}
+  .band h2{color:var(--paper);max-width:22ch;margin:14px auto 0}
+  .band .lead{color:#C9C4B6;margin:14px auto 0}
+  .wl{display:flex;gap:12px;max-width:460px;margin:26px auto 0;position:relative}
+  .wl input{flex:1;font-family:"Space Mono",monospace;font-size:14px;padding:13px 16px;border:2px solid #3A3A40;background:#1D1C22;color:var(--paper)}
+  .wl input:focus{outline:2px solid var(--green);outline-offset:2px}
+  .wl-note{margin-top:12px;font-family:"Space Mono","Noto Sans SC",monospace;font-size:10.5px;color:#8C877A;position:relative}
+
+  footer{padding:44px 0 60px}
+  footer .ft{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:22px}
+  footer .disc{font-family:"Space Mono","Noto Sans SC",monospace;font-size:10.5px;color:var(--ink-3);line-height:1.7;max-width:96ch;border-top:3px solid #111014;padding-top:20px}
+</style>
+
+<!-- 8-bit sprite 符号库(复用) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="sp-coin" viewBox="0 0 10 10">
+    <rect x="3" y="0" width="4" height="1" fill="#111014"/><rect x="2" y="1" width="1" height="1" fill="#111014"/><rect x="7" y="1" width="1" height="1" fill="#111014"/><rect x="1" y="2" width="1" height="1" fill="#111014"/><rect x="8" y="2" width="1" height="1" fill="#111014"/><rect x="0" y="3" width="1" height="4" fill="#111014"/><rect x="9" y="3" width="1" height="4" fill="#111014"/><rect x="1" y="7" width="1" height="1" fill="#111014"/><rect x="8" y="7" width="1" height="1" fill="#111014"/><rect x="2" y="8" width="1" height="1" fill="#111014"/><rect x="7" y="8" width="1" height="1" fill="#111014"/><rect x="3" y="9" width="4" height="1" fill="#111014"/>
+    <rect x="3" y="1" width="4" height="1" fill="#EE9A2F"/><rect x="2" y="2" width="6" height="1" fill="#EE9A2F"/><rect x="1" y="3" width="8" height="4" fill="#EE9A2F"/><rect x="2" y="7" width="6" height="1" fill="#EE9A2F"/><rect x="3" y="8" width="4" height="1" fill="#EE9A2F"/>
+    <rect x="3" y="2" width="2" height="1" fill="#FFE7B0"/><rect x="2" y="3" width="1" height="2" fill="#FFE7B0"/><rect x="6" y="6" width="2" height="1" fill="#C97F17"/>
+    <rect x="4" y="3" width="2" height="1" fill="#111014"/><rect x="3" y="4" width="2" height="1" fill="#111014"/><rect x="5" y="5" width="2" height="1" fill="#111014"/><rect x="4" y="6" width="2" height="1" fill="#111014"/>
+  </symbol>
+  <symbol id="sp-bars" viewBox="0 0 14 12">
+    <rect x="1" y="6" width="3" height="5" fill="#2FBFA3"/><rect x="1" y="6" width="3" height="1" fill="#7FDCC8"/>
+    <rect x="5" y="4" width="3" height="7" fill="#D8B62B"/><rect x="5" y="4" width="3" height="1" fill="#F2E08A"/>
+    <rect x="9" y="1" width="3" height="10" fill="#F2439B"/><rect x="9" y="1" width="3" height="1" fill="#FF9BCB"/>
+    <rect x="0" y="11" width="14" height="1" fill="#111014"/>
+  </symbol>
+  <symbol id="sp-lp" viewBox="0 0 10 10">
+    <rect x="0" y="0" width="6" height="6" fill="#111014"/><rect x="1" y="1" width="4" height="4" fill="#25B8D8"/>
+    <rect x="4" y="4" width="6" height="6" fill="#111014"/><rect x="5" y="5" width="4" height="4" fill="#2FBFA3"/>
+  </symbol>
+  <symbol id="sp-plus" viewBox="0 0 9 9">
+    <rect x="3" y="0" width="3" height="9" fill="#F2439B"/><rect x="0" y="3" width="9" height="3" fill="#F2439B"/><rect x="4" y="4" width="1" height="1" fill="#FFFDF7"/>
+  </symbol>
+  <symbol id="sp-warn" viewBox="0 0 10 10">
+    <rect x="4" y="1" width="2" height="1" fill="#EE9A2F"/><rect x="3" y="2" width="4" height="2" fill="#EE9A2F"/><rect x="2" y="4" width="6" height="2" fill="#EE9A2F"/><rect x="1" y="6" width="8" height="2" fill="#EE9A2F"/><rect x="0" y="8" width="10" height="1" fill="#111014"/><rect x="4" y="3" width="2" height="3" fill="#111014"/><rect x="4" y="7" width="2" height="1" fill="#111014"/>
+  </symbol>
+  <symbol id="sp-shield" viewBox="0 0 10 10">
+    <rect x="2" y="0" width="6" height="1" fill="#111014"/><rect x="1" y="1" width="1" height="5" fill="#111014"/><rect x="8" y="1" width="1" height="5" fill="#111014"/><rect x="2" y="6" width="1" height="1" fill="#111014"/><rect x="7" y="6" width="1" height="1" fill="#111014"/><rect x="3" y="7" width="1" height="1" fill="#111014"/><rect x="6" y="7" width="1" height="1" fill="#111014"/><rect x="4" y="8" width="2" height="1" fill="#111014"/>
+    <rect x="2" y="1" width="6" height="5" fill="#55C462"/><rect x="3" y="6" width="4" height="1" fill="#55C462"/><rect x="4" y="7" width="2" height="1" fill="#55C462"/>
+    <rect x="3" y="3" width="1" height="1" fill="#FFFDF7"/><rect x="4" y="4" width="1" height="1" fill="#FFFDF7"/><rect x="5" y="3" width="1" height="1" fill="#FFFDF7"/><rect x="6" y="2" width="1" height="1" fill="#FFFDF7"/>
+  </symbol>
+  <symbol id="sp-lock" viewBox="0 0 10 10">
+    <rect x="3" y="0" width="4" height="1" fill="#111014"/><rect x="2" y="1" width="1" height="2" fill="#111014"/><rect x="7" y="1" width="1" height="2" fill="#111014"/>
+    <rect x="1" y="3" width="8" height="6" fill="#111014"/><rect x="2" y="4" width="6" height="4" fill="#D8B62B"/><rect x="4" y="5" width="2" height="2" fill="#111014"/>
+  </symbol>
+  <symbol id="sp-quad" viewBox="0 0 4 4">
+    <rect x="0" y="0" width="2" height="2" fill="#25B8D8"/><rect x="2" y="0" width="2" height="2" fill="#9ACB3B"/><rect x="0" y="2" width="2" height="2" fill="#EE9A2F"/><rect x="2" y="2" width="2" height="2" fill="#F2439B"/>
+  </symbol>
+</svg>
+
+<div class="scan" aria-hidden="true"></div>
+
+<nav><div class="wrap nav-in">
+  <div class="brand"><svg class="spr" width="30" height="30"><use href="#sp-coin"/></svg>Sterling</div>
+  <div class="nav-links">
+    <a href="#problem" data-i18n="nav1">PROBLEM</a>
+    <a href="#layers" data-i18n="nav2">INCOME LAYERS</a>
+    <a href="#proof" data-i18n="nav3">PROOF</a>
+    <a href="#sku" data-i18n="nav4">SERVICES</a>
+    <a href="#road" data-i18n="nav5">ROADMAP</a>
+  </div>
+  <button class="langtoggle" id="lang" data-i18n="langbtn">中文</button>
+  <a href="#join" class="pbtn grad"><span><span class="n6" data-i18n="joinbtn">JOIN BETA</span></span></a>
+</div></nav>
+
+<header class="hero">
+  <div class="glow"></div>
+  <div class="wrap hero-in">
+    <div>
+      <span class="chip"><svg class="spr" width="10" height="10"><use href="#sp-quad"/></svg><span data-i18n="heroEy">THE INCOME-ORGANIZATION LAYER &#183; X LAYER &#183; OKX.AI</span></span>
+      <h1 style="margin-top:22px" data-i18n="heroH1">Put your tokenized<br>stocks <span class="gtext">to work.</span></h1>
+      <p class="sub" data-i18n="heroSub">Every income a token can earn — LP market-making, on-chain yield, xPoints, collateral strategies — organized, risk-ranked, and one signature away. Non-custodial. <b class="ink">Deterministic, not model guesswork.</b></p>
+      <div class="row">
+        <a href="#join" class="pbtn grad"><span><span class="n6" style="padding:14px 24px;font-size:12px" data-i18n="heroCta1">JOIN BETA &#8594;</span></span></a>
+        <a href="#layers" class="pbtn ghost"><span><span class="n6" data-i18n="heroCta2">SEE THE INCOME LAYERS</span></span></a>
+      </div>
+      <div class="chips">
+        <span class="chip" data-i18n="hchip1">40+ TOKENIZED STOCKS</span>
+        <span class="chip" data-i18n="hchip2">SHA256 RECEIPTS</span>
+        <span class="chip" style="color:var(--mintd)" data-i18n="hchip3">&#10003; DETERMINISTIC</span>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <svg class="spr" style="position:absolute;right:40px;top:0" width="120" height="120"><use href="#sp-coin"/></svg>
+      <svg class="spr" style="position:absolute;left:30px;top:140px" width="182" height="156"><use href="#sp-bars"/></svg>
+      <svg class="spr" style="position:absolute;right:10px;top:170px" width="42" height="42"><use href="#sp-plus"/></svg>
+      <div style="position:absolute;left:96px;top:76px;width:11px;height:11px;background:var(--cyan);box-shadow:3px 3px 0 #111014"></div>
+      <div style="position:absolute;right:70px;top:130px;width:8px;height:8px;background:var(--lime);box-shadow:3px 3px 0 #111014"></div>
+      <div style="position:absolute;left:210px;top:330px;width:10px;height:10px;background:var(--orange);box-shadow:3px 3px 0 #111014"></div>
+    </div>
+  </div>
+  <div class="marq"><div class="track" data-i18n="marq">
+    <span><b>&#9632;</b> LP MARKET-MAKING</span><span><b>&#9632;</b> ON-CHAIN YIELD</span><span><b>&#9632;</b> XPOINTS</span><span><b>&#9632;</b> BORROW-AND-EARN</span><span><b>&#9632;</b> COVERED-CALL SIGNAL</span><span><b>&#9632;</b> NON-CUSTODIAL</span><span><b>&#9632;</b> VERIFIABLE</span><span><b>&#9632;</b> DETERMINISTIC</span>
+    <span><b>&#9632;</b> LP MARKET-MAKING</span><span><b>&#9632;</b> ON-CHAIN YIELD</span><span><b>&#9632;</b> XPOINTS</span><span><b>&#9632;</b> BORROW-AND-EARN</span><span><b>&#9632;</b> COVERED-CALL SIGNAL</span><span><b>&#9632;</b> NON-CUSTODIAL</span><span><b>&#9632;</b> VERIFIABLE</span><span><b>&#9632;</b> DETERMINISTIC</span>
+  </div></div>
+  <div class="horizon"><div class="band15" style="position:absolute;inset:0"></div><div class="checker d1"></div><div class="checker-l d2"></div></div>
+</header>
+
+<main class="wrap">
+
+  <section id="problem">
+    <div class="cap"><span class="no">01</span><span class="lb" data-i18n="s1cmt">PROBLEM &#183; THE CAPITAL-EFFICIENCY BLACK HOLE</span></div>
+    <h2 data-i18n="s1h">40+ tokenized US stocks, sitting idle at 0%.</h2>
+    <p class="lead" data-i18n="s1lead">OKX has 40+ tokenized US stocks (xStocks) live — 1:1 real-share backed, tradable 24/7. After you buy, they mostly just sit there. And on-chain base yield, honestly, is near zero.</p>
+    <div class="stats">
+      <div class="pcard stat c"><div class="b n8"><div class="in n8"><div class="n">40+</div><div class="l" data-i18n="st1">Tokenized US stocks &amp; ETFs live on X Layer, 1:1 real-share backed</div></div></div></div>
+      <div class="pcard stat p"><div class="b n8"><div class="in n8"><div class="n">0%</div><div class="l" data-i18n="st2">Yield while idle — traditional brokers at least lend your shares</div></div></div></div>
+      <div class="pcard stat o"><div class="b n8"><div class="in n8"><div class="n">0.12%</div><div class="l" data-i18n="st3">Real on-chain supply APY on X Layer (measured) — earning nothing this way</div></div></div></div>
+    </div>
+    <p class="lead" style="margin-top:26px" data-i18n="s1tail">Real income can only come from <b class="ink">what the stock itself can be activated into</b>. Sterling peels those layers apart for you.</p>
+  </section>
+
+  <section id="layers">
+    <div class="cap"><span class="no">02</span><span class="lb" data-i18n="s2cmt">INCOME LAYERS &#183; STOCKS AS PROGRAMMABLE BLOCKS</span></div>
+    <h2 data-i18n="s2h">Turn idle assets into <span class="gtext">activatable income layers.</span></h2>
+    <p class="lead" data-i18n="s2lead">Sterling treats tokenized stocks as <b class="ink">composable income blocks</b> — LP, supply, collateral, farm points — one statement computes it all, ranked by executable net yield, every number sourced &amp; timestamped, the non-executable honestly marked "signal only."</p>
+    <div class="pcard layers"><div class="b n8"><div class="in n8">
+      <div class="layer"><svg class="spr" width="40" height="40"><use href="#sp-lp"/></svg><div><h3 data-i18n="l1h">LP market-making yield</h3><div class="d" data-i18n="l1d">Pair xStock / stablecoin into LP pools; earn fees + incentives + top-weight xPoints; IL flagged. Aggregates all pools, risk-adjusted ranking — organizing &#8800; chasing the highest APR.</div></div><span class="tag moat" data-i18n="l1t">EXECUTABLE &#183; HEADLINE</span></div>
+      <div class="layer"><svg class="spr" width="40" height="40"><use href="#sp-coin"/></svg><div><h3 data-i18n="l2h">On-chain yield (supply / lending)</h3><div class="d" data-i18n="l2d">Aave supply / lending &#183; base (durable) vs incentive (decays) split &#183; executable on X Layer.</div></div><span class="tag moat" data-i18n="l2t">EXECUTABLE</span></div>
+      <div class="layer"><svg class="spr" width="40" height="40"><use href="#sp-lock"/></svg><div><h3 data-i18n="l3h">Borrow stablecoin against stock &#183; net carry</h3><div class="d" data-i18n="l3d">Collateralize xStock &#8594; borrow stablecoin &#8594; deploy to yield; net carry + health factor + liquidation price. Only Sterling can do it.</div></div><span class="tag moat" data-i18n="l3t">EXECUTABLE &#183; EXCLUSIVE</span></div>
+      <div class="layer"><svg class="spr" width="40" height="40"><use href="#sp-plus"/></svg><div><h3 data-i18n="l4h">xPoints</h3><div class="d" data-i18n="l4d">Best points path + OKX Wallet boost &#183; rules timestamped &#183; non-cash.</div></div><span class="tag moat" data-i18n="l4t">EXECUTABLE</span></div>
+      <div class="layer"><svg class="spr" width="40" height="40"><use href="#sp-warn"/></svg><div><h3 data-i18n="l5h">Covered calls / dividends</h3><div class="d" data-i18n="l5d">Stock-native income — but X Layer has no on-chain options venue yet, so <b>signal / forward-looking only</b>, not counted in the executable total.</div></div><span class="tag sig" data-i18n="l5t">SIGNAL &#183; FORWARD</span></div>
+    </div></div></div>
+  </section>
+
+  <section id="product">
+    <div class="cap"><span class="no">03</span><span class="lb" data-i18n="s3cmt">PRODUCT SURFACE &#183; ONE CALL = ONE VERIFIABLE STATEMENT</span></div>
+    <div class="grid-2">
+      <div>
+        <h2 data-i18n="s3h">Not raw JSON — an <span class="gtext">income statement.</span></h2>
+        <p class="lead" data-i18n="s3lead">Every income stream, the total "working yield," the risk rail, one-tap activation — every number sourced &amp; timestamped. <b class="ink">Verifiable is the only thing this product asks you to trust.</b> One call returns both: machine JSON for agents, this card for people.</p>
+        <div style="margin-top:26px"><a href="#join" class="pbtn grad"><span><span class="n6" data-i18n="s3cta">TRY IT &#8594;</span></span></a></div>
+      </div>
+      <div class="pcard"><div class="b n8"><div class="in n8" style="overflow:hidden">
+        <div class="stmt-hd"><div class="band15 g"></div><div class="checker c"></div>
+          <div class="fl">
+            <div><div class="stmt-as"><svg class="spr" width="13" height="13"><use href="#sp-quad"/></svg>USDT</div><div class="stmt-pv" data-i18n="cardPos">Position $10,000 &#183; X Layer &#183; signed by your wallet</div></div>
+            <div class="stmt-st"><div class="k" data-i18n="cardStK">STATUS</div><div class="v" data-i18n="cardStV">IDLE &#8594; WORKING</div></div>
+          </div>
+        </div>
+        <div class="r h"><svg class="spr" style="align-self:center" width="20" height="20"><use href="#sp-coin"/></svg><div class="nm"><span data-i18n="cardR1">On-chain yield (risk-adjusted best)</span><span class="bst" data-i18n="cardR1s">&#9733; BEST</span></div><div class="apy">4.60%</div><div class="m" data-i18n="cardR1m">top lending &#183; base 3.10 + incentive 1.80 &#183; safety 88</div><div class="rt">45s</div></div>
+        <div class="r"><svg class="spr" style="align-self:center" width="20" height="20"><use href="#sp-warn"/></svg><div class="nm" data-i18n="cardR2">On-chain yield (high-APR pool)</div><div class="apy">8.30%</div><div class="m" data-i18n="cardR2m">caution: safety 41 &#183; exit limited &#183; incentive-heavy</div><div class="rt">2m</div></div>
+        <div class="r"><svg class="spr" style="align-self:center" width="20" height="20"><use href="#sp-lp"/></svg><div class="nm" data-i18n="cardR3">LP market-making (USDT/USDG)</div><div class="apy">3.30%</div><div class="m" data-i18n="cardR3m">fee 1.10 + incentive 2.40 &#183; IL low (stable pair)</div><div class="rt">08-31</div></div>
+        <div class="r"><svg class="spr" style="align-self:center" width="20" height="20"><use href="#sp-plus"/></svg><div class="nm" data-i18n="cardR4">xPoints</div><div class="apy" style="color:var(--goldd);font-size:13px" data-i18n="cardR4a">&#8776; points</div><div class="m" data-i18n="cardR4m">top-weight path &#183; rules as of 08-31</div><div class="rt" data-i18n="cardR4r">non-cash</div></div>
+        <div class="rail"><span class="rc"><span data-i18n="cardRail1">DEPEG</span> <b>&#177;0.02%</b></span><span class="rc"><span data-i18n="cardRail2">EXIT</span> <b data-i18n="cardRail2b">AMPLE</b></span><span class="rc">IL <b data-i18n="cardRail3b">LOW</b></span><span class="rc w"><span data-i18n="cardRail4">PRICE</span> <b>45S</b></span><span class="rc w"><span data-i18n="cardRail5">EVENT</span> <b>FOMC T-2D</b></span></div>
+        <div class="tot"><div class="checker c"></div><div class="fl"><div class="k"><span data-i18n="cardTotK">WORKING YIELD</span><small data-i18n="cardTotS">EXECUTABLE &#183; ILLUSTRATIVE</small></div><div class="v">7.90%</div></div></div>
+        <div class="stmt-cta"><a href="#join" class="pbtn grad" style="filter:drop-shadow(4px 4px 0 #111014)"><span><span class="n6" style="padding:10px 15px;font-size:9.5px" data-i18n="cardGo">PREPARE 1 SIGNABLE TX &#8594;</span></span></a><span class="nt" data-i18n="cardNt">Sign in wallet to activate<br>Non-custodial</span></div>
+        <div class="stmt-rcpt"><span data-i18n="cardRcpt1">method: deterministic &#183; no LLM</span><span class="hh">sha256:df8a52&#8230;1898 &#10003; <span data-i18n="cardRcpt2">recomputable</span></span></div>
+      </div></div></div>
+    </div>
+    <p class="lead" style="margin-top:26px" data-i18n="s3tail">The <b class="ink">yield radar</b> pushes the high-APR-but-unsafe venue (8.30%) below the safe 4.60% one — it compares <b class="ink">risk-adjusted net sustainable yield</b>, not who prints the highest number.</p>
+  </section>
+
+  <section id="proof">
+    <div class="cap"><span class="no">04</span><span class="lb" data-i18n="s4cmt">WHY TRUST IT &#183; WE COMPUTE, WE DON'T GUESS</span></div>
+    <div class="grid-2">
+      <div>
+        <h2 data-i18n="s4h">LLMs hallucinate.<br>Sterling runs <span class="gtext">deterministic computation.</span></h2>
+        <p class="lead" data-i18n="s4lead">Large models fundamentally don't understand numerical markets — they pattern-match text. Every Sterling number is computed by a <b class="ink">deterministic program</b>; the LLM never touches the number path. So we don't ask you to "trust" — you can <b class="ink">recompute and verify yourself</b>.</p>
+        <div style="margin-top:24px"><span class="chip mono">// GET /v1/track-record</span></div>
+      </div>
+      <div class="proof3">
+        <div class="pcard soft pf"><div class="b n6"><div class="in n6"><div style="display:grid;grid-template-columns:52px 1fr;gap:16px;padding:18px 20px;align-items:start"><span class="no sk">01</span><div><h3 data-i18n="p1h">Same input &#8594; same result</h3><p data-i18n="p1d">Same inputs + same engine version always yield the same number, independently recomputable. Not a model "improvising" each time.</p></div></div></div></div></div>
+        <div class="pcard soft pf"><div class="b n6"><div class="in n6"><div style="display:grid;grid-template-columns:52px 1fr;gap:16px;padding:18px 20px;align-items:start"><span class="no sk">02</span><div><h3 data-i18n="p2h">sha256 receipt on every output</h3><p data-i18n="p2d">Not "trust me" — a comparable fingerprint anyone can verify with the same inputs.</p></div></div></div></div></div>
+        <div class="pcard pf"><div class="b n6"><div class="in n6" style="background:linear-gradient(180deg,rgba(216,182,43,.14),rgba(216,182,43,0)),var(--card)"><div style="display:grid;grid-template-columns:52px 1fr;gap:16px;padding:18px 20px;align-items:start"><span class="no sk">03</span><div><h3 data-i18n="p3h">Verifiable track-record ledger</h3><p data-i18n="p3d">Every recommendation logged, never rewritten, accruing into a verifiable record. Wins and losses both on record.</p></div></div></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="stable">
+    <div class="cap"><span class="no">05</span><span class="lb" data-i18n="s5cmt">STABLECOINS &#183; BASE + COMPOSITION</span></div>
+    <div class="grid2">
+      <div class="pcard sc"><div class="b n8"><div class="in n8"><div style="padding:22px"><div class="t" data-i18n="sc1t">SCIENTIFIC CORE</div><h3 data-i18n="sc1h">Net &#183; sustainable &#183; safe</h3><p data-i18n="sc1d">Component split (base vs incentive) + net yield (after gas/slippage) + safety score + exit capacity + depeg scan, size-capped. High APR &#8800; best — risk-adjusted ranking.</p><div class="num" data-i18n="sc1n">HIGH APR &#8800; BEST &#183; RISK-ADJUSTED</div></div></div></div></div>
+      <div class="pcard sc moat"><div class="b n8"><div class="in n8" style="background:linear-gradient(180deg,rgba(216,182,43,.14),rgba(216,182,43,0)),var(--card)"><div style="padding:22px"><div class="t" data-i18n="sc2t">STERLING-EXCLUSIVE &#183; EXECUTABLE</div><h3 data-i18n="sc2h">Collateralize stock &#183; borrow stablecoin &#183; earn net carry</h3><p data-i18n="sc2d">Hold NVDAx &#8594; borrow USDG &#8594; deploy to best stable yield; net carry, health factor, liquidation price; negative carry or thin health &#8594; declined. No one else can, because only Sterling understands both sides.</p><div class="num" data-i18n="sc2n">AAVE ON X LAYER &#183; ONE-SIGNATURE</div></div></div></div></div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="cap"><span class="no">06</span><span class="lb" data-i18n="s6cmt">HOW IT WORKS &#183; ANALYSIS ON US, SIGNING ON YOU</span></div>
+    <h2 data-i18n="s6h">Non-custodial is a boundary, not a feature.</h2>
+    <div class="steps">
+      <div class="pcard soft step"><div class="b n6"><div class="in n6"><div style="padding:20px"><div class="no">STEP 01</div><h3 data-i18n="h1h">Analyze</h3><p data-i18n="h1d">Give an asset + amount; Sterling computes every income layer, ranks by net yield, builds the risk rail, every number sourced &amp; timestamped.</p></div></div></div></div>
+      <div class="pcard soft step"><div class="b n6"><div class="in n6"><div style="padding:20px"><div class="no">STEP 02</div><h3 data-i18n="h2h">One-tap activate</h3><p data-i18n="h2d">When you want to act, Sterling emits a signable transaction intent; your Agentic Wallet builds and signs it.</p></div></div></div></div>
+      <div class="pcard soft step"><div class="b n6"><div class="in n6"><div style="padding:20px"><div class="no">STEP 03</div><h3 data-i18n="h3h">Never touches your funds</h3><p data-i18n="h3d">Sterling structurally can't reach your keys or move your money. Verifiable is the only thing it asks you to trust.</p></div></div></div></div>
+    </div>
+  </section>
+
+  <section id="sku">
+    <div class="cap"><span class="no">07</span><span class="lb" data-i18n="s7cmt">SERVICES &#183; A2MCP &#183; X402 PER-CALL SETTLEMENT</span></div>
+    <h2 data-i18n="s7h">Wire Sterling into your agent.</h2>
+    <p class="lead" data-i18n="s7lead">If your agent manages xStocks or stablecoins, it can call Sterling directly — machine-readable JSON, per-call instant settlement, no haggling. Prefer to drive it yourself? That works too — but it's built agent-first from day one.</p>
+    <div class="pcard sku"><div class="b n8"><div class="in n8" style="overflow:hidden">
+      <div class="lrow hd"><span data-i18n="skuh1">SERVICE</span><span data-i18n="skuh2">WHAT YOU GET</span><span style="text-align:right" data-i18n="skuh3">PER CALL</span></div>
+      <div class="lrow"><div class="sn" data-i18n="sk1t">Income snapshot</div><div class="sd" data-i18n="sk1d">every income path, ranked by risk-adjusted net yield</div><div class="sp">$0.05</div></div>
+      <div class="lrow"><div class="sn" data-i18n="sk2t">Stablecoin yield snapshot</div><div class="sd" data-i18n="sk2d">venue radar + component split + signable deposit</div><div class="sp">$0.05</div></div>
+      <div class="lrow"><div class="sn" data-i18n="sk3t">Borrow-against-stock &#183; net carry</div><div class="sd" data-i18n="sk3d">S4 combo &#183; net carry + health factor + liquidation price</div><div class="sp">$0.10</div></div>
+      <div class="lrow"><div class="sn" data-i18n="sk5t">Covered-call radar</div><div class="sd" data-i18n="sk5d">premium-yield estimate (no on-chain venue &#183; signal only)</div><div class="sp">$0.03</div></div>
+      <div class="lrow"><div class="sn" data-i18n="sk4t">Depeg &amp; protocol safety scan</div><div class="sd" data-i18n="sk4d">pre-deposit safe / unsafe verdict</div><div class="sp">$0.01</div></div>
+      <div class="lrow"><div class="sn" data-i18n="sk7t">Best-path watch</div><div class="sd" data-i18n="sk7d">cheapest cron-able poll &#183; detect a better path</div><div class="sp">$0.005</div></div>
+      <div class="lrow"><div class="sn" data-i18n="sk6t">Dividend &amp; corporate actions</div><div class="sd" data-i18n="sk6d">dividend-equiv + ex-date / dividend / split windows</div><div class="sp free" data-i18n="skfree">FREE</div></div>
+      <div class="lrow"><div class="sn" data-i18n="sk8t">Verifiable track record</div><div class="sd" data-i18n="sk8d">append-only ledger + recomputable receipts</div><div class="sp free" data-i18n="skfree2">FREE</div></div>
+    </div></div></div>
+  </section>
+
+  <section id="road">
+    <div class="cap"><span class="no">08</span><span class="lb" data-i18n="s8cmt">ROADMAP &#183; SHIP BACKWARDS, FROM WHAT'S EXECUTABLE</span></div>
+    <h2 data-i18n="s8h">From analysis, to execution, to a network.</h2>
+    <div class="road">
+      <div class="pcard ph on"><div class="b n6"><div class="in n6" style="background:#111014;color:var(--paper)"><div style="padding:18px"><div class="p">&#9654; LEVEL 1</div><h3 data-i18n="ph1h">Analysis layer</h3><p data-i18n="ph1d">Read-only income analysis + stablecoin radar + risk. Per-call on OKX.AI.</p></div></div></div></div>
+      <div class="pcard soft ph"><div class="b n6"><div class="in n6"><div style="padding:18px"><div class="p"><span class="lock">&#9633;</span>LEVEL 2</div><h3 data-i18n="ph2h">Execution layer</h3><p data-i18n="ph2d">Non-custodial signable tx: DeFi supply / S4 combo / perp basis.</p></div></div></div></div>
+      <div class="pcard soft ph"><div class="b n6"><div class="in n6"><div style="padding:18px"><div class="p"><span class="lock">&#9633;</span>LEVEL 3</div><h3 data-i18n="ph3h">Monitoring subscription</h3><p data-i18n="ph3d">24/7 better-path + depeg / health / rule-change alerts.</p></div></div></div></div>
+      <div class="pcard soft ph"><div class="b n6"><div class="in n6"><div style="padding:18px"><div class="p"><span class="lock">&#9633;</span>LEVEL 4</div><h3 data-i18n="ph4h">Agent network</h3><p data-i18n="ph4d">The income-execution layer other agents can call on; $STER governance.</p></div></div></div></div>
+    </div>
+  </section>
+
+  <section id="join" style="border-bottom:0">
+    <div class="pcard"><div class="b n8"><div class="band in n8" style="background:#111014">
+      <div class="checker-l c"></div>
+      <div class="band15 gb"></div>
+      <span class="chip" style="position:relative;background:#1D1C22;border-color:#3A3A40;color:var(--paper)"><svg class="spr" width="10" height="10"><use href="#sp-quad"/></svg><span data-i18n="joinPill">BETA OPEN</span></span>
+      <h2 class="px" style="position:relative" data-i18n="joinH">Put your stocks to work.</h2>
+      <p class="lead" style="position:relative" data-i18n="joinLead">Drop an email; we'll ping you at X Layer launch.</p>
+      <form class="wl" id="wl" onsubmit="return false">
+        <input id="wl-email" type="email" placeholder="you@email.com" aria-label="email" autocomplete="email">
+        <button class="pbtn grad" id="wl-btn" type="submit"><span><span class="n6" data-i18n="joinSubmit">JOIN</span></span></button>
+      </form>
+      <div class="wl-note" id="wl-note" data-i18n="joinNote">We'll only contact you once at launch. (Prototype &#183; email stored only in your local browser.)</div>
+    </div></div></div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <div class="ft">
+    <div class="brand" style="font-size:22px"><svg class="spr" width="26" height="26"><use href="#sp-coin"/></svg>Sterling</div>
+    <span class="chip"><svg class="spr" width="10" height="10"><use href="#sp-quad"/></svg>TEAM PALO ALTO SIGNAL &#183; X LAYER &#183; $STER</span>
+  </div>
+  <div class="disc" data-i18n="foot">Sterling is a non-custodial research &amp; signable-transaction tool; it does not custody funds, does not trade on your behalf, and does not constitute investment / financial / legal advice; not available to US or restricted-region users; no official partnership with or endorsement by OKX / xStocks. All yield figures on this page are illustrative and not a prediction or promise of returns; covered calls / dividends are shown as signals only because X Layer currently has no on-chain options venue; tokenized stocks are restricted securities; xPoints rules per official real-time info. This page is a product prototype.</div>
+</footer>
+
+<script>
+  // ---- 中英切换:英文为默认(静态 HTML 即英文),点击切中文;记忆在本地浏览器 ----
+  var ZH = {
+    nav1:"问题", nav2:"收入层", nav3:"可信", nav4:"服务", nav5:"蓝图",
+    langbtn:"EN", joinbtn:"加入内测",
+    heroEy:"代币化资产的收益组织层 · X LAYER · OKX.AI",
+    heroH1:'让代币化股票<br><span class="gtext">开始上班。</span>',
+    heroSub:'一只资产该有的每一条收入 —— LP 做市、链上收益、xPoints、抵押组合 —— 组织好、按风险排好、一签激活。非托管。<b class="ink">确定性计算,不是模型猜测。</b>',
+    heroCta1:"加入内测 →", heroCta2:"看收入层",
+    hchip1:"40+ 代币化美股", hchip2:"SHA256 收据", hchip3:"✓ 确定性",
+    marq:'<span><b>■</b> LP 做市</span><span><b>■</b> 链上收益</span><span><b>■</b> XPOINTS</span><span><b>■</b> 抵押借币生息</span><span><b>■</b> 备兑期权信号</span><span><b>■</b> 非托管</span><span><b>■</b> 可核对</span><span><b>■</b> 确定性</span><span><b>■</b> LP 做市</span><span><b>■</b> 链上收益</span><span><b>■</b> XPOINTS</span><span><b>■</b> 抵押借币生息</span><span><b>■</b> 备兑期权信号</span><span><b>■</b> 非托管</span><span><b>■</b> 可核对</span><span><b>■</b> 确定性</span>',
+    s1cmt:"问题 · 链上股票的资本效率黑洞",
+    s1h:"40+ 代币化美股,躺在钱包里 0 收益。",
+    s1lead:"OKX 上了 40+ 代币化美股(xStocks),1:1 实股托管、24/7 可交易。买入之后,它们绝大多数时间只是躺着 —— 而链上基础生息,我们如实说,几乎为零。",
+    st1:"代币化美股 & ETF 已在 X Layer,1:1 实股托管", st2:"闲置期间收益率 —— 传统券商股票尚能融券生息", st3:"X Layer 链上真实供给 APY(实测)—— 生息这条路赚不到钱",
+    s1tail:'真正的收入,只能来自<b class="ink">股票本身能被激活的那些层</b>。Sterling 把它们一层层拆开给你。',
+    s2cmt:"收入层 · 把股票当可编程积木",
+    s2h:'把闲置资产,拆成<span class="gtext">可激活的收入层。</span>',
+    s2lead:'Sterling 把代币化股票当<b class="ink">可组合的收入积木</b> —— 组 LP、供给、抵押、farm 积分,一张表算清、按可执行净收益排序,每个数字带来源与时间戳,不可执行的如实标"仅信号"。',
+    l1h:"LP 做市收益", l1d:"xStock / 稳定币组 LP 池,赚手续费 + 激励 + 最高权重 xPoints;IL 单列。聚合全部池、风险调整排名 —— 组织 ≠ 追最高 APR。", l1t:"可执行 · 主力",
+    l2h:"链上收益(供给 / 借贷)", l2d:"Aave 供给 / 借贷 · 拆解 base(持久)vs 激励(会衰减)· X Layer 上可执行。", l2t:"可执行",
+    l3h:"抵押借稳定币 · 净利差", l3d:"抵押 xStock → 借稳定币 → 部署收益,净利差 + 健康因子 + 清算价。只有 Sterling 能做。", l3t:"可执行 · 独有",
+    l4h:"xPoints", l4d:"最优积分路径 + OKX Wallet 加成 · 规则带时间戳 · 非现金。", l4t:"可执行",
+    l5h:"备兑期权 / 股息", l5d:"股票原生收入 —— 但 X Layer 暂无链上期权场所,<b>仅信号 / 前瞻</b>,不计入可执行合计。", l5t:"信号 · 前瞻",
+    s3cmt:"产品表面 · 一次调用 = 一张可核对的收入表",
+    s3h:'不是裸 JSON,是一张<span class="gtext">收入表。</span>',
+    s3lead:'每一条收入流、总"在工作的收益"、风险轨、一键激活 —— 每个数字都带来源和时间戳。<b class="ink">可核对,是这产品唯一要你相信的东西。</b>一次调用同时给两种交付:机器 JSON 给 Agent,这张卡给人。',
+    s3cta:"试一试 →",
+    cardPos:"持仓 $10,000 · X Layer · 你的钱包签名", cardStK:"状态", cardStV:"闲置 → 在工作",
+    cardR1:"链上收益(风险调整最优)", cardR1s:"★ 优选", cardR1m:"头部借贷 · base 3.10 + 激励 1.80 · 安全88",
+    cardR2:"链上收益(高息池)", cardR2m:"谨慎:安全41 · 退出受限 · 激励为主",
+    cardR3:"LP 做市(USDT/USDG)", cardR3m:"手续费 1.10 + 激励 2.40 · IL 低(稳定对)",
+    cardR4:"xPoints(积分)", cardR4a:"≈ 积分", cardR4m:"最高权重路径 · 规则 as of 08-31", cardR4r:"非现金",
+    cardRail1:"脱锚", cardRail2:"退出", cardRail2b:"充足", cardRail3b:"低", cardRail4:"价格", cardRail5:"事件",
+    cardTotK:"在工作的收益", cardTotS:"可执行合计 · 示意",
+    cardGo:"生成 1 个待签交易 →", cardNt:"钱包签名激活<br>非托管",
+    cardRcpt1:"method: deterministic · LLM 不参与", cardRcpt2:"可复算",
+    s3tail:'<b class="ink">收益雷达</b>把高息但不安全的场所(8.30%)压到 4.60% 安全场所之后 —— 比的是<b class="ink">风险调整后的净可持续收益</b>,不是谁标得高。',
+    s4cmt:"为什么可信 · 我们是计算,不是猜",
+    s4h:'LLM 会幻觉,<br>Sterling 用<span class="gtext">确定性计算。</span>',
+    s4lead:'大模型天生不懂数字市场 —— 它做的是文本模式匹配。Sterling 每个数字都由<b class="ink">确定性程序</b>算出,LLM 不碰数值路径。所以我们不要你"相信",你可以<b class="ink">自己复算核验</b>。',
+    p1h:"同输入 → 同结果", p1d:'同样输入 + 同版引擎,永远得到同一个数,可独立复算。不是模型每次"发挥"。',
+    p2h:"每次输出附 sha256 收据", p2d:'不是一句"相信我",是一个可比对的指纹 —— 任何人拿同样输入就能核验。',
+    p3h:"可验证战绩账本", p3d:"每条推荐入账、永不改写,累积成可核验的战绩。好坏都留痕。",
+    s5cmt:"稳定币 · 底座 + 组合",
+    sc1t:"科学内核", sc1h:"净 · 可持续 · 安全", sc1d:"成分拆解(base vs 激励)+ 净收益(扣 gas/滑点)+ 安全分 + 退出容量 + 脱锚扫描,按金额封顶。高息 ≠ 优选 —— 风险调整后排名。", sc1n:"高息 ≠ 优选 · 风险调整排名",
+    sc2t:"STERLING 独有 · 可执行", sc2h:"抵押股票 · 借稳定币 · 赚净利差", sc2d:"持有 NVDAx → 借 USDG → 部署到最优稳定收益,测算净利差、健康因子与清算价;利差为负或健康因子不足直接劝退。没人能做,因为只有 Sterling 同时懂两侧。", sc2n:"AAVE ON X LAYER · 一签执行",
+    s6cmt:"运作 · 分析在我,签名在你",
+    s6h:"非托管,是一条边界,不是功能。",
+    h1h:"分析", h1d:"给一只资产 + 金额,算出全部收入层、净收益排序、风险轨,每个数字带来源与时间戳。",
+    h2h:"一签激活", h2d:"想动手时,Sterling 生成一笔待签交易意图,由你的 Agentic Wallet 构造并签名执行。",
+    h3h:"碰不到你的钱", h3d:"Sterling 结构上拿不到私钥、动不了资金。可核对,是它唯一要你相信的东西。",
+    s7cmt:"服务 · A2MCP · X402 按次即时结算",
+    s7h:"把 Sterling 接进你的 Agent。",
+    s7lead:"如果你的 Agent 在管 xStocks 或稳定币,它可以直接调用 Sterling —— 机器可读 JSON、按次即时结算、不议价。想自己用?也行 —— 但它从第一天就以 Agent 优先。",
+    skuh1:"服务", skuh2:"你拿到什么", skuh3:"每次",
+    sk1t:"收入快照", sk1d:"每一条收入路径,按风险调整净收益排序",
+    sk2t:"稳定币收益快照", sk2d:"场所雷达 + 成分拆解 + 可签存入",
+    sk3t:"抵押借稳定币 · 净利差", sk3d:"S4 组合 · 净利差 + 健康因子 + 清算价",
+    sk4t:"脱锚 & 协议安全扫描", sk4d:"存入前的安全 / 不安全裁决",
+    sk5t:"备兑期权侦测", sk5d:"权利金年化估算(暂无链上场所 · 仅信号)",
+    sk6t:"股息 & 公司行动", sk6d:"股息等价 + 除息 / 分红 / 拆股窗口",
+    sk7t:"最优路径监控", sk7d:"最便宜的 cron 轮询 · 发现更优路径",
+    sk8t:"可验证战绩", sk8d:"只增不改账本 + 可复算收据",
+    skfree:"免费", skfree2:"免费",
+    s8cmt:"蓝图 · 倒着上,从可执行的开始",
+    s8h:"从分析,到执行,到网络。",
+    ph1h:"分析层", ph1d:"只读收入分析 + 稳定币雷达 + 风控。按次上架 OKX.AI。",
+    ph2h:"执行层", ph2d:"非托管可签交易:DeFi 供给 / S4 组合 / 永续基差。",
+    ph3h:"监控订阅", ph3d:"7×24 更优路径 + 脱锚 / 健康 / 规则变更预警。",
+    ph4h:"Agent 网络", ph4d:"供其它 Agent 调用的收入执行层;$STER 治理。",
+    joinPill:"内测招募中", joinH:"让你的股票开始上班。", joinLead:"留个邮箱,X Layer 上线首批通知你。",
+    joinSubmit:"加入", joinNote:"我们只在上线时联系你一次。(原型页 · 邮箱仅保存在你本地浏览器)",
+    foot:"Sterling 是非托管的研究与可签交易工具,不托管资金、不代客交易、不构成投资 / 财务 / 法律建议,不面向美国及受限地区用户,与 OKX / xStocks 无官方合作或背书关系。页面所有收益数字均为示意,不构成任何收益预测或承诺;备兑期权 / 股息因 X Layer 当前无链上期权场所,仅作信号呈现;代币化股票为受限证券,xPoints 规则以官方实时信息为准。本页为产品原型展示。"
+  };
+
+  (function(){
+    // 缓存英文原文(静态 HTML 就是英文)
+    var EN = {};
+    document.querySelectorAll("[data-i18n]").forEach(function(el){ EN[el.getAttribute("data-i18n")] = el.innerHTML; });
+    function apply(lang){
+      var dict = (lang === "zh") ? ZH : EN;
+      document.querySelectorAll("[data-i18n]").forEach(function(el){
+        var k = el.getAttribute("data-i18n");
+        if(dict[k] != null) el.innerHTML = dict[k];
+      });
+      try{ document.documentElement.lang = (lang==="zh")?"zh":"en"; }catch(_){}
+    }
+    var saved = "en";
+    try{ saved = localStorage.getItem("sterling_lang") || "en"; }catch(_){}
+    if(saved === "zh") apply("zh");
+    var btn = document.getElementById("lang");
+    if(btn) btn.addEventListener("click", function(){
+      var cur = "en";
+      try{ cur = localStorage.getItem("sterling_lang") || "en"; }catch(_){}
+      var next = (cur === "zh") ? "en" : "zh";
+      try{ localStorage.setItem("sterling_lang", next); }catch(_){}
+      apply(next);
+    });
+
+    // 等候名单:纯本地演示,不上传
+    var f=document.getElementById("wl"),e=document.getElementById("wl-email"),n=document.getElementById("wl-note"),b=document.getElementById("wl-btn");
+    if(f) f.addEventListener("submit",function(){
+      var v=(e.value||"").trim();
+      var zh = (document.documentElement.lang==="zh");
+      if(!/.+@.+\..+/.test(v)){ n.textContent = zh?"请输入有效邮箱。":"Please enter a valid email."; return false; }
+      try{ localStorage.setItem("sterling_waitlist",v); }catch(_){}
+      b.querySelector("[data-i18n]").textContent = zh?"已记录 ✓":"JOINED ✓"; e.value=""; e.placeholder = zh?"已加入(demo)":"Joined (demo)";
+      n.textContent = zh?"已记录在你本地浏览器(原型页,未上传)。上线后我们会联系你。":"Saved in your local browser (prototype, not uploaded). We'll reach out at launch.";
+      return false;
+    });
+  })();
+</script>
+</body>
+</html>
