@@ -362,9 +362,9 @@
             <div class="stmt-st"><div class="k" data-i18n="cardStK">STATUS</div><div class="v" data-i18n="cardStV">IDLE &#8594; WORKING</div></div>
           </div>
         </div>
-        <div class="r h"><svg class="spr" style="align-self:center" width="20" height="20"><use href="#sp-coin"/></svg><div class="nm"><span data-i18n="cardR1">On-chain yield (risk-adjusted best)</span><span class="bst" data-i18n="cardR1s">&#9733; BEST</span></div><div class="apy">4.60%</div><div class="m" data-i18n="cardR1m">top lending &#183; base 3.10 + incentive 1.80 &#183; safety 88</div><div class="rt">45s</div></div>
+        <div class="r h"><svg class="spr" style="align-self:center" width="20" height="20"><use href="#sp-coin"/></svg><div class="nm"><span data-i18n="cardR1">On-chain yield (risk-adjusted best)</span><span class="bst" data-i18n="cardR1s">&#9733; BEST</span><span class="bst" style="background:var(--mintd)" data-i18n="cardR1r">LOW RISK</span></div><div class="apy">4.60%</div><div class="m" data-i18n="cardR1m">top lending &#183; base 3.10 + incentive 1.80 &#183; safety 88</div><div class="rt">45s</div></div>
         <div class="r"><svg class="spr" style="align-self:center" width="20" height="20"><use href="#sp-warn"/></svg><div class="nm" data-i18n="cardR2">On-chain yield (high-APR pool)</div><div class="apy">8.30%</div><div class="m" data-i18n="cardR2m">caution: safety 41 &#183; exit limited &#183; incentive-heavy</div><div class="rt">2m</div></div>
-        <div class="r"><svg class="spr" style="align-self:center" width="20" height="20"><use href="#sp-lp"/></svg><div class="nm" data-i18n="cardR3">LP market-making (USDT/USDG)</div><div class="apy">3.30%</div><div class="m" data-i18n="cardR3m">fee 1.10 + incentive 2.40 &#183; IL low (stable pair)</div><div class="rt">08-31</div></div>
+        <div class="r"><svg class="spr" style="align-self:center" width="20" height="20"><use href="#sp-lp"/></svg><div class="nm"><span data-i18n="cardR3">LP market-making (USDT/USDG)</span><span class="bst" style="background:var(--goldd)" data-i18n="cardR3b">BOOSTER · IL</span></div><div class="apy">3.30%</div><div class="m" data-i18n="cardR3m">fee 1.10 + incentive 2.40 &#183; IL low (stable pair)</div><div class="rt">08-31</div></div>
         <div class="r"><svg class="spr" style="align-self:center" width="20" height="20"><use href="#sp-plus"/></svg><div class="nm" data-i18n="cardR4">xPoints</div><div class="apy" style="color:var(--goldd);font-size:13px" data-i18n="cardR4a">&#8776; points</div><div class="m" data-i18n="cardR4m">top-weight path &#183; rules as of 08-31</div><div class="rt" data-i18n="cardR4r">non-cash</div></div>
         <div class="rail"><span class="rc"><span data-i18n="cardRail1">DEPEG</span> <b>&#177;0.02%</b></span><span class="rc"><span data-i18n="cardRail2">EXIT</span> <b data-i18n="cardRail2b">AMPLE</b></span><span class="rc">IL <b data-i18n="cardRail3b">LOW</b></span><span class="rc w"><span data-i18n="cardRail4">PRICE</span> <b>45S</b></span><span class="rc w"><span data-i18n="cardRail5">EVENT</span> <b>FOMC T-2D</b></span></div>
         <div class="tot"><div class="checker c"></div><div class="fl"><div class="k"><span data-i18n="cardTotK">WORKING YIELD</span><small data-i18n="cardTotS">EXECUTABLE &#183; ILLUSTRATIVE</small></div><div class="v">7.90%</div></div></div>
@@ -463,19 +463,10 @@
 </footer>
 
 <script>
-  // English-only build: no language toggle. Waitlist is a local demo (nothing uploaded).
-  (function(){
-    var f=document.getElementById("wl"),e=document.getElementById("wl-email"),n=document.getElementById("wl-note"),b=document.getElementById("wl-btn");
-    if(f) f.addEventListener("submit",function(){
-      var v=(e.value||"").trim();
-      if(!/.+@.+\..+/.test(v)){ n.textContent = "Please enter a valid email."; return false; }
-      try{ localStorage.setItem("sterling_waitlist",v); }catch(_){}
-      var lbl=b.querySelector("[data-i18n]"); if(lbl) lbl.textContent="JOINED \u2713";
-      e.value=""; e.placeholder="Joined (demo)";
-      n.textContent = "Saved in your local browser (prototype, not uploaded). We'll reach out at launch.";
-      return false;
-    });
-  })();
+  (function(){var f=document.getElementById("wl"),e=document.getElementById("wl-email"),n=document.getElementById("wl-note"),b=document.getElementById("wl-btn");
+  if(f) f.addEventListener("submit",function(){var v=(e.value||"").trim();if(!/.+@.+\..+/.test(v)){n.textContent="Please enter a valid email.";return false;}
+  try{localStorage.setItem("sterling_waitlist",v);}catch(_){}var lbl=b.querySelector("[data-i18n]");if(lbl)lbl.textContent="JOINED \u2713";e.value="";e.placeholder="Joined (demo)";
+  n.textContent="Saved in your local browser (prototype, not uploaded). We'll reach out at launch.";return false;});})();
 </script>
 </body>
 </html>
