@@ -443,7 +443,7 @@
         <input id="wl-email" type="email" placeholder="you@email.com" aria-label="email" autocomplete="email">
         <button class="pbtn grad" id="wl-btn" type="submit"><span><span class="n6" data-i18n="joinSubmit">JOIN</span></span></button>
       </form>
-      <div class="wl-note" id="wl-note" data-i18n="joinNote">We'll only contact you once at launch. (Prototype &#183; email stored only in your local browser.)</div>
+      <div class="wl-note" id="wl-note" data-i18n="joinNote">We'll only email you once — at X Layer launch.</div>
     </div></div></div>
   </section>
 
@@ -528,7 +528,7 @@
     ph3h:"监控订阅", ph3d:"7×24 更优路径 + 脱锚 / 健康 / 规则变更预警。",
     ph4h:"Agent 网络", ph4d:"供其它 Agent 调用的收入执行层;$STER 治理。",
     joinPill:"内测招募中", joinH:"让你的股票开始上班。", joinLead:"留个邮箱,X Layer 上线首批通知你。",
-    joinSubmit:"加入", joinNote:"我们只在上线时联系你一次。(原型页 · 邮箱仅保存在你本地浏览器)",
+    joinSubmit:"加入", joinNote:"我们只在 X Layer 上线时给你发一次邮件。",
     foot:"Sterling 是非托管的研究与可签交易工具,不托管资金、不代客交易、不构成投资 / 财务 / 法律建议,不面向美国及受限地区用户,与 OKX / xStocks 无官方合作或背书关系。页面所有收益数字均为示意,不构成任何收益预测或承诺;备兑期权 / 股息因 X Layer 当前无链上期权场所,仅作信号呈现;代币化股票为受限证券,xPoints 规则以官方实时信息为准。本页为产品原型展示。"
   };
 
@@ -556,15 +556,18 @@
       apply(next);
     });
 
-    // 等候名单:纯本地演示,不上传
+    // 等候名单:提交到 Web3Forms(邮件发到站主邮箱,不落本地)
     var f=document.getElementById("wl"),e=document.getElementById("wl-email"),n=document.getElementById("wl-note"),b=document.getElementById("wl-btn");
     if(f) f.addEventListener("submit",function(){
       var v=(e.value||"").trim();
       var zh = (document.documentElement.lang==="zh");
       if(!/.+@.+\..+/.test(v)){ n.textContent = zh?"请输入有效邮箱。":"Please enter a valid email."; return false; }
-      try{ localStorage.setItem("sterling_waitlist",v); }catch(_){}
-      b.querySelector("[data-i18n]").textContent = zh?"已记录 ✓":"JOINED ✓"; e.value=""; e.placeholder = zh?"已加入(demo)":"Joined (demo)";
-      n.textContent = zh?"已记录在你本地浏览器(原型页,未上传)。上线后我们会联系你。":"Saved in your local browser (prototype, not uploaded). We'll reach out at launch.";
+      var lbl=b.querySelector("[data-i18n]"); var old=lbl?lbl.textContent:"";
+      if(lbl) lbl.textContent = zh?"提交中…":"…"; b.disabled=true;
+      fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({access_key:"23360d2e-889a-400a-a2ac-7135749c2907",email:v,subject:"Sterling waitlist signup",from_name:"Sterling site"})})
+        .then(function(r){return r.json();})
+        .then(function(d){ if(d&&d.success){ if(lbl)lbl.textContent=zh?"已加入 ✓":"JOINED ✓"; e.value=""; e.placeholder=zh?"已加入":"Joined"; n.textContent=zh?"已收到,X Layer 上线首批通知你。":"Got it — we'll notify you first at X Layer launch."; } else { throw new Error("fail"); } })
+        .catch(function(){ if(lbl)lbl.textContent=old; b.disabled=false; n.textContent=zh?"提交失败,请稍后重试。":"Submission failed, please try again."; });
       return false;
     });
   })();

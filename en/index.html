@@ -442,7 +442,7 @@
         <input id="wl-email" type="email" placeholder="you@email.com" aria-label="email" autocomplete="email">
         <button class="pbtn grad" id="wl-btn" type="submit"><span><span class="n6" data-i18n="joinSubmit">JOIN</span></span></button>
       </form>
-      <div class="wl-note" id="wl-note" data-i18n="joinNote">We'll only contact you once at launch. (Prototype &#183; email stored only in your local browser.)</div>
+      <div class="wl-note" id="wl-note" data-i18n="joinNote">We'll only email you once — at X Layer launch.</div>
     </div></div></div>
   </section>
 
@@ -459,8 +459,8 @@
 <script>
   (function(){var f=document.getElementById("wl"),e=document.getElementById("wl-email"),n=document.getElementById("wl-note"),b=document.getElementById("wl-btn");
   if(f) f.addEventListener("submit",function(){var v=(e.value||"").trim();if(!/.+@.+\..+/.test(v)){n.textContent="Please enter a valid email.";return false;}
-  try{localStorage.setItem("sterling_waitlist",v);}catch(_){}var lbl=b.querySelector("[data-i18n]");if(lbl)lbl.textContent="JOINED \u2713";e.value="";e.placeholder="Joined (demo)";
-  n.textContent="Saved in your local browser (prototype, not uploaded). We'll reach out at launch.";return false;});})();
+  var lbl=b.querySelector("[data-i18n]");var old=lbl?lbl.textContent:"";if(lbl)lbl.textContent="…";b.disabled=true;
+  fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({access_key:"23360d2e-889a-400a-a2ac-7135749c2907",email:v,subject:"Sterling waitlist signup",from_name:"Sterling site"})}).then(function(r){return r.json();}).then(function(d){if(d&&d.success){if(lbl)lbl.textContent="JOINED \u2713";e.value="";e.placeholder="Joined";n.textContent="Got it — we'll notify you first at X Layer launch.";}else{throw new Error("fail");}}).catch(function(){if(lbl)lbl.textContent=old;b.disabled=false;n.textContent="Submission failed, please try again.";});return false;});})();
 </script>
 </body>
 </html>
