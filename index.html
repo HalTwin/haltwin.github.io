@@ -347,7 +347,7 @@
       <div>
         <h2 data-i18n="s3h">Not raw JSON — an <span class="gtext">income statement.</span></h2>
         <p class="lead" data-i18n="s3lead">Every income stream, the total "working yield," the risk rail, one-tap activation — every number sourced &amp; timestamped. <b class="ink">Verifiable is the only thing this product asks you to trust.</b> One call returns both: machine JSON for agents, this card for people.</p>
-        <div style="margin-top:26px"><a href="#join" class="pbtn grad"><span><span class="n6" data-i18n="s3cta">TRY IT &#8594;</span></span></a></div>
+        <div style="margin-top:26px"><a href="https://sterling-asp.onrender.com/preview" target="_blank" rel="noopener" class="pbtn grad"><span><span class="n6" data-i18n="s3cta">TRY IT &#8594;</span></span></a></div>
       </div>
       <div class="pcard"><div class="b n8"><div class="in n8" style="overflow:hidden">
         <div class="stmt-hd"><div class="band15 g"></div><div class="checker c"></div>
@@ -363,7 +363,7 @@
         <div class="rail"><span class="rc"><span data-i18n="cardRail1">DEPEG</span> <b>&#177;0.02%</b></span><span class="rc"><span data-i18n="cardRail2">EXIT</span> <b data-i18n="cardRail2b">AMPLE</b></span><span class="rc">IL <b data-i18n="cardRail3b">LOW</b></span><span class="rc w"><span data-i18n="cardRail4">PRICE</span> <b>45S</b></span><span class="rc w"><span data-i18n="cardRail5">EVENT</span> <b>FOMC T-2D</b></span></div>
         <div class="tot"><div class="checker c"></div><div class="fl"><div class="k"><span data-i18n="cardTotK">WORKING YIELD</span><small data-i18n="cardTotS">EXECUTABLE &#183; ILLUSTRATIVE</small></div><div class="v">7.90%</div></div></div>
         <div class="stmt-cta"><a href="#join" class="pbtn grad" style="filter:drop-shadow(4px 4px 0 #111014)"><span><span class="n6" style="padding:10px 15px;font-size:9.5px" data-i18n="cardGo">PREPARE 1 SIGNABLE TX &#8594;</span></span></a><span class="nt" data-i18n="cardNt">Sign in wallet to activate<br>Non-custodial</span></div>
-        <div class="stmt-rcpt"><span data-i18n="cardRcpt1">method: deterministic &#183; no LLM</span><span class="hh">sha256:df8a52&#8230;1898 &#10003; <span data-i18n="cardRcpt2">recomputable</span></span></div>
+        <div class="stmt-rcpt"><span data-i18n="cardRcpt1">method: deterministic &#183; no LLM</span><span class="hh">sha256:0403927b&#8230;fe1a &#10003; <span data-i18n="cardRcpt2">recomputable</span></span></div>
       </div></div></div>
     </div>
     <p class="lead" style="margin-top:26px" data-i18n="s3tail">The <b class="ink">yield radar</b> pushes the high-APR-but-unsafe venue (8.30%) below the safe 4.60% one — it compares <b class="ink">risk-adjusted net sustainable yield</b>, not who prints the highest number.</p>
@@ -375,12 +375,21 @@
       <div>
         <h2 data-i18n="s4h">LLMs hallucinate.<br>Sterling runs <span class="gtext">deterministic computation.</span></h2>
         <p class="lead" data-i18n="s4lead">Large models fundamentally don't understand numerical markets — they pattern-match text. Every Sterling number is computed by a <b class="ink">deterministic program</b>; the LLM never touches the number path. So we don't ask you to "trust" — you can <b class="ink">recompute and verify yourself</b>.</p>
-        <div style="margin-top:24px"><span class="chip mono">// GET /v1/track-record</span></div>
+        <div style="margin-top:24px;display:flex;gap:8px;flex-wrap:wrap">
+          <a href="https://sterling-asp.onrender.com/preview" target="_blank" rel="noopener" class="chip mono" style="cursor:pointer">&#9654; LIVE DEMO</a>
+          <a href="https://sterling-asp.onrender.com/docs" target="_blank" rel="noopener" class="chip mono" style="cursor:pointer">// /docs</a>
+          <a href="https://sterling-asp.onrender.com/v1/manifest" target="_blank" rel="noopener" class="chip mono" style="cursor:pointer">// /v1/manifest</a>
+        </div>
+        <pre style="margin-top:16px;font-family:'Space Mono',monospace;font-size:10.5px;line-height:1.7;color:var(--ink);background:var(--card);border:2px solid var(--ink);padding:14px;overflow:auto;box-shadow:4px 4px 0 var(--ink)">// real receipt from POST /v1/income-snapshot {"asset":"NVDAx","position_usd":10000}
+"engine_version": "0.1.0",
+"inputs_hash":  "sha256:252a3593a4c692cf&#8230;766f94e7c",
+"output_hash":  "sha256:0403927bb1010bb3&#8230;ff4debfe1a",
+"recompute": "same inputs + engine version &#8594; identical output_hash"</pre>
       </div>
       <div class="proof3">
         <div class="pcard soft pf"><div class="b n6"><div class="in n6"><div style="display:grid;grid-template-columns:52px 1fr;gap:16px;padding:18px 20px;align-items:start"><span class="no sk">01</span><div><h3 data-i18n="p1h">Same input &#8594; same result</h3><p data-i18n="p1d">Same inputs + same engine version always yield the same number, independently recomputable. Not a model "improvising" each time.</p></div></div></div></div></div>
         <div class="pcard soft pf"><div class="b n6"><div class="in n6"><div style="display:grid;grid-template-columns:52px 1fr;gap:16px;padding:18px 20px;align-items:start"><span class="no sk">02</span><div><h3 data-i18n="p2h">sha256 receipt on every output</h3><p data-i18n="p2d">Not "trust me" — a comparable fingerprint anyone can verify with the same inputs.</p></div></div></div></div></div>
-        <div class="pcard pf"><div class="b n6"><div class="in n6" style="background:linear-gradient(180deg,rgba(216,182,43,.14),rgba(216,182,43,0)),var(--card)"><div style="display:grid;grid-template-columns:52px 1fr;gap:16px;padding:18px 20px;align-items:start"><span class="no sk">03</span><div><h3 data-i18n="p3h">Verifiable track-record ledger</h3><p data-i18n="p3d">Every recommendation logged, never rewritten, accruing into a verifiable record. Wins and losses both on record.</p></div></div></div></div></div>
+        <div class="pcard pf"><div class="b n6"><div class="in n6" style="background:linear-gradient(180deg,rgba(216,182,43,.14),rgba(216,182,43,0)),var(--card)"><div style="display:grid;grid-template-columns:52px 1fr;gap:16px;padding:18px 20px;align-items:start"><span class="no sk">03</span><div><h3 data-i18n="p3h">Recomputable receipt log</h3><p data-i18n="p3d">Every output logged append-only with its input/output fingerprint. Anyone can recompute and check the number &mdash; it proves the computation is honest, not a profit claim.</p></div></div></div></div></div>
       </div>
     </div>
   </section>
@@ -407,6 +416,18 @@
     <div class="cap"><span class="no">07</span><span class="lb" data-i18n="s7cmt">SERVICES &#183; A2MCP &#183; X402 PER-CALL SETTLEMENT</span></div>
     <h2 data-i18n="s7h">Wire Sterling into your agent.</h2>
     <p class="lead" data-i18n="s7lead">If your agent manages xStocks or stablecoins, it can call Sterling directly — machine-readable JSON, per-call instant settlement, no haggling. Prefer to drive it yourself? That works too — but it's built agent-first from day one.</p>
+    <div class="pcard" style="margin:22px 0"><div class="b n8"><div class="in n8"><div style="padding:22px">
+      <div class="cap" style="margin:0 0 14px"><span class="lb">ADD STERLING TO YOUR AGENT &#183; 30 SECONDS</span></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+        <a href="https://sterling-asp.onrender.com/preview" target="_blank" rel="noopener" class="chip" style="cursor:pointer">&#9654; LIVE DEMO</a>
+        <a href="https://sterling-asp.onrender.com/docs" target="_blank" rel="noopener" class="chip" style="cursor:pointer">API DOCS</a>
+        <a href="https://sterling-asp.onrender.com/v1/manifest" target="_blank" rel="noopener" class="chip" style="cursor:pointer">CAPABILITY MANIFEST</a>
+      </div>
+      <pre style="font-family:'Space Mono',monospace;font-size:11px;line-height:1.7;color:var(--ink);background:var(--paper);border:2px solid var(--ink);padding:14px;overflow:auto;margin:0">curl -X POST https://sterling-asp.onrender.com/v1/income-snapshot \
+  -H "content-type: application/json" \
+  -d '{"asset":"NVDAx","position_usd":10000}'</pre>
+      <p class="lead" style="margin:14px 0 0;font-size:14px">Point your agent at the base URL, read <b class="ink">/v1/manifest</b> for the full catalog + example requests, and call any endpoint. Or just tell your agent: <span class="chip mono">"Use Sterling to rank the risk-adjusted income paths for my NVDAx"</span></p>
+    </div></div></div></div>
     <div class="pcard sku"><div class="b n8"><div class="in n8" style="overflow:hidden">
       <div class="lrow hd"><span data-i18n="skuh1">SERVICE</span><span data-i18n="skuh2">WHAT YOU GET</span><span style="text-align:right" data-i18n="skuh3">PER CALL</span></div>
       <div class="lrow"><div class="sn" data-i18n="sk2t">Stablecoin yield snapshot</div><div class="sd" data-i18n="sk2d">venue radar + component split + signable deposit</div><div class="sp">$0.05</div></div>
@@ -416,7 +437,7 @@
       <div class="lrow"><div class="sn" data-i18n="sk4t">Depeg &amp; protocol safety scan</div><div class="sd" data-i18n="sk4d">pre-deposit safe / unsafe verdict</div><div class="sp">$0.01</div></div>
       <div class="lrow"><div class="sn" data-i18n="sk7t">Best-path watch</div><div class="sd" data-i18n="sk7d">cheapest cron-able poll &#183; detect a better path</div><div class="sp">$0.005</div></div>
       <div class="lrow"><div class="sn" data-i18n="sk6t">Dividend &amp; corporate actions</div><div class="sd" data-i18n="sk6d">dividend-equiv + ex-date / dividend / split windows</div><div class="sp free" data-i18n="skfree">FREE</div></div>
-      <div class="lrow"><div class="sn" data-i18n="sk8t">Verifiable track record</div><div class="sd" data-i18n="sk8d">append-only ledger + recomputable receipts</div><div class="sp free" data-i18n="skfree2">FREE</div></div>
+      <div class="lrow"><div class="sn" data-i18n="sk8t">Recomputable receipts</div><div class="sd" data-i18n="sk8d">sha256 input/output fingerprint on every call &#183; verify the computation yourself</div><div class="sp free" data-i18n="skfree2">FREE</div></div>
     </div></div></div>
   </section>
 
@@ -428,6 +449,17 @@
       <div class="pcard soft ph"><div class="b n6"><div class="in n6"><div style="padding:18px"><div class="p"><span class="lock">&#9633;</span>LEVEL 2</div><h3 data-i18n="ph2h">Execution layer</h3><p data-i18n="ph2d">Non-custodial signable tx: DeFi supply / S4 combo / perp basis.</p></div></div></div></div>
       <div class="pcard soft ph"><div class="b n6"><div class="in n6"><div style="padding:18px"><div class="p"><span class="lock">&#9633;</span>LEVEL 3</div><h3 data-i18n="ph3h">Monitoring subscription</h3><p data-i18n="ph3d">24/7 better-path + depeg / health / rule-change alerts.</p></div></div></div></div>
       <div class="pcard soft ph"><div class="b n6"><div class="in n6"><div style="padding:18px"><div class="p"><span class="lock">&#9633;</span>LEVEL 4</div><h3 data-i18n="ph4h">Agent network</h3><p data-i18n="ph4d">The income-execution layer other agents can call on; $STER governance.</p></div></div></div></div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="cap"><span class="no">09</span><span class="lb">FAQ &#183; STRAIGHT ANSWERS</span></div>
+    <h2>Common questions.</h2>
+    <div class="steps">
+      <div class="pcard soft step"><div class="b n6"><div class="in n6"><div style="padding:20px"><h3>Is it custodial?</h3><p>No. Sterling only returns analysis + signable transaction intents. It structurally can&#8217;t reach your keys or move your funds &mdash; you sign in your own wallet.</p></div></div></div></div>
+      <div class="pcard soft step"><div class="b n6"><div class="in n6"><div style="padding:20px"><h3>What does &#8220;verifiable&#8221; mean?</h3><p>Every output ships a sha256 receipt (input + output fingerprint + engine version). Recompute with the same inputs and you get the identical result &mdash; it proves the computation is deterministic, not that a trade was profitable.</p></div></div></div></div>
+      <div class="pcard soft step"><div class="b n6"><div class="in n6"><div style="padding:20px"><h3>Live data or samples?</h3><p>The current demo runs on <b class="ink">sample data</b> (shown as <span class="chip mono">data_mode: sample_fixture</span> in /health). Live data + paid tier come once data sources and settlement are wired &mdash; we won&#8217;t charge real money for sample data.</p></div></div></div></div>
+      <div class="pcard soft step"><div class="b n6"><div class="in n6"><div style="padding:20px"><h3>Who can use it?</h3><p>Any agent or developer on OKX.AI / X Layer &mdash; call the endpoints or read /v1/manifest. Not for US or restricted-region users; tokenized stocks are restricted securities, so check your jurisdiction.</p></div></div></div></div>
     </div>
   </section>
 
