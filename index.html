@@ -32,7 +32,7 @@
   a{color:inherit;text-decoration:none}
   svg.spr{shape-rendering:crispEdges;flex:none}
 
-  /* 像素工艺基元 */
+  /* Pixel craft primitives */
   .n6{clip-path:polygon(0 6px,6px 6px,6px 0,calc(100% - 6px) 0,calc(100% - 6px) 6px,100% 6px,100% calc(100% - 6px),calc(100% - 6px) calc(100% - 6px),calc(100% - 6px) 100%,6px 100%,6px calc(100% - 6px),0 calc(100% - 6px))}
   .n8{clip-path:polygon(0 8px,8px 8px,8px 0,calc(100% - 8px) 0,calc(100% - 8px) 8px,100% 8px,100% calc(100% - 8px),calc(100% - 8px) calc(100% - 8px),calc(100% - 8px) 100%,8px 100%,8px calc(100% - 8px),0 calc(100% - 8px))}
   .checker{background-image:conic-gradient(#111014 25%,transparent 0 50%,#111014 0 75%,transparent 0);background-size:4px 4px}
@@ -44,12 +44,12 @@
     #F26D4F 80% 86.7%,#F25875 86.7% 93.4%,#F2439B 93.4% 100%)}
   .gtext{background:var(--gradtext);-webkit-background-clip:text;background-clip:text;color:transparent}
 
-  /* 扫描线(全站,克制) */
+  /* Scanlines (site-wide, restrained) */
   .scan{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.32;
     background:repeating-linear-gradient(0deg,rgba(17,16,20,.05) 0 1px,transparent 1px 3px)}
   @media(prefers-reduced-motion:reduce){.marq .track{animation:none}}
 
-  /* 按钮:双层缺角 + 硬像素影 + 按压 */
+  /* Button: double notch + hard pixel shadow + press */
   .pbtn{display:inline-block;filter:drop-shadow(5px 5px 0 #111014);transition:filter .08s,transform .08s;cursor:pointer;border:0;background:none;padding:0}
   .pbtn>span{display:inline-block;background:#111014;padding:3px}
   .pbtn>span>span{display:inline-block;padding:12px 20px;font-family:"Silkscreen","Noto Sans SC",monospace;font-weight:700;font-size:11px;letter-spacing:.05em;color:#111014}
@@ -62,10 +62,10 @@
   .pbtn:active{transform:translate(5px,5px);filter:drop-shadow(0 0 0 #111014)}
   .pbtn:focus-visible{outline:2px solid var(--pink);outline-offset:3px}
 
-  /* 像素小 chip */
+  /* Pixel chip */
   .chip{display:inline-flex;align-items:center;gap:8px;font-family:"Silkscreen","Noto Sans SC",monospace;font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;border:2px solid #111014;background:var(--card);padding:5px 9px;color:var(--ink-2)}
 
-  /* 章节头 */
+  /* Section header */
   section{padding:84px 0;border-bottom:3px solid #111014}
   .cap{display:flex;align-items:center;gap:12px;margin-bottom:10px}
   .cap .no{font-family:"Silkscreen",monospace;font-size:10px;color:#FFFDF7;background:#111014;padding:4px 8px;letter-spacing:.1em}
@@ -74,7 +74,7 @@
   .lead{margin:14px 0 0;font-size:clamp(15px,1.9vw,17.5px);color:var(--ink-2);max-width:64ch}
   b.ink{color:var(--ink)}
 
-  /* 导航 */
+  /* Nav */
   nav{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(8px);border-bottom:3px solid #111014}
   .nav-in{display:flex;align-items:center;gap:18px;height:68px}
   .brand{display:flex;align-items:center;gap:11px;font-family:"Pixelify Sans",sans-serif;font-weight:700;font-size:27px}
@@ -98,7 +98,7 @@
   .hero .chips{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}
   .hero-art{position:relative;min-height:400px}
 
-  /* 跑马灯 + 抖动地平线 */
+  /* Marquee + dithered horizon */
   .marq{border-top:3px solid #111014;background:#111014;overflow:hidden;white-space:nowrap}
   .marq .track{display:inline-block;padding:10px 0;font-family:"Silkscreen",monospace;font-size:9.5px;letter-spacing:.1em;color:var(--paper);animation:mscroll 44s steps(176) infinite}
   .marq .track span{margin:0 20px}
@@ -108,13 +108,13 @@
   .horizon .d1{position:absolute;inset:0;opacity:.26}
   .horizon .d2{position:absolute;inset:0;opacity:.1}
 
-  /* 卡片:双层缺角 */
+  /* Card: double notch */
   .pcard{filter:drop-shadow(6px 6px 0 #111014)}
   .pcard>.b{background:#111014;padding:3px}
   .pcard .in{background:var(--card)}
   .pcard.soft{filter:drop-shadow(4px 4px 0 #C9C2AE)}
 
-  /* 统计 */
+  /* Stats */
   .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:36px}
   .stat .in{padding:24px}
   .stat .n{font-family:"Pixelify Sans",sans-serif;font-weight:700;font-size:52px;line-height:1}
@@ -122,7 +122,7 @@
   .stat .l{margin-top:10px;font-size:13.5px;color:var(--ink-2);line-height:1.5}
   @media(max-width:760px){.stats{grid-template-columns:1fr}}
 
-  /* 收入层账本 */
+  /* Income-layer ledger */
   .layers{margin-top:36px}
   .layers .in{overflow:hidden}
   .layer{display:grid;grid-template-columns:56px 1fr auto;gap:18px;align-items:center;padding:18px 22px;border-bottom:2px solid var(--line)}
@@ -135,7 +135,7 @@
   .tag.sig{background:var(--paper-2);color:var(--ink-2)}
   @media(max-width:720px){.layer{grid-template-columns:44px 1fr}.layer .tag{grid-column:2;justify-self:start;margin-top:6px}}
 
-  /* 收入表卡片(产品表面) */
+  /* Income-statement card (product surface) */
   .grid-2{display:grid;grid-template-columns:1.02fr .98fr;gap:40px;align-items:center;margin-top:26px}
   @media(max-width:900px){.grid-2{grid-template-columns:1fr;gap:30px}}
   .stmt-hd{position:relative;border-bottom:3px solid #111014}
@@ -169,13 +169,13 @@
   .stmt-rcpt{padding:9px 18px;border-top:3px solid #111014;font-family:"Space Mono",monospace;font-size:8.5px;color:var(--ink-3);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
   .stmt-rcpt .hh{color:var(--mintd)}
 
-  /* 可信三印记(内层网格由内联样式给出,勿在 .in 上重复设 grid) */
+  /* Trust triptych (inner grid from inline styles; do not re-set grid on .in) */
   .proof3{display:grid;gap:14px;margin-top:8px}
   .pf h3{font-size:17px;font-weight:600}
   .pf p{margin:4px 0 0;font-size:13px;color:var(--ink-2);line-height:1.55}
   .pf .no{font-family:"Silkscreen",monospace;font-size:16px;color:var(--pink);padding-top:2px}
 
-  /* 稳定币两卡 */
+  /* Stablecoin two cards */
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:36px}
   .sc .in{padding:22px}
   .sc .t{font-family:"Silkscreen",monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
@@ -186,7 +186,7 @@
   .sc.moat .in{background:linear-gradient(180deg,rgba(216,182,43,.14),rgba(216,182,43,0)),var(--card)}
   @media(max-width:760px){.grid2{grid-template-columns:1fr}}
 
-  /* 步骤 */
+  /* Steps */
   .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:36px}
   .step .in{padding:20px}
   .step .no{font-family:"Silkscreen",monospace;font-size:9px;color:var(--pink);letter-spacing:.1em}
@@ -194,7 +194,7 @@
   .step p{margin:0;font-size:13px;color:var(--ink-2);line-height:1.5}
   @media(max-width:760px){.steps{grid-template-columns:1fr}}
 
-  /* SKU 账本 */
+  /* SKU ledger */
   .sku{margin-top:36px}
   .lrow{display:grid;grid-template-columns:1.2fr 1.8fr auto;gap:16px;padding:13px 20px;border-bottom:2px solid var(--line);align-items:baseline}
   .lrow:last-child{border-bottom:0}
@@ -207,7 +207,7 @@
   .lrow:hover{background:var(--paper-2)}
   @media(max-width:720px){.lrow{grid-template-columns:1fr auto}.lrow .sd{grid-column:1 / -1}}
 
-  /* Roadmap = 关卡选择 */
+  /* Roadmap = level select */
   .road{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:36px}
   .ph .in{padding:18px}
   .ph .p{font-family:"Silkscreen",monospace;font-size:9px;letter-spacing:.1em;color:var(--ink)}
@@ -235,7 +235,7 @@
   footer .disc{font-family:"Space Mono","Noto Sans SC",monospace;font-size:10.5px;color:var(--ink-3);line-height:1.7;max-width:96ch;border-top:3px solid #111014;padding-top:20px}
 </style>
 
-<!-- 8-bit sprite 符号库(复用) -->
+<!-- 8-bit sprite symbol library (reusable) -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="sp-coin" viewBox="0 0 22 22"><rect x="6" y="0" width="10" height="3" fill="#111014"/><rect x="5" y="1" width="1" height="3" fill="#111014"/><rect x="16" y="1" width="1" height="3" fill="#111014"/><rect x="4" y="2" width="1" height="10" fill="#111014"/><rect x="17" y="2" width="1" height="4" fill="#111014"/><rect x="3" y="3" width="1" height="2" fill="#111014"/><rect x="6" y="3" width="10" height="3" fill="#FFFDF7"/><rect x="18" y="3" width="1" height="2" fill="#111014"/><rect x="2" y="4" width="1" height="2" fill="#111014"/><rect x="5" y="4" width="1" height="8" fill="#FFFDF7"/><rect x="16" y="4" width="1" height="2" fill="#FFFDF7"/><rect x="19" y="4" width="1" height="2" fill="#111014"/><rect x="1" y="5" width="1" height="12" fill="#111014"/><rect x="3" y="5" width="1" height="1" fill="#FFFFFF"/><rect x="18" y="5" width="1" height="12" fill="#F2439B"/><rect x="20" y="5" width="1" height="12" fill="#111014"/><rect x="0" y="6" width="1" height="10" fill="#111014"/><rect x="2" y="6" width="2" height="10" fill="#25B8D8"/><rect x="6" y="6" width="2" height="6" fill="#FFFDF7"/><rect x="8" y="6" width="9" height="1" fill="#111014"/><rect x="17" y="6" width="1" height="3" fill="#F25875"/><rect x="19" y="6" width="1" height="10" fill="#F2439B"/><rect x="21" y="6" width="1" height="10" fill="#111014"/><rect x="8" y="7" width="1" height="2" fill="#111014"/><rect x="9" y="7" width="1" height="1" fill="#9ACB3B"/><rect x="10" y="7" width="2" height="1" fill="#BAC133"/><rect x="12" y="7" width="1" height="1" fill="#D8B62B"/><rect x="13" y="7" width="1" height="1" fill="#E3A82D"/><rect x="14" y="7" width="1" height="1" fill="#EE9A2F"/><rect x="15" y="7" width="1" height="1" fill="#F0843F"/><rect x="16" y="7" width="1" height="1" fill="#F26D4F"/><rect x="9" y="8" width="8" height="1" fill="#111014"/><rect x="8" y="9" width="9" height="3" fill="#FFFDF7"/><rect x="17" y="9" width="1" height="8" fill="#111014"/><rect x="4" y="12" width="1" height="3" fill="#2ABCBE"/><rect x="5" y="12" width="9" height="1" fill="#111014"/><rect x="14" y="12" width="3" height="5" fill="#FFFDF7"/><rect x="5" y="13" width="1" height="1" fill="#2FBFA3"/><rect x="6" y="13" width="1" height="1" fill="#42C283"/><rect x="7" y="13" width="1" height="1" fill="#55C462"/><rect x="8" y="13" width="1" height="1" fill="#78C84F"/><rect x="9" y="13" width="1" height="1" fill="#9ACB3B"/><rect x="10" y="13" width="2" height="1" fill="#BAC133"/><rect x="12" y="13" width="1" height="1" fill="#D8B62B"/><rect x="13" y="13" width="1" height="2" fill="#111014"/><rect x="5" y="14" width="8" height="1" fill="#111014"/><rect x="4" y="15" width="1" height="2" fill="#111014"/><rect x="5" y="15" width="9" height="2" fill="#FFFDF7"/><rect x="2" y="16" width="1" height="2" fill="#111014"/><rect x="3" y="16" width="1" height="1" fill="#25B8D8"/><rect x="19" y="16" width="1" height="2" fill="#111014"/><rect x="3" y="17" width="1" height="2" fill="#111014"/><rect x="4" y="17" width="1" height="1" fill="#2ABCBE"/><rect x="5" y="17" width="1" height="1" fill="#111014"/><rect x="6" y="17" width="10" height="1" fill="#FFFDF7"/><rect x="16" y="17" width="1" height="1" fill="#111014"/><rect x="17" y="17" width="1" height="1" fill="#F25875"/><rect x="18" y="17" width="1" height="2" fill="#111014"/><rect x="4" y="18" width="1" height="2" fill="#111014"/><rect x="5" y="18" width="1" height="1" fill="#2FBFA3"/><rect x="6" y="18" width="10" height="1" fill="#111014"/><rect x="16" y="18" width="1" height="1" fill="#F26D4F"/><rect x="17" y="18" width="1" height="2" fill="#111014"/><rect x="5" y="19" width="1" height="2" fill="#111014"/><rect x="6" y="19" width="1" height="1" fill="#42C283"/><rect x="7" y="19" width="1" height="1" fill="#55C462"/><rect x="8" y="19" width="1" height="1" fill="#78C84F"/><rect x="9" y="19" width="1" height="1" fill="#9ACB3B"/><rect x="10" y="19" width="2" height="1" fill="#BAC133"/><rect x="12" y="19" width="1" height="1" fill="#D8B62B"/><rect x="13" y="19" width="1" height="1" fill="#E3A82D"/><rect x="14" y="19" width="1" height="1" fill="#EE9A2F"/><rect x="15" y="19" width="1" height="1" fill="#F0843F"/><rect x="16" y="19" width="1" height="2" fill="#111014"/><rect x="6" y="20" width="10" height="2" fill="#111014"/></symbol>
   <symbol id="sp-bars" viewBox="0 0 14 12">
@@ -279,7 +279,6 @@
     <a href="#sku" data-i18n="nav4">SERVICES</a>
     <a href="#road" data-i18n="nav5">ROADMAP</a>
   </div>
-  <button class="langtoggle" id="lang" data-i18n="langbtn">中文</button>
   <a href="#join" class="pbtn grad"><span><span class="n6" data-i18n="joinbtn">JOIN BETA</span></span></a>
 </div></nav>
 
@@ -458,119 +457,10 @@
 </footer>
 
 <script>
-  // ---- 中英切换:英文为默认(静态 HTML 即英文),点击切中文;记忆在本地浏览器 ----
-  var ZH = {
-    nav1:"问题", nav2:"收入层", nav3:"可信", nav4:"服务", nav5:"蓝图",
-    langbtn:"EN", joinbtn:"加入内测",
-    heroEy:"代币化资产的收益组织层 · X LAYER · OKX.AI",
-    heroH1:'让代币化股票<br><span class="gtext">开始上班。</span>',
-    heroCta1:"加入内测 →", heroCta2:"看收入层",
-    hchip1:"100+ XSTOCKS 股票宇宙", hchip2:"SHA256 收据", hchip3:"✓ 确定性",
-    marq:'<span><b>■</b> LP 做市</span><span><b>■</b> 链上收益</span><span><b>■</b> XPOINTS</span><span><b>■</b> 抵押借币生息</span><span><b>■</b> 备兑期权信号</span><span><b>■</b> 非托管</span><span><b>■</b> 可核对</span><span><b>■</b> 确定性</span><span><b>■</b> LP 做市</span><span><b>■</b> 链上收益</span><span><b>■</b> XPOINTS</span><span><b>■</b> 抵押借币生息</span><span><b>■</b> 备兑期权信号</span><span><b>■</b> 非托管</span><span><b>■</b> 可核对</span><span><b>■</b> 确定性</span>',
-    s1cmt:"问题 · 链上股票的资本效率黑洞",
-    s1h:"100+ 只代币化美股,躺在钱包里 0 收益。",
-    s1lead:"xStocks 生态已突破 100 只代币化美股与 ETF —— 1:1 实股托管、24/7 可交易,规划扩至 500+;其中 40+ 已上 OKX。买入之后,它们绝大多数时间只是躺着 —— 而链上基础生息,我们如实说,几乎为零。",
-    st1:"xStocks 生态代币化美股 & ETF(规划 500+)—— 40+ 已上 OKX", st2:"闲置期间收益率 —— 传统券商股票尚能融券生息", st3:"X Layer 链上真实供给 APY(实测)—— 生息这条路赚不到钱",
-    s1tail:'真正的收入,只能来自<b class="ink">股票本身能被激活的那些层</b>。Sterling 把它们一层层拆开给你。',
-    s2cmt:"收入层 · 把股票当可编程积木",
-    s2h:'把闲置资产,拆成<span class="gtext">可激活的收入层。</span>',
-    s2lead:'Sterling 把代币化股票当<b class="ink">可组合的收入积木</b> —— 组 LP、供给、抵押、farm 积分,一张表算清、按可执行净收益排序,每个数字带来源与时间戳,不可执行的如实标"仅信号"。<b class="ink">按风险从低到高排序</b> —— LP 这类加成项由你主动选择,绝不默认。',
-    l1h:"LP 做市收益(加成项)", l1d:"收益更高,但有无常损失(IL)—— 所以它是可选加成,绝不是默认推荐。全部池聚合、风险调整排名(IL/安全/退出全打折扣);你知情选择,一签入池。", l1t:"可执行 · 可选加成",
-    l2h:"链上收益(供给 / 借贷)", l2d:"Aave 供给 / 借贷 · 拆解 base(持久)vs 激励(会衰减)· 无无常损失机制 —— 风险最低的可执行收入,所以排第一。", l2t:"可执行 · 主打 · 风险最低",
-    l3h:"抵押借稳定币 · 净利差", l3d:"抵押 xStock → 借稳定币 → 部署收益,净利差 + 健康因子 + 清算价。只有 Sterling 能做。", l3t:"可执行 · 独有",
-    l4h:"xPoints", l4d:"最优积分路径 + OKX Wallet 加成 · 规则带时间戳 · 非现金。", l4t:"可执行",
-    l5h:"备兑期权 / 股息", l5d:"股票原生收入 —— 但 X Layer 暂无链上期权场所,<b>仅信号 / 前瞻</b>,不计入可执行合计。", l5t:"信号 · 前瞻",
-    s3cmt:"产品表面 · 一次调用 = 一张可核对的收入表",
-    s3h:'不是裸 JSON,是一张<span class="gtext">收入表。</span>',
-    s3lead:'每一条收入流、总"在工作的收益"、风险轨、一键激活 —— 每个数字都带来源和时间戳。<b class="ink">可核对,是这产品唯一要你相信的东西。</b>一次调用同时给两种交付:机器 JSON 给 Agent,这张卡给人。',
-    s3cta:"试一试 →",
-    cardPos:"持仓 $10,000 · X Layer · 你的钱包签名", cardStK:"状态", cardStV:"闲置 → 在工作",
-    cardR1:"链上收益(风险调整最优)", cardR1s:"★ 优选", cardR1r:"低风险", cardR3b:"加成·含IL", cardR1m:"头部借贷 · base 3.10 + 激励 1.80 · 安全88",
-    cardR2:"链上收益(高息池)", cardR2m:"谨慎:安全41 · 退出受限 · 激励为主",
-    cardR3:"LP 做市(USDT/USDG)", cardR3m:"手续费 1.10 + 激励 2.40 · IL 低(稳定对)",
-    cardR4:"xPoints(积分)", cardR4a:"≈ 积分", cardR4m:"最高权重路径 · 规则 as of 08-31", cardR4r:"非现金",
-    cardRail1:"脱锚", cardRail2:"退出", cardRail2b:"充足", cardRail3b:"低", cardRail4:"价格", cardRail5:"事件",
-    cardTotK:"在工作的收益", cardTotS:"可执行合计 · 示意",
-    cardGo:"生成 1 个待签交易 →", cardNt:"钱包签名激活<br>非托管",
-    cardRcpt1:"method: deterministic · LLM 不参与", cardRcpt2:"可复算",
-    s3tail:'<b class="ink">收益雷达</b>把高息但不安全的场所(8.30%)压到 4.60% 安全场所之后 —— 比的是<b class="ink">风险调整后的净可持续收益</b>,不是谁标得高。',
-    s4cmt:"为什么可信 · 我们是计算,不是猜",
-    s4h:'LLM 会幻觉,<br>Sterling 用<span class="gtext">确定性计算。</span>',
-    s4lead:'大模型天生不懂数字市场 —— 它做的是文本模式匹配。Sterling 每个数字都由<b class="ink">确定性程序</b>算出,LLM 不碰数值路径。所以我们不要你"相信",你可以<b class="ink">自己复算核验</b>。',
-    p1h:"同输入 → 同结果", p1d:'同样输入 + 同版引擎,永远得到同一个数,可独立复算。不是模型每次"发挥"。',
-    p2h:"每次输出附 sha256 收据", p2d:'不是一句"相信我",是一个可比对的指纹 —— 任何人拿同样输入就能核验。',
-    p3h:"可验证战绩账本", p3d:"每条推荐入账、永不改写,累积成可核验的战绩。好坏都留痕。",
-    s5cmt:"稳定币 · 底座 + 组合",
-    sc1t:"科学内核", sc1h:"净 · 可持续 · 安全", sc1d:"成分拆解(base vs 激励)+ 净收益(扣 gas/滑点)+ 安全分 + 退出容量 + 脱锚扫描,按金额封顶。高息 ≠ 优选 —— 风险调整后排名。", sc1n:"高息 ≠ 优选 · 风险调整排名",
-    sc2t:"STERLING 独有 · 可执行", sc2h:"抵押股票 · 借稳定币 · 赚净利差", sc2d:"持有 NVDAx → 借 USDG → 部署到最优稳定收益,测算净利差、健康因子与清算价;利差为负或健康因子不足直接劝退。没人能做,因为只有 Sterling 同时懂两侧。", sc2n:"AAVE ON X LAYER · 一签执行",
-    s6cmt:"运作 · 分析在我,签名在你",
-    s6h:"非托管,是一条边界,不是功能。",
-    h1h:"分析", h1d:"给一只资产 + 金额,算出全部收入层、净收益排序、风险轨,每个数字带来源与时间戳。",
-    h2h:"一签激活", h2d:"想动手时,Sterling 生成一笔待签交易意图,由你的 Agentic Wallet 构造并签名执行。",
-    h3h:"碰不到你的钱", h3d:"Sterling 结构上拿不到私钥、动不了资金。可核对,是它唯一要你相信的东西。",
-    s7cmt:"服务 · A2MCP · X402 按次即时结算",
-    s7h:"把 Sterling 接进你的 Agent。",
-    s7lead:"如果你的 Agent 在管 xStocks 或稳定币,它可以直接调用 Sterling —— 机器可读 JSON、按次即时结算、不议价。想自己用?也行 —— 但它从第一天就以 Agent 优先。",
-    skuh1:"服务", skuh2:"你拿到什么", skuh3:"每次",
-    sk1t:"收入快照", sk1d:"每一条收入路径,按风险调整净收益排序",
-    sk2t:"稳定币收益快照", sk2d:"场所雷达 + 成分拆解 + 可签存入",
-    sk3t:"抵押借稳定币 · 净利差", sk3d:"S4 组合 · 净利差 + 健康因子 + 清算价",
-    sk4t:"脱锚 & 协议安全扫描", sk4d:"存入前的安全 / 不安全裁决",
-    sk5t:"备兑期权侦测", sk5d:"权利金年化估算(暂无链上场所 · 仅信号)",
-    sk6t:"股息 & 公司行动", sk6d:"股息等价 + 除息 / 分红 / 拆股窗口",
-    sk7t:"最优路径监控", sk7d:"最便宜的 cron 轮询 · 发现更优路径",
-    sk8t:"可验证战绩", sk8d:"只增不改账本 + 可复算收据",
-    skfree:"免费", skfree2:"免费",
-    s8cmt:"蓝图 · 倒着上,从可执行的开始",
-    s8h:"从分析,到执行,到网络。",
-    ph1h:"分析层", ph1d:"只读收入分析 + 稳定币雷达 + 风控。按次上架 OKX.AI。",
-    ph2h:"执行层", ph2d:"非托管可签交易:DeFi 供给 / S4 组合 / 永续基差。",
-    ph3h:"监控订阅", ph3d:"7×24 更优路径 + 脱锚 / 健康 / 规则变更预警。",
-    ph4h:"Agent 网络", ph4d:"供其它 Agent 调用的收入执行层;$STER 治理。",
-    joinPill:"内测招募中", joinH:"让你的股票开始上班。", joinLead:"留个邮箱,X Layer 上线首批通知你。",
-    joinSubmit:"加入", joinNote:"我们只在 X Layer 上线时给你发一次邮件。",
-    foot:"Sterling 是非托管的研究与可签交易工具,不托管资金、不代客交易、不构成投资 / 财务 / 法律建议,不面向美国及受限地区用户,与 OKX / xStocks 无官方合作或背书关系。页面所有收益数字均为示意,不构成任何收益预测或承诺;备兑期权 / 股息因 X Layer 当前无链上期权场所,仅作信号呈现;代币化股票为受限证券,xPoints 规则以官方实时信息为准。本页为产品原型展示。"
-  };
-
-  (function(){
-    // 缓存英文原文(静态 HTML 就是英文)
-    var EN = {};
-    document.querySelectorAll("[data-i18n]").forEach(function(el){ EN[el.getAttribute("data-i18n")] = el.innerHTML; });
-    function apply(lang){
-      var dict = (lang === "zh") ? ZH : EN;
-      document.querySelectorAll("[data-i18n]").forEach(function(el){
-        var k = el.getAttribute("data-i18n");
-        if(dict[k] != null) el.innerHTML = dict[k];
-      });
-      try{ document.documentElement.lang = (lang==="zh")?"zh":"en"; }catch(_){}
-    }
-    var saved = "en";
-    try{ saved = localStorage.getItem("sterling_lang") || "en"; }catch(_){}
-    if(saved === "zh") apply("zh");
-    var btn = document.getElementById("lang");
-    if(btn) btn.addEventListener("click", function(){
-      var cur = "en";
-      try{ cur = localStorage.getItem("sterling_lang") || "en"; }catch(_){}
-      var next = (cur === "zh") ? "en" : "zh";
-      try{ localStorage.setItem("sterling_lang", next); }catch(_){}
-      apply(next);
-    });
-
-    // 等候名单:提交到 Web3Forms(邮件发到站主邮箱,不落本地)
-    var f=document.getElementById("wl"),e=document.getElementById("wl-email"),n=document.getElementById("wl-note"),b=document.getElementById("wl-btn");
-    if(f) f.addEventListener("submit",function(){
-      var v=(e.value||"").trim();
-      var zh = (document.documentElement.lang==="zh");
-      if(!/.+@.+\..+/.test(v)){ n.textContent = zh?"请输入有效邮箱。":"Please enter a valid email."; return false; }
-      var lbl=b.querySelector("[data-i18n]"); var old=lbl?lbl.textContent:"";
-      if(lbl) lbl.textContent = zh?"提交中…":"…"; b.disabled=true;
-      fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({access_key:"23360d2e-889a-400a-a2ac-7135749c2907",email:v,subject:"Sterling waitlist signup",from_name:"Sterling site"})})
-        .then(function(r){return r.json();})
-        .then(function(d){ if(d&&d.success){ if(lbl)lbl.textContent=zh?"已加入 ✓":"JOINED ✓"; e.value=""; e.placeholder=zh?"已加入":"Joined"; n.textContent=zh?"已收到,X Layer 上线首批通知你。":"Got it — we'll notify you first at X Layer launch."; } else { throw new Error("fail"); } })
-        .catch(function(){ if(lbl)lbl.textContent=old; b.disabled=false; n.textContent=zh?"提交失败,请稍后重试。":"Submission failed, please try again."; });
-      return false;
-    });
-  })();
+  (function(){var f=document.getElementById("wl"),e=document.getElementById("wl-email"),n=document.getElementById("wl-note"),b=document.getElementById("wl-btn");
+  if(f) f.addEventListener("submit",function(){var v=(e.value||"").trim();if(!/.+@.+\..+/.test(v)){n.textContent="Please enter a valid email.";return false;}
+  var lbl=b.querySelector("[data-i18n]");var old=lbl?lbl.textContent:"";if(lbl)lbl.textContent="…";b.disabled=true;
+  fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({access_key:"23360d2e-889a-400a-a2ac-7135749c2907",email:v,subject:"Sterling waitlist signup",from_name:"Sterling site"})}).then(function(r){return r.json();}).then(function(d){if(d&&d.success){if(lbl)lbl.textContent="JOINED \u2713";e.value="";e.placeholder="Joined";n.textContent="Got it — we'll notify you first at X Layer launch.";}else{throw new Error("fail");}}).catch(function(){if(lbl)lbl.textContent=old;b.disabled=false;n.textContent="Submission failed, please try again.";});return false;});})();
 </script>
 </body>
 </html>
