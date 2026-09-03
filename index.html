@@ -62,7 +62,7 @@
   /* Scanlines (site-wide, restrained) */
   .scan{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.32;
     background:repeating-linear-gradient(0deg,rgba(17,16,20,.05) 0 1px,transparent 1px 3px)}
-  @media(prefers-reduced-motion:reduce){.marq .track,.pac-eat .po,.pac-eat .pc{animation:none}}
+  @media(prefers-reduced-motion:reduce){.marq .track,.pac-eat .po,.pac-eat .pc,.coin-cta,.pac-idle .po,.pac-idle .pc{animation:none}}
 
   /* Button: double notch + hard pixel shadow + press */
   .pbtn{display:inline-block;filter:drop-shadow(5px 5px 0 #111014);transition:filter .08s,transform .08s;cursor:pointer;border:0;background:none;padding:0}
@@ -269,6 +269,21 @@
   footer{padding:44px 0 60px}
   footer .ft{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:22px}
   footer .disc{font-family:"Space Mono","Noto Sans SC",monospace;font-size:10.5px;color:var(--ink-3);line-height:1.7;max-width:96ch;border-top:3px solid #111014;padding-top:20px}
+  /* 街机式收尾:全宽暗带 + 闪烁 INSERT COIN → JOIN BETA + 咀嚼吃豆人(呼应顶部字幕吃豆人,首尾书挡)*/
+  .arcade{position:relative;background:#111014;border-top:3px solid #111014}
+  .arcade::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#25B8D8,#2FBFA3,#55C462,#9ACB3B,#D8B62B,#EE9A2F,#F26D4F,#F2439B)}
+  .arcade-in{max-width:var(--maxw);margin:0 auto;padding:50px 26px 44px;display:flex;flex-direction:column;align-items:center;gap:13px;text-align:center}
+  .ready{font-family:"Silkscreen",monospace;font-size:12px;letter-spacing:2.5px;color:#9ACB3B}
+  .coin-cta{font-family:"Pixelify Sans","Noto Sans SC",sans-serif;font-weight:700;font-size:clamp(27px,6vw,50px);line-height:1;text-decoration:none;
+    background:linear-gradient(90deg,#25B8D8,#2FBFA3,#55C462,#9ACB3B,#D8B62B,#EE9A2F,#F26D4F,#F2439B);-webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:blink 1.15s steps(1) infinite}
+  .coin-cta:hover,.coin-cta:focus-visible{animation:none;opacity:1}
+  @keyframes blink{0%,64%{opacity:1}65%,100%{opacity:.22}}
+  .pac-idle{position:relative;width:36px;height:36px;margin-top:2px;filter:drop-shadow(2px 2px 0 rgba(0,0,0,.5))}
+  .pac-idle svg{position:absolute;inset:0;width:100%;height:100%}
+  .pac-idle .po{animation:chompO .5s infinite}
+  .pac-idle .pc{opacity:0;animation:chompC .5s infinite}
+  @media(max-width:560px){.arcade-in{padding:38px 22px 32px}}
 </style>
 
 <!-- 8-bit sprite symbol library (reusable) -->
@@ -516,6 +531,14 @@
   </section>
 
 </main>
+
+<div class="arcade">
+  <div class="arcade-in">
+    <div class="ready">READY PLAYER ONE?</div>
+    <a class="coin-cta" href="#join">INSERT COIN &#9654; JOIN BETA</a>
+    <i class="pac-idle" aria-hidden="true"><svg class="spr po" viewBox="0 0 18 18"><use href="#sp-pac-o"/></svg><svg class="spr pc" viewBox="0 0 18 18"><use href="#sp-pac-c"/></svg></i>
+  </div>
+</div>
 
 <footer class="wrap">
   <div class="ft">
