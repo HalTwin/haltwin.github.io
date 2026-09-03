@@ -62,7 +62,7 @@
   /* Scanlines (site-wide, restrained) */
   .scan{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.32;
     background:repeating-linear-gradient(0deg,rgba(17,16,20,.05) 0 1px,transparent 1px 3px)}
-  @media(prefers-reduced-motion:reduce){.marq .track,.pac-eat{animation:none}}
+  @media(prefers-reduced-motion:reduce){.marq .track,.pac-eat .po,.pac-eat .pc{animation:none}}
 
   /* Button: double notch + hard pixel shadow + press */
   .pbtn{display:inline-block;filter:drop-shadow(5px 5px 0 #111014);transition:filter .08s,transform .08s;cursor:pointer;border:0;background:none;padding:0}
@@ -133,13 +133,12 @@
   /* 彩虹吃豆人吃字幕:左侧咀嚼的吃豆人 + 字幕滚进去边缘渐隐被"吃掉"—— 呼应 banner */
   .marq::after{content:"";position:absolute;left:0;top:0;bottom:0;width:74px;z-index:1;pointer-events:none;
     background:linear-gradient(90deg,#111014 30%,rgba(17,16,20,0))}
-  .pac-eat{position:absolute;left:15px;top:50%;transform:translateY(-50%);width:27px;height:27px;z-index:2;pointer-events:none;
-    background:linear-gradient(120deg,#25B8D8,#2FBFA3,#55C462,#9ACB3B,#D8B62B,#EE9A2F,#F26D4F,#F2439B);
-    animation:chomp .5s ease-in-out infinite;filter:drop-shadow(2px 2px 0 rgba(0,0,0,.45));
-    clip-path:polygon(50% 50%,100% 32%,92% 15%,72% 3%,50% 0,28% 3%,8% 15%,0 34%,0 66%,8% 85%,28% 97%,50% 100%,72% 97%,92% 85%,100% 68%)}
-  @keyframes chomp{
-    0%,100%{clip-path:polygon(50% 50%,100% 32%,92% 15%,72% 3%,50% 0,28% 3%,8% 15%,0 34%,0 66%,8% 85%,28% 97%,50% 100%,72% 97%,92% 85%,100% 68%)}
-    50%{clip-path:polygon(50% 50%,100% 47%,92% 15%,72% 3%,50% 0,28% 3%,8% 15%,0 34%,0 66%,8% 85%,28% 97%,50% 100%,72% 97%,92% 85%,100% 53%)}}
+  .pac-eat{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:28px;height:28px;z-index:2;pointer-events:none;filter:drop-shadow(2px 2px 0 rgba(0,0,0,.4))}
+  .pac-eat svg{position:absolute;inset:0;width:100%;height:100%}
+  .pac-eat .po{animation:chompO .48s infinite}
+  .pac-eat .pc{opacity:0;animation:chompC .48s infinite}
+  @keyframes chompO{0%,49.9%{opacity:1}50%,100%{opacity:0}}
+  @keyframes chompC{0%,49.9%{opacity:0}50%,100%{opacity:1}}
   .horizon{position:relative;height:120px;border-top:3px solid #111014}
   .horizon .d1{position:absolute;inset:0;opacity:.26}
   .horizon .d2{position:absolute;inset:0;opacity:.1}
@@ -303,6 +302,7 @@
   <symbol id="sp-quad" viewBox="0 0 4 4">
     <rect x="0" y="0" width="2" height="2" fill="#25B8D8"/><rect x="2" y="0" width="2" height="2" fill="#9ACB3B"/><rect x="0" y="2" width="2" height="2" fill="#EE9A2F"/><rect x="2" y="2" width="2" height="2" fill="#F2439B"/>
   </symbol>
+  <linearGradient id="pacgrad" x1="1" y1="1" x2="17" y2="16" gradientUnits="userSpaceOnUse"><stop offset="0.000" stop-color="#25B8D8"/><stop offset="0.143" stop-color="#2FBFA3"/><stop offset="0.286" stop-color="#55C462"/><stop offset="0.429" stop-color="#9ACB3B"/><stop offset="0.571" stop-color="#D8B62B"/><stop offset="0.714" stop-color="#EE9A2F"/><stop offset="0.857" stop-color="#F26D4F"/><stop offset="1.000" stop-color="#F2439B"/></linearGradient><symbol id="sp-pac-o" viewBox="0 0 18 18"><rect x="8" y="0" width="2" height="1" fill="url(#pacgrad)"/><rect x="5" y="1" width="8" height="1" fill="url(#pacgrad)"/><rect x="3" y="2" width="12" height="1" fill="url(#pacgrad)"/><rect x="2" y="3" width="14" height="1" fill="url(#pacgrad)"/><rect x="2" y="4" width="14" height="1" fill="url(#pacgrad)"/><rect x="1" y="5" width="8" height="1" fill="url(#pacgrad)"/><rect x="9" y="5" width="1" height="1" fill="#111014"/><rect x="10" y="5" width="4" height="1" fill="url(#pacgrad)"/><rect x="1" y="6" width="12" height="1" fill="url(#pacgrad)"/><rect x="1" y="7" width="10" height="1" fill="url(#pacgrad)"/><rect x="0" y="8" width="10" height="1" fill="url(#pacgrad)"/><rect x="0" y="9" width="10" height="1" fill="url(#pacgrad)"/><rect x="1" y="10" width="10" height="1" fill="url(#pacgrad)"/><rect x="1" y="11" width="12" height="1" fill="url(#pacgrad)"/><rect x="1" y="12" width="13" height="1" fill="url(#pacgrad)"/><rect x="2" y="13" width="14" height="1" fill="url(#pacgrad)"/><rect x="2" y="14" width="14" height="1" fill="url(#pacgrad)"/><rect x="3" y="15" width="12" height="1" fill="url(#pacgrad)"/><rect x="5" y="16" width="8" height="1" fill="url(#pacgrad)"/><rect x="8" y="17" width="2" height="1" fill="url(#pacgrad)"/></symbol><symbol id="sp-pac-c" viewBox="0 0 18 18"><rect x="8" y="0" width="2" height="1" fill="url(#pacgrad)"/><rect x="5" y="1" width="8" height="1" fill="url(#pacgrad)"/><rect x="3" y="2" width="12" height="1" fill="url(#pacgrad)"/><rect x="2" y="3" width="14" height="1" fill="url(#pacgrad)"/><rect x="2" y="4" width="14" height="1" fill="url(#pacgrad)"/><rect x="1" y="5" width="8" height="1" fill="url(#pacgrad)"/><rect x="9" y="5" width="1" height="1" fill="#111014"/><rect x="10" y="5" width="7" height="1" fill="url(#pacgrad)"/><rect x="1" y="6" width="16" height="1" fill="url(#pacgrad)"/><rect x="1" y="7" width="16" height="1" fill="url(#pacgrad)"/><rect x="0" y="8" width="12" height="1" fill="url(#pacgrad)"/><rect x="0" y="9" width="12" height="1" fill="url(#pacgrad)"/><rect x="1" y="10" width="16" height="1" fill="url(#pacgrad)"/><rect x="1" y="11" width="16" height="1" fill="url(#pacgrad)"/><rect x="1" y="12" width="16" height="1" fill="url(#pacgrad)"/><rect x="2" y="13" width="14" height="1" fill="url(#pacgrad)"/><rect x="2" y="14" width="14" height="1" fill="url(#pacgrad)"/><rect x="3" y="15" width="12" height="1" fill="url(#pacgrad)"/><rect x="5" y="16" width="8" height="1" fill="url(#pacgrad)"/><rect x="8" y="17" width="2" height="1" fill="url(#pacgrad)"/></symbol>
 </svg>
 
 <div class="scan" aria-hidden="true"></div>
@@ -344,7 +344,7 @@
       <div style="position:absolute;left:210px;top:330px;width:10px;height:10px;background:var(--orange);box-shadow:3px 3px 0 #111014"></div>
     </div>
   </div>
-  <div class="marq"><i class="pac-eat" aria-hidden="true"></i><div class="track" data-i18n="marq">
+  <div class="marq"><i class="pac-eat" aria-hidden="true"><svg class="spr po" viewBox="0 0 18 18"><use href="#sp-pac-o"/></svg><svg class="spr pc" viewBox="0 0 18 18"><use href="#sp-pac-c"/></svg></i><div class="track" data-i18n="marq">
     <span><b>&#9632;</b> LP MARKET-MAKING</span><span><b>&#9632;</b> ON-CHAIN YIELD</span><span><b>&#9632;</b> XPOINTS</span><span><b>&#9632;</b> BORROW-AND-EARN</span><span><b>&#9632;</b> COVERED-CALL SIGNAL</span><span><b>&#9632;</b> NON-CUSTODIAL</span><span><b>&#9632;</b> VERIFIABLE</span><span><b>&#9632;</b> DETERMINISTIC</span>
     <span><b>&#9632;</b> LP MARKET-MAKING</span><span><b>&#9632;</b> ON-CHAIN YIELD</span><span><b>&#9632;</b> XPOINTS</span><span><b>&#9632;</b> BORROW-AND-EARN</span><span><b>&#9632;</b> COVERED-CALL SIGNAL</span><span><b>&#9632;</b> NON-CUSTODIAL</span><span><b>&#9632;</b> VERIFIABLE</span><span><b>&#9632;</b> DETERMINISTIC</span>
   </div></div>
