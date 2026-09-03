@@ -62,7 +62,7 @@
   /* Scanlines (site-wide, restrained) */
   .scan{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.32;
     background:repeating-linear-gradient(0deg,rgba(17,16,20,.05) 0 1px,transparent 1px 3px)}
-  @media(prefers-reduced-motion:reduce){.marq .track{animation:none}}
+  @media(prefers-reduced-motion:reduce){.marq .track,.pac-eat{animation:none}}
 
   /* Button: double notch + hard pixel shadow + press */
   .pbtn{display:inline-block;filter:drop-shadow(5px 5px 0 #111014);transition:filter .08s,transform .08s;cursor:pointer;border:0;background:none;padding:0}
@@ -125,11 +125,21 @@
   }
 
   /* Marquee + dithered horizon */
-  .marq{border-top:3px solid #111014;background:#111014;overflow:hidden;white-space:nowrap}
+  .marq{position:relative;border-top:3px solid #111014;background:#111014;overflow:hidden;white-space:nowrap}
   .marq .track{display:inline-block;padding:10px 0;font-family:"Silkscreen",monospace;font-size:9.5px;letter-spacing:.1em;color:var(--paper);animation:mscroll 44s steps(176) infinite}
   .marq .track span{margin:0 20px}
   .marq .track b{color:var(--green);font-weight:400}
   @keyframes mscroll{to{transform:translateX(-50%)}}
+  /* 彩虹吃豆人吃字幕:左侧咀嚼的吃豆人 + 字幕滚进去边缘渐隐被"吃掉"—— 呼应 banner */
+  .marq::after{content:"";position:absolute;left:0;top:0;bottom:0;width:74px;z-index:1;pointer-events:none;
+    background:linear-gradient(90deg,#111014 30%,rgba(17,16,20,0))}
+  .pac-eat{position:absolute;left:15px;top:50%;transform:translateY(-50%);width:27px;height:27px;z-index:2;pointer-events:none;
+    background:linear-gradient(120deg,#25B8D8,#2FBFA3,#55C462,#9ACB3B,#D8B62B,#EE9A2F,#F26D4F,#F2439B);
+    animation:chomp .5s ease-in-out infinite;filter:drop-shadow(2px 2px 0 rgba(0,0,0,.45));
+    clip-path:polygon(50% 50%,100% 32%,92% 15%,72% 3%,50% 0,28% 3%,8% 15%,0 34%,0 66%,8% 85%,28% 97%,50% 100%,72% 97%,92% 85%,100% 68%)}
+  @keyframes chomp{
+    0%,100%{clip-path:polygon(50% 50%,100% 32%,92% 15%,72% 3%,50% 0,28% 3%,8% 15%,0 34%,0 66%,8% 85%,28% 97%,50% 100%,72% 97%,92% 85%,100% 68%)}
+    50%{clip-path:polygon(50% 50%,100% 47%,92% 15%,72% 3%,50% 0,28% 3%,8% 15%,0 34%,0 66%,8% 85%,28% 97%,50% 100%,72% 97%,92% 85%,100% 53%)}}
   .horizon{position:relative;height:120px;border-top:3px solid #111014}
   .horizon .d1{position:absolute;inset:0;opacity:.26}
   .horizon .d2{position:absolute;inset:0;opacity:.1}
@@ -334,7 +344,7 @@
       <div style="position:absolute;left:210px;top:330px;width:10px;height:10px;background:var(--orange);box-shadow:3px 3px 0 #111014"></div>
     </div>
   </div>
-  <div class="marq"><div class="track" data-i18n="marq">
+  <div class="marq"><i class="pac-eat" aria-hidden="true"></i><div class="track" data-i18n="marq">
     <span><b>&#9632;</b> LP MARKET-MAKING</span><span><b>&#9632;</b> ON-CHAIN YIELD</span><span><b>&#9632;</b> XPOINTS</span><span><b>&#9632;</b> BORROW-AND-EARN</span><span><b>&#9632;</b> COVERED-CALL SIGNAL</span><span><b>&#9632;</b> NON-CUSTODIAL</span><span><b>&#9632;</b> VERIFIABLE</span><span><b>&#9632;</b> DETERMINISTIC</span>
     <span><b>&#9632;</b> LP MARKET-MAKING</span><span><b>&#9632;</b> ON-CHAIN YIELD</span><span><b>&#9632;</b> XPOINTS</span><span><b>&#9632;</b> BORROW-AND-EARN</span><span><b>&#9632;</b> COVERED-CALL SIGNAL</span><span><b>&#9632;</b> NON-CUSTODIAL</span><span><b>&#9632;</b> VERIFIABLE</span><span><b>&#9632;</b> DETERMINISTIC</span>
   </div></div>
