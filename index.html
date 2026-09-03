@@ -112,13 +112,14 @@
   .hero .row{display:flex;gap:16px;margin-top:28px;flex-wrap:wrap;align-items:center}
   .hero .chips{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}
   .hero-art{position:relative;min-height:400px}
-  /* 手机端 hero:标题降号(不再顶满宽度)、留白加大、元素更松 —— 更简洁清晰 */
+  /* 手机端 hero:整体居中 + 标题/按钮缩约 20% —— 简洁不贴边 */
   @media(max-width:560px){
-    .hero-in{padding:38px 0 30px}
-    .hero h1{font-size:34px;line-height:1.16;letter-spacing:-.5px}
-    .hero .sub{font-size:15px;margin-top:16px}
-    .hero .row{margin-top:24px;gap:12px}
-    .hero .chips{margin-top:18px;gap:8px}
+    .hero-in{padding:34px 0 30px}
+    .hero-in>div{text-align:center}                 /* 整体居中,不再左对齐贴边 */
+    .hero h1{font-size:27px;line-height:1.18}        /* 34→27 ≈ -20% */
+    .hero .row{margin-top:20px;gap:10px;justify-content:center}    /* 按钮居中 */
+    .hero .chips{margin-top:16px;gap:8px;justify-content:center}   /* 徽章居中 */
+    .hero .pbtn>span>span{font-size:9px!important;padding:10px 16px!important}  /* 按钮框 ≈ -20% */
   }
 
   /* Marquee + dithered horizon */
