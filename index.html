@@ -112,6 +112,14 @@
   .hero .row{display:flex;gap:16px;margin-top:28px;flex-wrap:wrap;align-items:center}
   .hero .chips{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}
   .hero-art{position:relative;min-height:400px}
+  /* 手机端 hero:标题降号(不再顶满宽度)、留白加大、元素更松 —— 更简洁清晰 */
+  @media(max-width:560px){
+    .hero-in{padding:38px 0 30px}
+    .hero h1{font-size:34px;line-height:1.16;letter-spacing:-.5px}
+    .hero .sub{font-size:15px;margin-top:16px}
+    .hero .row{margin-top:24px;gap:12px}
+    .hero .chips{margin-top:18px;gap:8px}
+  }
 
   /* Marquee + dithered horizon */
   .marq{border-top:3px solid #111014;background:#111014;overflow:hidden;white-space:nowrap}
