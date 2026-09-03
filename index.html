@@ -114,6 +114,7 @@
   .hero-art{position:relative;min-height:400px}
   /* 手机端 hero:整体居中 + 标题/按钮缩约 20% —— 简洁不贴边 */
   @media(max-width:560px){
+    nav .pbtn{display:none}                         /* 去掉导航栏重复的 JOIN BETA(hero 里保留主 CTA)*/
     .hero-in{padding:34px 0 30px}
     .hero-in>div{text-align:center}                 /* 整体居中,不再左对齐贴边 */
     .hero h1{font-size:27px;line-height:1.18}        /* 34→27 ≈ -20% */
