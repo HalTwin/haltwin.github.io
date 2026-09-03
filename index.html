@@ -115,9 +115,10 @@
   /* 手机端 hero:整体居中 + 标题/按钮缩约 20% —— 简洁不贴边 */
   @media(max-width:560px){
     nav .pbtn{display:none}                         /* 去掉导航栏重复的 JOIN BETA(hero 里保留主 CTA)*/
-    .hero-in{padding:34px 0 30px}
+    .hero-in>div>.chip{display:none}                /* 去掉眉标(THE INCOME-ORGANIZATION LAYER…),更整洁 */
+    .hero-in{padding:48px 0 34px}                   /* 眉标去掉后,给标题上方留合适空间 */
     .hero-in>div{text-align:center}                 /* 整体居中,不再左对齐贴边 */
-    .hero h1{font-size:27px;line-height:1.18}        /* 34→27 ≈ -20% */
+    .hero h1{font-size:27px;line-height:1.18;margin-top:0!important}   /* 标题现为首元素,去掉原给眉标留的上边距 */
     .hero .row{margin-top:20px;gap:10px;justify-content:center}    /* 按钮居中 */
     .hero .chips{margin-top:16px;gap:8px;justify-content:center}   /* 徽章居中 */
     .hero .pbtn>span>span{font-size:9px!important;padding:10px 16px!important}  /* 按钮框 ≈ -20% */
