@@ -233,6 +233,7 @@
   .ph.on p{color:#C9C4B6}
   .ph .lock{float:right;opacity:.55}
   @media(max-width:860px){.road{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.road{grid-template-columns:1fr}}
 
   /* JOIN */
   .band{position:relative;background:#111014;color:var(--paper);padding:56px 40px;text-align:center;overflow:hidden}
@@ -395,7 +396,7 @@
           <a href="https://sterling-asp.onrender.com/docs" target="_blank" rel="noopener" class="chip mono" style="cursor:pointer">// /docs</a>
           <a href="https://sterling-asp.onrender.com/v1/manifest" target="_blank" rel="noopener" class="chip mono" style="cursor:pointer">// /v1/manifest</a>
         </div>
-        <pre style="margin-top:16px;font-family:'Space Mono',monospace;font-size:10.5px;line-height:1.7;color:var(--ink);background:var(--card);border:2px solid var(--ink);padding:14px;overflow:auto;box-shadow:4px 4px 0 var(--ink)">// real receipt from POST /v1/income-snapshot {"asset":"NVDAx","position_usd":10000}
+        <pre style="margin-top:16px;font-family:'Space Mono',monospace;font-size:10.5px;line-height:1.7;color:var(--ink);background:var(--card);border:2px solid var(--ink);padding:14px;overflow-x:auto;white-space:pre-wrap;word-break:break-word;max-width:100%;box-shadow:4px 4px 0 var(--ink)">// real receipt from POST /v1/income-snapshot {"asset":"NVDAx","position_usd":10000}
 "engine_version": "0.1.0",
 "inputs_hash":  "sha256:252a3593a4c692cf&#8230;766f94e7c",
 "output_hash":  "sha256:0403927bb1010bb3&#8230;ff4debfe1a",
@@ -438,7 +439,7 @@
         <a href="https://sterling-asp.onrender.com/docs" target="_blank" rel="noopener" class="chip" style="cursor:pointer">API DOCS</a>
         <a href="https://sterling-asp.onrender.com/v1/manifest" target="_blank" rel="noopener" class="chip" style="cursor:pointer">CAPABILITY MANIFEST</a>
       </div>
-      <pre style="font-family:'Space Mono',monospace;font-size:11px;line-height:1.7;color:var(--ink);background:var(--paper);border:2px solid var(--ink);padding:14px;overflow:auto;margin:0">curl -X POST https://sterling-asp.onrender.com/v1/income-snapshot \
+      <pre style="font-family:'Space Mono',monospace;font-size:11px;line-height:1.7;color:var(--ink);background:var(--paper);border:2px solid var(--ink);padding:14px;overflow-x:auto;white-space:pre-wrap;word-break:break-word;max-width:100%;margin:0">curl -X POST https://sterling-asp.onrender.com/v1/income-snapshot \
   -H "content-type: application/json" \
   -d '{"asset":"NVDAx","position_usd":10000}'</pre>
       <p class="lead" style="margin:14px 0 0;font-size:14px">Point your agent at the base URL, read <b class="ink">/v1/manifest</b> for the full catalog + example requests, and call any endpoint. Or just tell your agent: <span class="chip mono">"Use Sterling to rank the risk-adjusted income paths for my NVDAx"</span></p>
