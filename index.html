@@ -265,6 +265,12 @@
   .wl input{flex:1;font-family:"Space Mono",monospace;font-size:14px;padding:13px 16px;border:2px solid #3A3A40;background:#1D1C22;color:var(--paper)}
   .wl input:focus{outline:2px solid var(--green);outline-offset:2px}
   .wl-note{margin-top:12px;font-family:"Space Mono","Noto Sans SC",monospace;font-size:10.5px;color:#8C877A;position:relative}
+  /* 手机端:INSERT COIN 按钮较宽 → 表单竖排(邮箱整行 + 按钮居中在下),避免溢出被裁 */
+  @media(max-width:560px){
+    .band{padding:42px 22px}
+    .wl{flex-direction:column;align-items:stretch;max-width:320px}
+    .wl .pbtn{align-self:center;margin-top:2px}
+  }
 
   footer{padding:44px 0 60px}
   footer .ft{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:22px}
@@ -278,7 +284,7 @@
     animation:blink 1.15s steps(1) infinite}
   .coin-cta:hover,.coin-cta:focus-visible{animation:none;opacity:1}
   @keyframes blink{0%,64%{opacity:1}65%,100%{opacity:.22}}
-  .pac-idle{position:relative;width:36px;height:36px;margin-top:2px;filter:drop-shadow(2px 2px 0 rgba(0,0,0,.5))}
+  .pac-idle{display:inline-block;position:relative;width:38px;height:38px;margin-top:18px;filter:drop-shadow(2px 2px 0 rgba(0,0,0,.5))}
   .pac-idle svg{position:absolute;inset:0;width:100%;height:100%}
   .pac-idle .po{animation:chompO .5s infinite}
   .pac-idle .pc{opacity:0;animation:chompC .5s infinite}
@@ -518,33 +524,26 @@
     <div class="pcard"><div class="b n8"><div class="band in n8" style="background:#111014">
       <div class="checker-l c"></div>
       <div class="band15 gb"></div>
-      <span class="chip" style="position:relative;background:#1D1C22;border-color:#3A3A40;color:var(--paper)"><svg class="spr" width="10" height="10"><use href="#sp-quad"/></svg><span data-i18n="joinPill">BETA OPEN</span></span>
+      <div class="ready" style="position:relative">READY PLAYER ONE?</div>
       <h2 class="px" style="position:relative" data-i18n="joinH">Put your stocks to work.</h2>
       <p class="lead" style="position:relative" data-i18n="joinLead">Drop an email; we'll ping you at X Layer launch.</p>
       <form class="wl" id="wl" onsubmit="return false">
         <input id="wl-email" type="email" placeholder="you@email.com" aria-label="email" autocomplete="email">
-        <button class="pbtn grad" id="wl-btn" type="submit"><span><span class="n6" data-i18n="joinSubmit">JOIN</span></span></button>
+        <button class="pbtn grad" id="wl-btn" type="submit"><span><span class="n6" data-i18n="joinSubmit">INSERT COIN &#9654;</span></span></button>
       </form>
       <div class="wl-note" id="wl-note" data-i18n="joinNote">We'll only email you once — at X Layer launch.</div>
+      <i class="pac-idle" aria-hidden="true"><svg class="spr po" viewBox="0 0 18 18"><use href="#sp-pac-o"/></svg><svg class="spr pc" viewBox="0 0 18 18"><use href="#sp-pac-c"/></svg></i>
     </div></div></div>
   </section>
 
 </main>
-
-<div class="arcade">
-  <div class="arcade-in">
-    <div class="ready">READY PLAYER ONE?</div>
-    <a class="coin-cta" href="#join">INSERT COIN &#9654; JOIN BETA</a>
-    <i class="pac-idle" aria-hidden="true"><svg class="spr po" viewBox="0 0 18 18"><use href="#sp-pac-o"/></svg><svg class="spr pc" viewBox="0 0 18 18"><use href="#sp-pac-c"/></svg></i>
-  </div>
-</div>
 
 <footer class="wrap">
   <div class="ft">
     <div class="brand" style="font-size:22px"><svg class="spr" width="26" height="26"><use href="#sp-coin"/></svg>Sterling</div>
     <span class="chip"><svg class="spr" width="10" height="10"><use href="#sp-quad"/></svg>TEAM PALO ALTO SIGNAL &#183; X LAYER &#183; $STER</span>
   </div>
-  <div class="disc" data-i18n="foot">Sterling is a non-custodial research &amp; signable-transaction tool; it does not custody funds, does not trade on your behalf, and does not constitute investment / financial / legal advice; not available to US or restricted-region users; no official partnership with or endorsement by OKX / xStocks. All yield figures on this page are illustrative and not a prediction or promise of returns; covered calls / dividends are shown as signals only because X Layer currently has no on-chain options venue; tokenized stocks are restricted securities; xPoints rules per official real-time info. This page is a product prototype.</div>
+  <div class="disc" data-i18n="foot">Non-custodial research &amp; signal tool — no custody, no trading on your behalf, not investment / financial / legal advice. Yield figures are illustrative, not a promise of returns. Tokenized stocks are restricted securities; not for US / restricted-region users. Not affiliated with or endorsed by OKX / xStocks. Product prototype.</div>
 </footer>
 
 <script>
