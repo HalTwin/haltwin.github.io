@@ -229,6 +229,22 @@
   .step p{margin:0;font-size:13px;color:var(--ink-2);line-height:1.5}
   @media(max-width:760px){.steps{grid-template-columns:1fr}}
 
+  /* 第10项:$STER 1% 国库(复用暖像素基元 + 官网吃豆人 sp-pac-o) */
+  .tflow{display:flex;align-items:center;gap:14px;margin-top:36px;flex-wrap:wrap}
+  .tchip{border:2px solid #111014;background:var(--card);padding:12px 16px;text-align:center;filter:drop-shadow(4px 4px 0 #111014)}
+  .tchip .l{font-family:"Silkscreen",monospace;font-size:9px;letter-spacing:.06em;color:var(--ink-3);text-transform:uppercase}
+  .tchip .v{font-family:"Pixelify Sans","Noto Sans SC",sans-serif;font-weight:700;font-size:19px;color:var(--ink);margin-top:3px;white-space:nowrap}
+  .tchip.hot{background:#111014;filter:drop-shadow(4px 4px 0 var(--pink))}
+  .tchip.hot .v{color:var(--paper)}
+  .tchip.hot .l{color:var(--green)}
+  .tflow .pct{font-family:"Silkscreen",monospace;font-size:13px;color:var(--coral)}
+  .tgrow{position:relative;margin-top:34px;height:190px}
+  .tgrowlabel{position:absolute;top:0;left:0;right:0;text-align:center;font-family:"Silkscreen",monospace;font-size:12px;letter-spacing:.05em;color:#1C8A46;text-transform:uppercase}
+  .tband{position:absolute;left:0;right:0;bottom:16px;height:40px;clip-path:polygon(0 30px,100% 0,100% 40px,0 40px)}
+  .tpacs{position:absolute;left:0;right:0;bottom:28px;display:flex;align-items:flex-end;justify-content:space-around;padding:0 6%}
+  .tpac{filter:drop-shadow(5px 6px 0 #111014)}
+  .tdisc{margin-top:28px;font-family:"Space Mono","Noto Sans SC",monospace;font-size:10.5px;color:var(--ink-3);line-height:1.6;border-top:2px solid var(--line);padding-top:16px;max-width:92ch}
+
   /* SKU ledger */
   .sku{margin-top:36px}
   .lrow{display:grid;grid-template-columns:1.2fr 1.8fr auto;gap:16px;padding:13px 20px;border-bottom:2px solid var(--line);align-items:baseline}
@@ -275,6 +291,13 @@
   footer{padding:44px 0 60px}
   footer .ft{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:22px}
   footer .disc{font-family:"Space Mono","Noto Sans SC",monospace;font-size:10.5px;color:var(--ink-3);line-height:1.7;max-width:96ch;border-top:3px solid #111014;padding-top:20px}
+  footer .ftl{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .social{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;
+    border:2px solid #111014;background:var(--card);color:var(--ink);
+    filter:drop-shadow(3px 3px 0 #111014);transition:transform .08s,filter .08s,background .12s}
+  .social:hover{transform:translate(1px,1px);filter:drop-shadow(2px 2px 0 #111014);background:var(--amber)}
+  .social:active{transform:translate(3px,3px);filter:drop-shadow(0 0 0 #111014)}
+  .social:focus-visible{outline:2px solid var(--pink);outline-offset:3px}
   /* 街机式收尾:全宽暗带 + 闪烁 INSERT COIN → JOIN BETA + 咀嚼吃豆人(呼应顶部字幕吃豆人,首尾书挡)*/
   .arcade{position:relative;background:#111014;border-top:3px solid #111014}
   .arcade-in{max-width:var(--maxw);margin:0 auto;padding:50px 26px 44px;display:flex;flex-direction:column;align-items:center;gap:13px;text-align:center}
@@ -322,6 +345,7 @@
   <symbol id="sp-quad" viewBox="0 0 4 4">
     <rect x="0" y="0" width="2" height="2" fill="#25B8D8"/><rect x="2" y="0" width="2" height="2" fill="#9ACB3B"/><rect x="0" y="2" width="2" height="2" fill="#EE9A2F"/><rect x="2" y="2" width="2" height="2" fill="#F2439B"/>
   </symbol>
+  <symbol id="sp-x" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" fill="#111014"/></symbol>
   <linearGradient id="pacgrad" x1="1" y1="1" x2="17" y2="16" gradientUnits="userSpaceOnUse"><stop offset="0.000" stop-color="#25B8D8"/><stop offset="0.143" stop-color="#2FBFA3"/><stop offset="0.286" stop-color="#55C462"/><stop offset="0.429" stop-color="#9ACB3B"/><stop offset="0.571" stop-color="#D8B62B"/><stop offset="0.714" stop-color="#EE9A2F"/><stop offset="0.857" stop-color="#F26D4F"/><stop offset="1.000" stop-color="#F2439B"/></linearGradient><symbol id="sp-pac-o" viewBox="0 0 18 18"><rect x="8" y="0" width="2" height="1" fill="url(#pacgrad)"/><rect x="5" y="1" width="8" height="1" fill="url(#pacgrad)"/><rect x="3" y="2" width="12" height="1" fill="url(#pacgrad)"/><rect x="2" y="3" width="14" height="1" fill="url(#pacgrad)"/><rect x="2" y="4" width="14" height="1" fill="url(#pacgrad)"/><rect x="1" y="5" width="8" height="1" fill="url(#pacgrad)"/><rect x="9" y="5" width="1" height="1" fill="#111014"/><rect x="10" y="5" width="4" height="1" fill="url(#pacgrad)"/><rect x="1" y="6" width="12" height="1" fill="url(#pacgrad)"/><rect x="1" y="7" width="10" height="1" fill="url(#pacgrad)"/><rect x="0" y="8" width="10" height="1" fill="url(#pacgrad)"/><rect x="0" y="9" width="10" height="1" fill="url(#pacgrad)"/><rect x="1" y="10" width="10" height="1" fill="url(#pacgrad)"/><rect x="1" y="11" width="12" height="1" fill="url(#pacgrad)"/><rect x="1" y="12" width="13" height="1" fill="url(#pacgrad)"/><rect x="2" y="13" width="14" height="1" fill="url(#pacgrad)"/><rect x="2" y="14" width="14" height="1" fill="url(#pacgrad)"/><rect x="3" y="15" width="12" height="1" fill="url(#pacgrad)"/><rect x="5" y="16" width="8" height="1" fill="url(#pacgrad)"/><rect x="8" y="17" width="2" height="1" fill="url(#pacgrad)"/></symbol><symbol id="sp-pac-c" viewBox="0 0 18 18"><rect x="8" y="0" width="2" height="1" fill="url(#pacgrad)"/><rect x="5" y="1" width="8" height="1" fill="url(#pacgrad)"/><rect x="3" y="2" width="12" height="1" fill="url(#pacgrad)"/><rect x="2" y="3" width="14" height="1" fill="url(#pacgrad)"/><rect x="2" y="4" width="14" height="1" fill="url(#pacgrad)"/><rect x="1" y="5" width="8" height="1" fill="url(#pacgrad)"/><rect x="9" y="5" width="1" height="1" fill="#111014"/><rect x="10" y="5" width="7" height="1" fill="url(#pacgrad)"/><rect x="1" y="6" width="16" height="1" fill="url(#pacgrad)"/><rect x="1" y="7" width="16" height="1" fill="url(#pacgrad)"/><rect x="0" y="8" width="12" height="1" fill="url(#pacgrad)"/><rect x="0" y="9" width="12" height="1" fill="url(#pacgrad)"/><rect x="1" y="10" width="16" height="1" fill="url(#pacgrad)"/><rect x="1" y="11" width="16" height="1" fill="url(#pacgrad)"/><rect x="1" y="12" width="16" height="1" fill="url(#pacgrad)"/><rect x="2" y="13" width="14" height="1" fill="url(#pacgrad)"/><rect x="2" y="14" width="14" height="1" fill="url(#pacgrad)"/><rect x="3" y="15" width="12" height="1" fill="url(#pacgrad)"/><rect x="5" y="16" width="8" height="1" fill="url(#pacgrad)"/><rect x="8" y="17" width="2" height="1" fill="url(#pacgrad)"/></symbol>
 </svg>
 
@@ -336,6 +360,7 @@
     <a href="#sku" data-i18n="nav4">SERVICES</a>
     <a href="#road" data-i18n="nav5">ROADMAP</a>
   </div>
+  <a class="social" href="https://x.com/sterlingaixyz" target="_blank" rel="noopener noreferrer" aria-label="Sterling on X (Twitter)" title="Follow @sterlingaixyz on X"><svg width="18" height="18" viewBox="0 0 24 24" style="shape-rendering:geometricPrecision"><use href="#sp-x"/></svg></a>
   <a href="#join" class="pbtn grad"><span><span class="n6" data-i18n="joinbtn">JOIN BETA</span></span></a>
 </div></nav>
 
@@ -520,6 +545,39 @@
     </div>
   </section>
 
+  <section id="treasury">
+    <div class="cap"><span class="no">10</span><span class="lb">$STER &#183; THE 1% TREASURY</span></div>
+    <h2>The 1% doesn't leave. <span class="gtext">It compounds.</span></h2>
+    <p class="lead">Every $STER buy &amp; sell carries a <b class="ink">1% tax</b> (set at launch on ignix.bot). <b class="ink">100%</b> of it flows into an on-chain treasury pool &mdash; run by yield Agents + quant strategies as an <b class="ink">investment DAO</b>. Profits stay in; the pool only grows.</p>
+
+    <div class="tflow">
+      <div class="tchip"><div class="l">Source</div><div class="v">$STER buy&#183;sell</div></div>
+      <div class="pct">&#8212;1%&#8594;</div>
+      <div class="tchip"><div class="l">100% in</div><div class="v">Treasury pool</div></div>
+      <div class="pct">&#8212;100%&#8594;</div>
+      <div class="tchip hot"><div class="l">Put to work</div><div class="v">Investment DAO</div></div>
+    </div>
+
+    <div class="tgrow">
+      <div class="tgrowlabel">eats the yield &#8594; compounds &#8734; &#183; the pool only grows</div>
+      <div class="tband band15"></div>
+      <div class="tpacs">
+        <svg class="spr tpac" viewBox="0 0 18 18" width="46" height="46"><use href="#sp-pac-o"/></svg>
+        <svg class="spr tpac" viewBox="0 0 18 18" width="74" height="74"><use href="#sp-pac-o"/></svg>
+        <svg class="spr tpac" viewBox="0 0 18 18" width="106" height="106"><use href="#sp-pac-o"/></svg>
+        <svg class="spr tpac" viewBox="0 0 18 18" width="150" height="150"><use href="#sp-pac-o"/></svg>
+      </div>
+    </div>
+
+    <div class="steps" style="margin-top:36px">
+      <div class="pcard soft step"><div class="b n6"><div class="in n6"><div style="padding:20px"><h3>100% in, 0% to the team</h3><p>The full 1% enters the treasury pool &mdash; no team cut, no marketing wallet. Every unit goes to work.</p></div></div></div></div>
+      <div class="pcard soft step"><div class="b n6"><div class="in n6"><div style="padding:20px"><h3>A DAO, not a desk</h3><p>Yield Agents + quant strategies allocate the pool, governed as an investment DAO &mdash; the same engine Sterling offers its users.</p></div></div></div></div>
+      <div class="pcard soft step"><div class="b n6"><div class="in n6"><div style="padding:20px"><h3>On-chain &amp; recomputable</h3><p>Pool balance and every allocation live on-chain, with the same recomputable receipts as the rest of Sterling.</p></div></div></div></div>
+    </div>
+
+    <div class="tdisc">The treasury is an on-chain protocol mechanism &mdash; not a fund, not a security, not a promise of return. $STER is a utility &amp; governance token; holding it is not a claim on treasury assets or profits, and all investment carries risk of loss. Illustrative &#183; prototype.</div>
+  </section>
+
   <section id="join" style="border-bottom:0">
     <div class="pcard"><div class="b n8"><div class="band in n8" style="background:#111014">
       <div class="checker-l c"></div>
@@ -540,7 +598,10 @@
 
 <footer class="wrap">
   <div class="ft">
-    <div class="brand" style="font-size:22px"><svg class="spr" width="26" height="26"><use href="#sp-coin"/></svg>Sterling</div>
+    <div class="ftl">
+      <div class="brand" style="font-size:22px"><svg class="spr" width="26" height="26"><use href="#sp-coin"/></svg>Sterling</div>
+      <a class="social" href="https://x.com/sterlingaixyz" target="_blank" rel="noopener noreferrer" aria-label="Sterling on X (Twitter)" title="Follow @sterlingaixyz on X"><svg width="18" height="18" viewBox="0 0 24 24" style="shape-rendering:geometricPrecision"><use href="#sp-x"/></svg></a>
+    </div>
     <span class="chip"><svg class="spr" width="10" height="10"><use href="#sp-quad"/></svg>TEAM PALO ALTO SIGNAL &#183; X LAYER &#183; $STER</span>
   </div>
   <div class="disc" data-i18n="foot">Non-custodial research &amp; signal tool — no custody, no trading on your behalf, not investment / financial / legal advice. Yield figures are illustrative, not a promise of returns. Tokenized stocks are restricted securities; not for US / restricted-region users. Not affiliated with or endorsed by OKX / xStocks. Product prototype.</div>
