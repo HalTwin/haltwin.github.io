@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Sterling — Yield Terminal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Silkscreen:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap">
+<style>
+  :root{
+    --paper:#FAF6EC; --paper-2:#F3EEDF; --card:#FFFDF7;
+    --ink:#111014; --ink-2:#55524A; --ink-3:#8C877A; --line:#E2DBC8;
+    --cyan:#25B8D8; --teal:#2FBFA3; --green:#55C462; --lime:#9ACB3B;
+    --amber:#D8B62B; --orange:#EE9A2F; --coral:#F26D4F; --pink:#F2439B; --mintd:#1C8A46;
+    --maxw:1080px;
+    --grad:linear-gradient(90deg,#25B8D8,#2FBFA3 16%,#55C462 32%,#9ACB3B 46%,#D8B62B 60%,#EE9A2F 72%,#F26D4F 86%,#F2439B);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Space Grotesk","Noto Sans SC",system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  svg.spr{shape-rendering:crispEdges;flex:none}
+  .band15{background:linear-gradient(90deg,#25B8D8 0 6.7%,#2ABCBE 6.7% 13.4%,#2FBFA3 13.4% 20%,#42C283 20% 26.7%,#55C462 26.7% 33.4%,#78C84F 33.4% 40%,#9ACB3B 40% 46.7%,#BAC133 46.7% 53.4%,#D8B62B 53.4% 60%,#E3A82D 60% 66.7%,#EE9A2F 66.7% 73.4%,#F0843F 73.4% 80%,#F26D4F 80% 86.7%,#F25875 86.7% 93.4%,#F2439B 93.4% 100%)}
+  .gtext{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .n6{clip-path:polygon(0 6px,6px 6px,6px 0,calc(100% - 6px) 0,calc(100% - 6px) 6px,100% 6px,100% calc(100% - 6px),calc(100% - 6px) calc(100% - 6px),calc(100% - 6px) 100%,6px 100%,6px calc(100% - 6px),0 calc(100% - 6px))}
+  .scan{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.30;background:repeating-linear-gradient(0deg,rgba(17,16,20,.05) 0 1px,transparent 1px 3px)}
+
+  /* 顶栏 */
+  nav{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(8px);border-bottom:3px solid #111014}
+  .nav-in{display:flex;align-items:center;gap:12px;height:64px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:"Pixelify Sans",sans-serif;font-weight:700;font-size:24px}
+  .tag{margin-left:auto;font-family:"Silkscreen",monospace;font-size:9px;letter-spacing:.1em;color:var(--ink-2);border:2px solid #111014;background:var(--card);padding:6px 9px}
+  .wbtn{font-family:"Silkscreen",monospace;font-size:10px;border:2px solid #111014;background:#111014;color:var(--paper);padding:9px 12px;cursor:pointer;filter:drop-shadow(3px 3px 0 var(--pink))}
+  .wbtn:active{transform:translate(2px,2px);filter:drop-shadow(1px 1px 0 var(--pink))}
+
+  /* hero */
+  header.hero{padding:52px 0 20px}
+  .eyebrow{font-family:"Silkscreen",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+  h1{font-family:"Pixelify Sans",sans-serif;font-weight:700;font-size:clamp(34px,5.4vw,58px);line-height:1.02;margin:12px 0 0;letter-spacing:-.01em}
+  .lead{margin:16px 0 0;font-size:clamp(15px,1.9vw,17px);color:var(--ink-2);max-width:60ch}
+
+  /* 输入面板 */
+  .panel{margin-top:30px;border:3px solid #111014;background:var(--card);filter:drop-shadow(6px 6px 0 #111014);padding:22px 22px 24px}
+  .panel .lbl{font-family:"Silkscreen",monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+  .assets{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+  .asset{font-family:"Space Mono",monospace;font-size:14px;font-weight:700;border:2px solid #111014;background:var(--paper-2);padding:9px 15px;cursor:pointer;user-select:none;transition:transform .06s}
+  .asset[aria-pressed="true"]{background:#111014;color:var(--paper)}
+  .asset:active{transform:translate(1px,1px)}
+  .row{display:flex;gap:14px;align-items:flex-end;margin-top:18px;flex-wrap:wrap}
+  .amt{flex:1;min-width:180px}
+  .amt input{width:100%;font-family:"Space Mono",monospace;font-size:16px;padding:12px 14px;border:2px solid #111014;background:var(--paper);color:var(--ink);margin-top:8px}
+  .go{font-family:"Silkscreen",monospace;font-weight:700;font-size:12px;letter-spacing:.05em;color:#111014;border:0;padding:3px;background:#111014;cursor:pointer;filter:drop-shadow(5px 5px 0 #111014)}
+  .go>span{display:block;padding:13px 22px;background:var(--grad)}
+  .go:active{transform:translate(3px,3px);filter:drop-shadow(0 0 0 #111014)}
+  .go:disabled{opacity:.5;cursor:wait}
+
+  /* 结果 */
+  .status{margin-top:22px;font-family:"Space Mono",monospace;font-size:13px;color:var(--ink-2)}
+  .status b{color:var(--ink)}
+  .grp{margin-top:30px}
+  .cap{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .cap .no{font-family:"Silkscreen",monospace;font-size:10px;color:#FFFDF7;background:#111014;padding:4px 8px;letter-spacing:.1em}
+  .cap .lb{font-family:"Silkscreen",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+  .yc{border:3px solid #111014;background:var(--card);filter:drop-shadow(5px 5px 0 #111014)}
+  .yc .top{height:8px}
+  .yc .in{padding:18px 18px 20px}
+  .yc .a{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+  .yc .asset{border:0;background:none;padding:0;font-family:"Pixelify Sans",sans-serif;font-size:22px;cursor:default}
+  .yc .apy{font-family:"Pixelify Sans",sans-serif;font-weight:700;font-size:30px;line-height:1}
+  .yc .venue{margin-top:4px;font-family:"Space Mono",monospace;font-size:12px;color:var(--ink-2)}
+  .split{margin-top:14px;display:flex;flex-direction:column;gap:7px}
+  .split .r{display:flex;justify-content:space-between;font-family:"Space Mono",monospace;font-size:12.5px}
+  .split .r .k{color:var(--ink-3)}
+  .split .r .v{font-weight:700}
+  .split .r.base .v{color:var(--mintd)}
+  .split .r.rwd .v{color:var(--orange)}
+  .meta{margin-top:12px;padding-top:12px;border-top:2px solid var(--line);display:flex;justify-content:space-between;font-family:"Space Mono",monospace;font-size:11px;color:var(--ink-3)}
+  .exec{margin-top:14px}
+  .exec button{width:100%;font-family:"Silkscreen",monospace;font-size:10px;letter-spacing:.05em;border:2px solid #111014;background:var(--paper-2);color:var(--ink-2);padding:11px;cursor:not-allowed}
+
+  /* 收据 */
+  .receipt{margin-top:36px;border:2px dashed #111014;background:var(--paper-2);padding:18px 20px}
+  .receipt .h{font-family:"Silkscreen",monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--mintd)}
+  .receipt .hash{font-family:"Space Mono",monospace;font-size:12px;color:var(--ink);word-break:break-all;margin-top:8px;line-height:1.6}
+  .receipt .note{font-family:"Space Mono",monospace;font-size:11px;color:var(--ink-3);margin-top:10px;line-height:1.5}
+  .rjson{margin-top:12px}
+  .rjson summary{font-family:"Space Mono",monospace;font-size:11.5px;color:var(--mintd);cursor:pointer;user-select:none}
+  .rjson pre{font-family:"Space Mono",monospace;font-size:10.5px;background:var(--card);border:2px solid #111014;padding:12px;overflow:auto;max-height:260px;margin:10px 0;white-space:pre-wrap;word-break:break-word}
+  #dljson{font-family:"Silkscreen",monospace;font-size:9px;letter-spacing:.04em;border:2px solid #111014;background:var(--paper-2);color:var(--ink);padding:8px 12px;cursor:pointer}
+  #dljson:active{transform:translate(1px,1px)}
+  .hownote{font-family:"Space Mono",monospace;font-size:10px;color:var(--ink-3);margin-top:10px;line-height:1.5}
+  .hownote code{background:var(--card);padding:1px 5px;border:1px solid var(--line)}
+
+  footer{margin-top:44px;padding:28px 0 56px;border-top:3px solid #111014}
+  .disc{font-family:"Space Mono","Noto Sans SC",monospace;font-size:10.5px;color:var(--ink-3);line-height:1.7;max-width:96ch}
+  .fband{height:10px;margin-bottom:20px;width:260px}
+  a{color:inherit}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="seal" viewBox="0 0 22 22"><rect x="6" y="0" width="10" height="3" fill="#111014"/><rect x="5" y="1" width="1" height="3" fill="#111014"/><rect x="16" y="1" width="1" height="3" fill="#111014"/><rect x="4" y="2" width="1" height="10" fill="#111014"/><rect x="17" y="2" width="1" height="4" fill="#111014"/><rect x="3" y="3" width="1" height="2" fill="#111014"/><rect x="6" y="3" width="10" height="3" fill="#FFFDF7"/><rect x="18" y="3" width="1" height="2" fill="#111014"/><rect x="2" y="4" width="1" height="2" fill="#111014"/><rect x="5" y="4" width="1" height="8" fill="#FFFDF7"/><rect x="16" y="4" width="1" height="2" fill="#FFFDF7"/><rect x="19" y="4" width="1" height="2" fill="#111014"/><rect x="1" y="5" width="1" height="12" fill="#111014"/><rect x="3" y="5" width="1" height="1" fill="#FFFFFF"/><rect x="18" y="5" width="1" height="12" fill="#F2439B"/><rect x="20" y="5" width="1" height="12" fill="#111014"/><rect x="0" y="6" width="1" height="10" fill="#111014"/><rect x="2" y="6" width="2" height="10" fill="#25B8D8"/><rect x="6" y="6" width="2" height="6" fill="#FFFDF7"/><rect x="8" y="6" width="9" height="1" fill="#111014"/><rect x="17" y="6" width="1" height="3" fill="#F25875"/><rect x="19" y="6" width="1" height="10" fill="#F2439B"/><rect x="21" y="6" width="1" height="10" fill="#111014"/><rect x="8" y="7" width="1" height="2" fill="#111014"/><rect x="9" y="7" width="1" height="1" fill="#9ACB3B"/><rect x="10" y="7" width="2" height="1" fill="#BAC133"/><rect x="12" y="7" width="1" height="1" fill="#D8B62B"/><rect x="13" y="7" width="1" height="1" fill="#E3A82D"/><rect x="14" y="7" width="1" height="1" fill="#EE9A2F"/><rect x="15" y="7" width="1" height="1" fill="#F0843F"/><rect x="16" y="7" width="1" height="1" fill="#F26D4F"/><rect x="9" y="8" width="8" height="1" fill="#111014"/><rect x="8" y="9" width="9" height="3" fill="#FFFDF7"/><rect x="17" y="9" width="1" height="8" fill="#111014"/><rect x="4" y="12" width="1" height="3" fill="#2ABCBE"/><rect x="5" y="12" width="9" height="1" fill="#111014"/><rect x="14" y="12" width="3" height="5" fill="#FFFDF7"/><rect x="5" y="13" width="1" height="1" fill="#2FBFA3"/><rect x="6" y="13" width="1" height="1" fill="#42C283"/><rect x="7" y="13" width="1" height="1" fill="#55C462"/><rect x="8" y="13" width="1" height="1" fill="#78C84F"/><rect x="9" y="13" width="1" height="1" fill="#9ACB3B"/><rect x="10" y="13" width="2" height="1" fill="#BAC133"/><rect x="12" y="13" width="1" height="1" fill="#D8B62B"/><rect x="13" y="13" width="1" height="2" fill="#111014"/><rect x="5" y="14" width="8" height="1" fill="#111014"/><rect x="4" y="15" width="1" height="2" fill="#111014"/><rect x="5" y="15" width="9" height="2" fill="#FFFDF7"/><rect x="2" y="16" width="1" height="2" fill="#111014"/><rect x="3" y="16" width="1" height="1" fill="#25B8D8"/><rect x="19" y="16" width="1" height="2" fill="#111014"/><rect x="3" y="17" width="1" height="2" fill="#111014"/><rect x="4" y="17" width="1" height="1" fill="#2ABCBE"/><rect x="5" y="17" width="1" height="1" fill="#111014"/><rect x="6" y="17" width="10" height="1" fill="#FFFDF7"/><rect x="16" y="17" width="1" height="1" fill="#111014"/><rect x="17" y="17" width="1" height="1" fill="#F25875"/><rect x="18" y="17" width="1" height="2" fill="#111014"/><rect x="4" y="18" width="1" height="2" fill="#111014"/><rect x="5" y="18" width="1" height="1" fill="#2FBFA3"/><rect x="6" y="18" width="10" height="1" fill="#111014"/><rect x="16" y="18" width="1" height="1" fill="#F26D4F"/><rect x="17" y="18" width="1" height="2" fill="#111014"/><rect x="5" y="19" width="1" height="2" fill="#111014"/><rect x="6" y="19" width="1" height="1" fill="#42C283"/><rect x="7" y="19" width="1" height="1" fill="#55C462"/><rect x="8" y="19" width="1" height="1" fill="#78C84F"/><rect x="9" y="19" width="1" height="1" fill="#9ACB3B"/><rect x="10" y="19" width="2" height="1" fill="#BAC133"/><rect x="12" y="19" width="1" height="1" fill="#D8B62B"/><rect x="13" y="19" width="1" height="1" fill="#E3A82D"/><rect x="14" y="19" width="1" height="1" fill="#EE9A2F"/><rect x="15" y="19" width="1" height="2" fill="#111014"/><rect x="6" y="20" width="10" height="2" fill="#111014"/></symbol>
+</svg>
+
+<div class="scan"></div>
+
+<nav><div class="wrap nav-in">
+  <div class="brand"><svg class="spr" width="26" height="26"><use href="#seal"/></svg>Sterling</div>
+  <span class="tag">Yield Terminal</span>
+  <button class="wbtn" id="wbtn">Connect Wallet</button>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <div class="eyebrow">Live on-chain data · X Layer · deterministic receipts</div>
+  <h1>Organize your <span class="gtext">stablecoin yield.</span></h1>
+  <p class="lead">Pick your assets — Sterling scans DefiLlama in real time and ranks the mature-protocol routes that clear its allowlist + liquidity filters, by 30-day yield, splitting base interest from decaying incentives with a recomputable receipt. <b>This is a filter, not a risk score — token contracts are not identity-verified.</b> Non-custodial: it never touches your funds.</p>
+
+  <div class="panel">
+    <div class="lbl">1 · Assets</div>
+    <div class="assets" id="assets">
+      <span class="asset" data-tok="USDT" aria-pressed="true">USDT</span>
+      <span class="asset" data-tok="USDC" aria-pressed="true">USDC</span>
+      <span class="asset" data-tok="USDG" aria-pressed="false">USDG</span>
+      <span class="asset" data-tok="DAI" aria-pressed="false">DAI</span>
+      <span class="asset" data-tok="USDS" aria-pressed="false">USDS</span>
+    </div>
+    <div class="row">
+      <div class="amt">
+        <div class="lbl">2 · Amount (optional)</div>
+        <input id="amt" type="text" inputmode="decimal" placeholder="10,000" value="10000">
+      </div>
+      <button class="go" id="go"><span>ANALYZE →</span></button>
+    </div>
+  </div>
+
+  <div class="status" id="status"></div>
+  <div id="results"></div>
+
+  <div class="receipt" id="receipt" style="display:none">
+    <div class="h">✓ Recomputable receipt · SHA-256</div>
+    <div class="hash" id="hash"></div>
+    <div class="note">Hash of the exact result snapshot above (assets + routes + data timestamp + engine version), excluding the hash itself. Recompute over this same snapshot → identical hash — a content-integrity check that the result matches its hash. It is <b>not</b> tamper-proof (result + hash can be swapped together), and does not prove the ranking is optimal, the data real, or any yield; re-scanning later returns fresh data with a new hash.</div>
+    <details class="rjson"><summary>▸ View / download the exact result JSON — recompute the hash yourself</summary>
+      <pre id="rjsonpre"></pre>
+      <button id="dljson">Download result.json</button>
+      <div class="hownote">Recompute: <code>sha256(canonicalize(result))</code> where canonicalize sorts every object's keys. Same JSON → same hash. The hash only proves this shown result is untampered — it is not proof the ranking is optimal or the underlying data is real.</div>
+    </details>
+  </div>
+</div></header>
+
+<footer><div class="wrap">
+  <div class="fband band15"></div>
+  <div class="disc">Sterling Yield Terminal is a non-custodial research tool — it returns analysis only, never custodies funds or trades on your behalf. Data from DefiLlama (industry-standard on-chain aggregator); only mature audited protocols (Aave / Compound / Morpho / Sky / Spark / Fluid / Venus) above liquidity floors are ranked — the allowlist + TVL floor is a filter, not a risk score, and no token contract is identity-verified (risk_scored: false). Yields are historical/current observations, not a promise of returns; 30-day mean is shown to flag transient spikes; base vs reward split shows how much is base interest vs decaying incentives. Cross-chain APY excludes bridge cost. Not for US / restricted-region users. Not investment advice. Prototype · engine v0.1.</div>
+</div></footer>
+
+<script>
+  var ENGINE = "yield-terminal/0.1";
+  var LLAMA = "https://yields.llama.fi/pools";
+  var ALLOW = new Set(["aave-v3","aave-v4","fluid-lending","compound-v3","morpho-blue","sky-lending","spark","sparklend","morpho-aave","venus-core-pool"]);
+  var MIN_TVL = 10e6, XL_MIN_TVL = 1e6, XLAYER = "Xlayer";
+  var XL_TOKENS = ["USDT","USD₮0","USDC","USDG"];
+
+  function f(v){
+    if(v===null||v===undefined||typeof v==="boolean") return null;
+    if(typeof v==="object") return null;                  // 拒绝数组/对象(Number([8])→8 的坑)
+    if(typeof v==="string"){
+      var t=v.trim();
+      // 只接受十进制(整数/小数/科学计数),拒绝 ""/0x/0o/0b/非数字 —— 对齐 Python float(float("0x10") 报错)
+      if(t==="" || !/^[+-]?(\d+\.?\d*|\.\d+)([eE][+-]?\d+)?$/.test(t)) return null;
+    }
+    var n=Number(v); return isFinite(n)?n:null;
+  }
+  function m30(p){ return f(p.apyMean30d); }
+  // 排名键(30d 均值 → TVL → project → chain → pool),和 gen_report._sort_key 同口径
+  function cmpKey(a,b){
+    var ka=[m30(a)===null?-Infinity:m30(a), f(a.tvlUsd)===null?-Infinity:f(a.tvlUsd), a.project, a.chain, a.pool];
+    var kb=[m30(b)===null?-Infinity:m30(b), f(b.tvlUsd)===null?-Infinity:f(b.tvlUsd), b.project, b.chain, b.pool];
+    for(var i=0;i<ka.length;i++){ if(ka[i]<kb[i])return -1; if(ka[i]>kb[i])return 1; } return 0;
+  }
+  // 移植 gen_report.gather 的 pick:白名单 + single 敞口 + 符号匹配 + TVL 地板 + 30d>0,取 30d 最优
+  // 集合级校验(与 gen_report._validate_pools 同口径):类型 + 重复池身份 → 坏则整体拒绝,不静默
+  function validatePools(pools){
+    if(!Array.isArray(pools)) throw new Error("Invalid pool collection from source");
+    var seen=new Set(), strk=["pool","chain","project","symbol","exposure"], numk=["tvlUsd","apy","apyMean30d"];
+    for(var i=0;i<pools.length;i++){ var p=pools[i];
+      if(!p || typeof p!=="object" || Array.isArray(p)) throw new Error("Malformed pool row in source");
+      for(var s=0;s<strk.length;s++){ if(typeof p[strk[s]]!=="string" || !p[strk[s]].trim()) throw new Error("Pool row missing/blank "+strk[s]+" — data cannot be trusted"); }
+      for(var k=0;k<numk.length;k++){ if(!(numk[k] in p)) throw new Error("Pool row missing "+numk[k]); }
+      if(seen.has(p.pool)) throw new Error("Duplicate pool identity in source — data cannot be trusted");
+      seen.add(p.pool);
+    }
+  }
+  function pick(pools, chainPred, tok, floor){
+    var best=null;
+    for(var i=0;i<pools.length;i++){ var p=pools[i];
+      if(!ALLOW.has(p.project) || p.exposure!=="single") continue;
+      if(String(p.symbol||"").toUpperCase()!==tok.toUpperCase()) continue;
+      if(!chainPred(p)) continue;
+      // 匹配到同币同链的白名单池 → 严格校验(损坏即中止,绝不静默跳过再宣称"最佳"),与 gen_report.pick 一致
+      var tvl=f(p.tvlUsd);
+      if(tvl===null || tvl<0) throw new Error("Matching pool has invalid TVL — data cannot be trusted");
+      if(tvl<floor) continue;
+      if(typeof p.pool!=="string" || !p.pool || typeof p.chain!=="string" || !p.chain || f(p.apy)===null)
+        throw new Error("Matching pool missing identity or current APY");
+      var mm=m30(p);
+      if(mm===null){ if(p.apyMean30d!==null && p.apyMean30d!==undefined) throw new Error("Matching pool has invalid 30d APY"); continue; }
+      if(mm<=0) continue;
+      if(best===null || cmpKey(p,best)>0) best=p;
+    }
+    return best;
+  }
+  function rd(v){ var x=f(v); return x===null?null:Math.round(x*100)/100; }
+  function row(p, asset){
+    var mm=m30(p);
+    return {asset: asset||String(p.symbol||""), apy: rd(p.apy), apy_30d: mm===null?null:Math.round(mm*100)/100,
+      apy_base: rd(p.apyBase), apy_reward: rd(p.apyReward), venue: p.project||"?", chain: p.chain||"?",
+      tvl: f(p.tvlUsd), pool_id: p.pool};
+  }
+  function fmtTvl(v){ if(v===null)return "n/a"; if(v>=1e9)return "$"+(v/1e9).toFixed(1)+"B"; if(v>=1e6)return "$"+(v/1e6).toFixed(1)+"M"; if(v>=1e3)return "$"+(v/1e3).toFixed(0)+"K"; return "$"+v.toFixed(0); }
+  function disp(v){ return v===null||v===undefined?"n/a":Number(v).toFixed(2); }
+
+  // canonical JSON(键排序)→ 和 Python sort_keys 同思路,用于可复算收据
+  function canon(o){
+    if(Array.isArray(o)) return "["+o.map(canon).join(",")+"]";
+    if(o&&typeof o==="object"){ return "{"+Object.keys(o).sort().map(function(k){return JSON.stringify(k)+":"+canon(o[k]);}).join(",")+"}"; }
+    return JSON.stringify(o);
+  }
+  async function sha256(str){ var b=await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str)); return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0");}).join(""); }
+
+  var selected = new Set(["USDT","USDC"]);
+  document.getElementById("assets").addEventListener("click", function(e){
+    var el=e.target.closest(".asset"); if(!el)return;
+    var t=el.dataset.tok;
+    if(selected.has(t)){ selected.delete(t); el.setAttribute("aria-pressed","false"); }
+    else { selected.add(t); el.setAttribute("aria-pressed","true"); }
+  });
+
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+  function card(r, hot){
+    var reward = r.apy_reward!==null && r.apy_reward>0;
+    return '<div class="yc"><div class="top '+(hot?"band15":"")+'" '+(hot?"":'style="background:var(--line)"')+'></div><div class="in">'
+      +'<div class="a"><span class="asset">'+esc(r.asset)+'</span><span class="apy gtext">'+disp(r.apy)+'%</span></div>'
+      +'<div class="venue">'+esc(r.venue)+' · '+esc(r.chain)+'</div>'
+      +'<div class="split">'
+        +'<div class="r"><span class="k">30-day mean</span><span class="v">'+disp(r.apy_30d)+'%</span></div>'
+        +'<div class="r base"><span class="k">base (interest)</span><span class="v">'+disp(r.apy_base)+'%</span></div>'
+        +'<div class="r rwd"><span class="k">reward (incentive)</span><span class="v">'+(reward?disp(r.apy_reward)+"%":"—")+'</span></div>'
+      +'</div>'
+      +'<div class="meta"><span>TVL '+fmtTvl(r.tvl)+'</span><span>single-sided supply</span></div>'
+      +'<div class="exec"><button disabled title="Signable execution ships in the next iteration">⚡ ONE-TAP EXECUTE — SOON</button></div>'
+      +'</div></div>';
+  }
+
+  document.getElementById("go").addEventListener("click", run);
+  var lastResult=null;
+  async function run(){
+    var st=document.getElementById("status"), res=document.getElementById("results"), rc=document.getElementById("receipt"), go=document.getElementById("go");
+    res.innerHTML=""; rc.style.display="none";
+    var toks=[...selected];
+    if(!toks.length){ st.innerHTML="Pick at least one asset."; return; }
+    go.disabled=true; st.innerHTML="Scanning DefiLlama…";
+    try{
+      // 取数:20s 超时;取数 + 校验 + 计算 + 收据全部纳入同一异常处理
+      var ctrl=new AbortController(), to=setTimeout(function(){ctrl.abort();}, 20000), j;
+      try{
+        var resp=await fetch(LLAMA,{headers:{"accept":"application/json"}, signal:ctrl.signal});
+        if(!resp.ok) throw new Error("HTTP "+resp.status);
+        j=await resp.json();          // 超时/abort 覆盖到正文读取完成为止,正文卡住也会被中断
+      }finally{ clearTimeout(to); }    // 整个下载(含 json)结束/失败后才清超时
+      if(!j || j.status!=="success" || !Array.isArray(j.data)) throw new Error("DefiLlama response schema invalid");
+      var pools=j.data;
+      validatePools(pools);
+      var when=new Date().toISOString().replace(/\.\d+Z$/,"Z");
+      var cross=[], xl=[];
+      toks.forEach(function(t){ var b=pick(pools,function(){return true;},t,MIN_TVL); if(b) cross.push(row(b,t)); });
+      XL_TOKENS.forEach(function(t){ var b=pick(pools,function(p){return p.chain===XLAYER;},t,XL_MIN_TVL); if(b){ var r=row(b,t); r.kind="supply"; xl.push(r); } });
+      if(!cross.length && !xl.length){ st.innerHTML="No qualifying pools for "+esc(toks.join(", "))+" above liquidity floors right now."; return; }
+      var html="";
+      if(cross.length){ html+='<div class="grp"><div class="cap"><span class="no">01</span><span class="lb">Best filtered route · by 30-day yield</span></div><div class="cards">'+cross.map(function(r){return card(r,true);}).join("")+'</div></div>'; }
+      if(xl.length){ html+='<div class="grp"><div class="cap"><span class="no">02</span><span class="lb">On X Layer · Sterling\'s home chain</span></div><div class="cards">'+xl.map(function(r){return card(r,false);}).join("")+'</div></div>'; }
+      st.innerHTML="<b>"+cross.length+"</b> cross-chain + <b>"+xl.length+"</b> X Layer route(s) · source: DefiLlama · "+esc(when);
+      res.innerHTML=html;
+      // 收据 + 复算材料:把完整 result 交给用户(哈希才有意义)
+      var result={engine:ENGINE, assets:toks.slice().sort(), amount:document.getElementById("amt").value||null, as_of:when, source:"defillama", ranking:"allowlist_then_apyMean30d_tvl", risk_scored:false, identity_verified:false, actionable:false, cross_chain:cross, xlayer:xl};
+      lastResult=result;
+      document.getElementById("hash").textContent="sha256:"+(await sha256(canon(result)));
+      document.getElementById("rjsonpre").textContent=JSON.stringify(result,null,2);
+      rc.style.display="block";
+    }catch(err){
+      // 任何环节出错(取数/超时/校验/坏数据/计算)→ 撤回结果,绝不展示可能错误的"最佳"
+      st.innerHTML="⚠ "+esc(err&&err.message?err.message:"Unexpected error")+" — result withheld. DefiLlama may be down or rate-limiting direct browser calls; a lightweight proxy fixes this in production.";
+      res.innerHTML=""; rc.style.display="none";
+    }finally{
+      go.disabled=false;   // 无论成功失败都恢复按钮,不再卡死
+    }
+  }
+
+  // 连钱包(迭代1:显示地址,执行下一迭代)
+  document.getElementById("wbtn").addEventListener("click", async function(){
+    var b=this;
+    if(!window.ethereum){ b.textContent="No wallet found"; return; }
+    try{
+      var acc=await window.ethereum.request({method:"eth_requestAccounts"});
+      var a=acc&&acc[0]; if(a) b.textContent=a.slice(0,6)+"…"+a.slice(-4);
+    }catch(e){ /* 用户取消 */ }
+  });
+
+  document.getElementById("dljson").addEventListener("click", function(){
+    if(!lastResult) return;
+    var blob=new Blob([JSON.stringify(lastResult,null,2)],{type:"application/json"});
+    var url=URL.createObjectURL(blob), a=document.createElement("a");
+    a.href=url; a.download="sterling-result.json"; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+  });
+
+  // 首屏自动跑一次,让打开即见真实数据
+  run();
+</script>
+</html>
