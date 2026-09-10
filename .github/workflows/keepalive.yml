@@ -1,0 +1,23 @@
+# Render 免费实例保活 —— 每 5 分钟 ping /health,防止 15 分钟无流量休眠。
+# 目的:审核期官方(OKX.AI)测试调用时,endpoint 保持醒着,避免冷启动 30-50s 超时导致调用失败。
+# 迁移到 api.sterlingai.xyz 后,把下面的 URL 改成 https://api.sterlingai.xyz/health 即可。
+name: keepalive
+on:
+  schedule:
+    - cron: "*/5 * * * *"    # 每 5 分钟(GitHub cron 最小间隔;定时器有延迟,故设密一点抵消)
+  workflow_dispatch: {}       # 允许手动触发(测试用)
+# 只读外部 ping,不需要仓库写权限
+permissions:
+  contents: read
+concurrency:
+  group: keepalive
+  cancel-in-progress: false
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Sterling ASP /health
+        run: |
+          # --max-time 60:冷启动唤醒可能 30-50s,给足;|| true:唤醒慢/偶发失败不让 job 红
+          code=$(curl -sS --max-time 60 -o /dev/null -w "%{http_code}" "https://sterling-asp.onrender.com/health" || echo "000")
+          echo "health ping -> HTTP $code"
