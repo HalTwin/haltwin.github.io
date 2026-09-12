@@ -1,0 +1,98 @@
+{
+ "v": 4,
+ "as_of": "2026-09-12 18:21 UTC",
+ "generated_at": 1789237269,
+ "total_usd": 5442.517874534871,
+ "okb_price": 113.34530583047702,
+ "per_wallet_usd": {
+  "Treasury wallet": 5442.517874534871
+ },
+ "tax_pending_usd": 6680.861081320454,
+ "unpriced": [],
+ "rows": [
+  {
+   "asset": "OKB",
+   "qty": 14.99999379839969,
+   "usd": 1700.1788845348715,
+   "basis": "DefiLlama spot",
+   "contract": null
+  },
+  {
+   "asset": "NVDAx",
+   "qty": 4.97151163101674,
+   "usd": 1090.313046,
+   "basis": "DEX sell quote",
+   "contract": "0xc845b2894dbddd03858fd2d643b4ef725fe0849d"
+  },
+  {
+   "asset": "USD₮0",
+   "qty": 0.0,
+   "usd": 0.0,
+   "basis": "assumed $1",
+   "contract": "0x779Ded0c9e1022225f8E0630b35a9b54bE713736"
+  },
+  {
+   "asset": "aUSD₮0",
+   "qty": 1090.08083,
+   "usd": 1090.08083,
+   "basis": "assumed $1",
+   "contract": "0xf356ae412db5df43bd3a10746f7ad4e1c4de4297"
+  },
+  {
+   "asset": "$STERLING",
+   "qty": 405917.8104141629,
+   "usd": 1022.445578,
+   "basis": "DEX sell quote",
+   "contract": "0x2026a3fcb9f2d2317085ab59bd666b64dd81eeee"
+  },
+  {
+   "asset": "$STARLINK",
+   "qty": 91004.38424669408,
+   "usd": 539.499536,
+   "basis": "DEX sell quote",
+   "contract": "0x87359b7d78b03bd81b567bf425263b453c73eeee"
+  }
+ ],
+ "buckets": [
+  {
+   "label": "OKB strategic reserve",
+   "target": 30.0,
+   "usd": 1700.1788845348715,
+   "actual": 31.23882959557891,
+   "unpriced": false,
+   "drift": 1.2388295955789097
+  },
+  {
+   "label": "NVDA tokenized equity",
+   "target": 20.0,
+   "usd": 1090.313046,
+   "actual": 20.033246948099006,
+   "unpriced": false,
+   "drift": 0.033246948099005635
+  },
+  {
+   "label": "USDT DeFi yield",
+   "target": 20.0,
+   "usd": 1090.08083,
+   "actual": 20.02898024644817,
+   "unpriced": false,
+   "drift": 0.028980246448170988
+  },
+  {
+   "label": "$STERLING buyback",
+   "target": 20.0,
+   "usd": 1022.445578,
+   "actual": 18.786260359087574,
+   "unpriced": false,
+   "drift": -1.2137396409124257
+  },
+  {
+   "label": "$STARLINK",
+   "target": 10.0,
+   "usd": 539.499536,
+   "actual": 9.912682850786352,
+   "unpriced": false,
+   "drift": -0.08731714921364819
+  }
+ ]
+}
