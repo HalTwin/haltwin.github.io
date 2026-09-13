@@ -226,20 +226,61 @@
     .hcard:hover,.wcard:hover{box-shadow:4px 4px 0 var(--ink);transform:none}
   }
   @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+  .tot{display:none!important}
+  .flow{margin:8px 0 6px;border:3px solid var(--ink);background:var(--card);filter:drop-shadow(8px 8px 0 var(--ink));padding:24px 26px 22px;position:relative;overflow:hidden}
+  .flow::after{content:"";position:absolute;left:0;top:0;height:6px;width:100%;background:var(--spectrum);opacity:.9}
+  .frow{display:grid;grid-template-columns:1fr 1.5fr 1fr;align-items:center;gap:10px}
+  .fend{min-width:0}.fend.r{text-align:right}
+  .fk{font-family:"Silkscreen",monospace;font-size:10px;font-weight:700;letter-spacing:.09em;color:var(--ink2);display:flex;align-items:center;gap:7px}
+  .fend.r .fk{justify-content:flex-end}
+  .fdot{width:8px;height:8px;border:2px solid var(--ink);border-radius:50%;background:#D8B62B;flex:none}
+  .fdot.g{background:var(--ok)}
+  .fnum{font-family:"Pixelify Sans",sans-serif;font-weight:700;line-height:.92;letter-spacing:-.015em;white-space:nowrap;margin-top:9px;font-variant-numeric:tabular-nums;color:var(--ink)}
+  .fnum.tax{font-size:clamp(26px,5vw,44px)}
+  .fnum.vault{font-size:clamp(34px,7vw,64px)}
+  .fnum .c{color:var(--ink3);font-size:.5em;vertical-align:.06em;margin-right:.04em}
+  .fvault.hit .fnum{animation:fbump .9s cubic-bezier(.2,.8,.2,1)}
+  @keyframes fbump{0%{transform:scale(1)}24%{transform:scale(1.05);color:var(--ok);text-shadow:0 0 22px rgba(28,138,70,.5)}100%{transform:scale(1);color:var(--ink);text-shadow:none}}
+  .fsub{font-family:"Space Mono",monospace;font-size:11px;color:var(--ink3);margin-top:9px}
+  .fend.r .fsub{color:var(--ok)}
+  .fcx{position:relative;height:112px}
+  .fcx canvas{position:absolute;inset:0;width:100%;height:100%}
+  .flab{position:absolute;left:0;right:0;bottom:-2px;text-align:center;font-family:"Silkscreen",monospace;font-size:8.5px;letter-spacing:.1em;color:var(--ink3)}
+  .flab b{color:var(--ok)}
+  @media (max-width:640px){.frow{grid-template-columns:1fr;gap:4px;text-align:center}.fend.r{text-align:center}.fend.r .fk{justify-content:center}.fcx{height:92px}.fnum.vault{font-size:42px}.fnum.tax{font-size:28px}}
+  @media (prefers-reduced-motion:reduce){.fnum{animation:none!important}}
 </style>
 <div class="bar"></div>
 
 <div class="wrap">
   <header>
     <h1><a href="/" title="Back to sterlingai.net"><span class="back">←</span>Sterling Treasury · Portfolio</a></h1>
-    <div class="tot" id="tot"><span class="cur">$</span>11,287.50</div>
-    <div class="meta"><span>TREASURY WALLET TOTAL</span><span id="incomp" class="incomp" hidden></span><span id="asof">2026-09-13 09:33 UTC</span>
+              <div class="flow n6">
+            <div class="frow">
+              <div class="fend l">
+                <div class="fk"><span class="fdot"></span>TAX WALLET</div>
+                <div class="fnum tax" id="hftax">$3,875.13</div>
+                <div class="fsub">accruing in OKB &middot; injects every 50</div>
+              </div>
+              <div class="fcx"><canvas id="hfflow"></canvas>
+                <div class="flab">TAX &#8594; <b>TREASURY</b></div>
+              </div>
+              <div class="fend r fvault" id="hfvault">
+                <div class="fk"><span class="fdot g"></span>TREASURY VALUE</div>
+                <div class="fnum vault" id="hftot">$11,331.45</div>
+                <div class="fsub">total on-chain &middot; compounding</div>
+              </div>
+            </div>
+          </div>
+          <div class="tot" id="tot"><span class="cur">$</span>11,331.45</div>
+    <div class="meta"><span>TREASURY WALLET TOTAL</span><span id="incomp" class="incomp" hidden></span><span id="asof">2026-09-13 10:04 UTC</span>
       <span id="age"></span><span>X LAYER</span><span>READ-ONLY</span></div>
     <div class="stale" id="stale" hidden></div>
   </header>
 
   <h2>Allocation — actual vs target</h2>
-  <div class="brow" data-bucket="OKB strategic reserve"><span class="bl">OKB strategic reserve</span><div class="track" title="OKB strategic reserve — actual 65.4% vs target 30%"><i style="width:65.4%;--p:65.4"><b></b></i><span class="ticks"></span></div><span class="bv">65.4%</span><span class="bt">/ 30%</span><span class="bd over">+35.4</span></div><div class="brow" data-bucket="NVDA tokenized equity"><span class="bl">NVDA tokenized equity</span><div class="track" title="NVDA tokenized equity — actual 9.5% vs target 20%"><i style="width:9.5%;--p:9.5"><b></b></i><span class="ticks"></span></div><span class="bv">9.5%</span><span class="bt">/ 20%</span><span class="bd under">-10.5</span></div><div class="brow" data-bucket="USDT DeFi yield"><span class="bl">USDT DeFi yield</span><div class="track" title="USDT DeFi yield — actual 9.7% vs target 20%"><i style="width:9.7%;--p:9.7"><b></b></i><span class="ticks"></span></div><span class="bv">9.7%</span><span class="bt">/ 20%</span><span class="bd under">-10.3</span></div><div class="brow" data-bucket="$STERLING buyback"><span class="bl">$STERLING buyback</span><div class="track" title="$STERLING buyback — actual 9.0% vs target 20%"><i style="width:9.0%;--p:9.0"><b></b></i><span class="ticks"></span></div><span class="bv">9.0%</span><span class="bt">/ 20%</span><span class="bd under">-11.0</span></div><div class="brow" data-bucket="$STARLINK"><span class="bl">$STARLINK</span><div class="track" title="$STARLINK — actual 6.5% vs target 10%"><i style="width:6.5%;--p:6.5"><b></b></i><span class="ticks"></span></div><span class="bv">6.5%</span><span class="bt">/ 10%</span><span class="bd under">-3.5</span></div>
+  <div class="brow" data-bucket="OKB strategic reserve"><span class="bl">OKB strategic reserve</span><div class="track" title="OKB strategic reserve — actual 65.3% vs target 30%"><i style="width:65.3%;--p:65.3"><b></b></i><span class="ticks"></span></div><span class="bv">65.3%</span><span class="bt">/ 30%</span><span class="bd over">+35.3</span></div><div class="brow" data-bucket="NVDA tokenized equity"><span class="bl">NVDA tokenized equity</span><div class="track" title="NVDA tokenized equity — actual 9.4% vs target 20%"><i style="width:9.4%;--p:9.4"><b></b></i><span class="ticks"></span></div><span class="bv">9.4%</span><span class="bt">/ 20%</span><span class="bd under">-10.6</span></div><div class="brow" data-bucket="USDT DeFi yield"><span class="bl">USDT DeFi yield</span><div class="track" title="USDT DeFi yield — actual 9.6% vs target 20%"><i style="width:9.6%;--p:9.6"><b></b></i><span class="ticks"></span></div><span class="bv">9.6%</span><span class="bt">/ 20%</span><span class="bd under">-10.4</span></div><div class="brow" data-bucket="$STERLING buyback"><span class="bl">$STERLING buyback</span><div class="track" title="$STERLING buyback — actual 9.0% vs target 20%"><i style="width:9.0%;--p:9.0"><b></b></i><span class="ticks"></span></div><span class="bv">9.0%</span><span class="bt">/ 20%</span><span class="bd under">-11.0</span></div><div class="brow" data-bucket="$STARLINK"><span class="bl">$STARLINK</span><div class="track" title="$STARLINK — actual 6.6% vs target 10%"><i style="width:6.6%;--p:6.6"><b></b></i><span class="ticks"></span></div><span class="bv">6.6%</span><span class="bt">/ 10%</span><span class="bd under">-3.4</span></div>
   <div class="auto">
     <div class="autohd"><span class="autok">AGENT AUTONOMY</span><span class="autosp"></span>
       <span class="autov">65%</span></div>
@@ -254,20 +295,20 @@
 
   <h2>Agent signals</h2>
 
-  <div class="hcard" data-asset="OKB"><div class="hhd"><a class="ha buy" href="https://web3.okx.com/dex-swap?inputChain=196&outputChain=196&inputCurrency=0x779Ded0c9e1022225f8E0630b35a9b54bE713736&outputCurrency=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" target="_blank" rel="noopener noreferrer" title="Trade OKB on OKX DEX">OKB<span class="barrow">↗</span></a><span class="hsig hold">RESERVE</span><span class="hsp"></span><span class="hq">65.0000</span><span class="hu">$7,381.28</span><span class="hs">65.4%</span></div><ul class="edges"><li>Treasury store of value with long-term growth potential.</li></ul><div class="cabox"><span class="calabel">TOKEN</span><span class="ca native">native · X Layer gas token</span></div></div><div class="hcard" data-asset="NVDAx"><div class="hhd"><a class="ha buy" href="https://web3.okx.com/dex-swap?inputChain=196&outputChain=196&inputCurrency=0x779Ded0c9e1022225f8E0630b35a9b54bE713736&outputCurrency=0xc845b2894dbddd03858fd2d643b4ef725fe0849d" target="_blank" rel="noopener noreferrer" title="Trade NVDAx on OKX DEX">NVDAx<span class="barrow">↗</span></a><span class="hsig rwa">RWA · NVIDIA</span><span class="hsp"></span><span class="hq">4.9715</span><span class="hu">$1,071.51</span><span class="hs">9.5%</span></div><ul class="edges"><li>AI's core value leader — the direct beneficiary of compute demand that keeps expanding.</li><li>Tokenized Nasdaq equity held on-chain: the RWA thesis on the balance sheet, not in a deck. OKX tags this contract <b>rwaXstock</b> and binds it to NVDA's stock profile.</li></ul><div class="cabox"><span class="calabel">CONTRACT</span><a class="ca" href="https://www.oklink.com/xlayer/address/0xc845b2894dbddd03858fd2d643b4ef725fe0849d" target="_blank" rel="noopener noreferrer">0xc845b2894dbddd03858fd2d643b4ef725fe0849d</a></div></div><div class="hcard" data-asset="aUSD₮0"><div class="hhd"><a class="ha buy" href="https://web3.okx.com/earn/product/aave-v3-x-layer-usdt-33905" target="_blank" rel="noopener noreferrer" title="Trade aUSD₮0 on OKX DEX">aUSD₮0<span class="barrow">↗</span></a><span class="hsig earn">YIELD · AAVE V3</span><span class="hsp"></span><span class="hq">1,090</span><span class="hu">$1,090.15</span><span class="hs">9.7%</span></div><ul class="edges"><li>Interest accrues in place on the aToken — nothing to claim, so nothing to forget.</li><li>The only lending venue with real depth on X Layer — the USD₮0 pool holds <b>$68.6M</b> with $7.3M sitting idle, so a position this size moves in and out without touching the sides.</li></ul><div class="cabox"><span class="calabel">CONTRACT</span><a class="ca" href="https://www.oklink.com/xlayer/address/0xf356ae412db5df43bd3a10746f7ad4e1c4de4297" target="_blank" rel="noopener noreferrer">0xf356ae412db5df43bd3a10746f7ad4e1c4de4297</a></div></div><div class="hcard" data-asset="$STERLING"><div class="hhd"><a class="ha buy" href="https://web3.okx.com/dex-swap?inputChain=196&outputChain=196&inputCurrency=0x779Ded0c9e1022225f8E0630b35a9b54bE713736&outputCurrency=0x2026a3fcb9f2d2317085ab59bd666b64dd81eeee" target="_blank" rel="noopener noreferrer" title="Trade $STERLING on OKX DEX">$STERLING<span class="barrow">↗</span></a><span class="hsig risk">BUYBACK · HOLD</span><span class="hsp"></span><span class="hq">405,918</span><span class="hu">$1,014.33</span><span class="hs">9.0%</span></div><ul class="edges"><li>Early-stage value, high growth potential — RWA + DeFi infrastructure.</li></ul><div class="cabox"><span class="calabel">CONTRACT</span><a class="ca" href="https://www.oklink.com/xlayer/address/0x2026a3fcb9f2d2317085ab59bd666b64dd81eeee" target="_blank" rel="noopener noreferrer">0x2026a3fcb9f2d2317085ab59bd666b64dd81eeee</a></div></div><div class="hcard" data-asset="$STARLINK"><div class="hhd"><a class="ha buy" href="https://web3.okx.com/dex-swap?inputChain=196&outputChain=196&inputCurrency=0x779Ded0c9e1022225f8E0630b35a9b54bE713736&outputCurrency=0x87359b7d78b03bd81b567bf425263b453c73eeee" target="_blank" rel="noopener noreferrer" title="Trade $STARLINK on OKX DEX">$STARLINK<span class="barrow">↗</span></a><span class="hsig risk">TARGET</span><span class="hsp"></span><span class="hq">91,004</span><span class="hu">$730.23</span><span class="hs">6.5%</span></div><ul class="edges"><li>Strong community momentum, deep liquidity, meme narrative.</li></ul><div class="cabox"><span class="calabel">CONTRACT</span><a class="ca" href="https://www.oklink.com/xlayer/address/0x87359b7d78b03bd81b567bf425263b453c73eeee" target="_blank" rel="noopener noreferrer">0x87359b7d78b03bd81b567bf425263b453c73eeee</a></div></div>
+  <div class="hcard" data-asset="OKB"><div class="hhd"><a class="ha buy" href="https://web3.okx.com/dex-swap?inputChain=196&outputChain=196&inputCurrency=0x779Ded0c9e1022225f8E0630b35a9b54bE713736&outputCurrency=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" target="_blank" rel="noopener noreferrer" title="Trade OKB on OKX DEX">OKB<span class="barrow">↗</span></a><span class="hsig hold">RESERVE</span><span class="hsp"></span><span class="hq">65.0000</span><span class="hu">$7,399.16</span><span class="hs">65.3%</span></div><ul class="edges"><li>Treasury store of value with long-term growth potential.</li></ul><div class="cabox"><span class="calabel">TOKEN</span><span class="ca native">native · X Layer gas token</span></div></div><div class="hcard" data-asset="NVDAx"><div class="hhd"><a class="ha buy" href="https://web3.okx.com/dex-swap?inputChain=196&outputChain=196&inputCurrency=0x779Ded0c9e1022225f8E0630b35a9b54bE713736&outputCurrency=0xc845b2894dbddd03858fd2d643b4ef725fe0849d" target="_blank" rel="noopener noreferrer" title="Trade NVDAx on OKX DEX">NVDAx<span class="barrow">↗</span></a><span class="hsig rwa">RWA · NVIDIA</span><span class="hsp"></span><span class="hq">4.9715</span><span class="hu">$1,068.84</span><span class="hs">9.4%</span></div><ul class="edges"><li>AI's core value leader — the direct beneficiary of compute demand that keeps expanding.</li><li>Tokenized Nasdaq equity held on-chain: the RWA thesis on the balance sheet, not in a deck. OKX tags this contract <b>rwaXstock</b> and binds it to NVDA's stock profile.</li></ul><div class="cabox"><span class="calabel">CONTRACT</span><a class="ca" href="https://www.oklink.com/xlayer/address/0xc845b2894dbddd03858fd2d643b4ef725fe0849d" target="_blank" rel="noopener noreferrer">0xc845b2894dbddd03858fd2d643b4ef725fe0849d</a></div></div><div class="hcard" data-asset="aUSD₮0"><div class="hhd"><a class="ha buy" href="https://web3.okx.com/earn/product/aave-v3-x-layer-usdt-33905" target="_blank" rel="noopener noreferrer" title="Trade aUSD₮0 on OKX DEX">aUSD₮0<span class="barrow">↗</span></a><span class="hsig earn">YIELD · AAVE V3</span><span class="hsp"></span><span class="hq">1,090</span><span class="hu">$1,090.15</span><span class="hs">9.6%</span></div><ul class="edges"><li>Interest accrues in place on the aToken — nothing to claim, so nothing to forget.</li><li>The only lending venue with real depth on X Layer — the USD₮0 pool holds <b>$68.6M</b> with $7.3M sitting idle, so a position this size moves in and out without touching the sides.</li></ul><div class="cabox"><span class="calabel">CONTRACT</span><a class="ca" href="https://www.oklink.com/xlayer/address/0xf356ae412db5df43bd3a10746f7ad4e1c4de4297" target="_blank" rel="noopener noreferrer">0xf356ae412db5df43bd3a10746f7ad4e1c4de4297</a></div></div><div class="hcard" data-asset="$STERLING"><div class="hhd"><a class="ha buy" href="https://web3.okx.com/dex-swap?inputChain=196&outputChain=196&inputCurrency=0x779Ded0c9e1022225f8E0630b35a9b54bE713736&outputCurrency=0x2026a3fcb9f2d2317085ab59bd666b64dd81eeee" target="_blank" rel="noopener noreferrer" title="Trade $STERLING on OKX DEX">$STERLING<span class="barrow">↗</span></a><span class="hsig risk">BUYBACK · HOLD</span><span class="hsp"></span><span class="hq">405,918</span><span class="hu">$1,019.81</span><span class="hs">9.0%</span></div><ul class="edges"><li>Early-stage value, high growth potential — RWA + DeFi infrastructure.</li></ul><div class="cabox"><span class="calabel">CONTRACT</span><a class="ca" href="https://www.oklink.com/xlayer/address/0x2026a3fcb9f2d2317085ab59bd666b64dd81eeee" target="_blank" rel="noopener noreferrer">0x2026a3fcb9f2d2317085ab59bd666b64dd81eeee</a></div></div><div class="hcard" data-asset="$STARLINK"><div class="hhd"><a class="ha buy" href="https://web3.okx.com/dex-swap?inputChain=196&outputChain=196&inputCurrency=0x779Ded0c9e1022225f8E0630b35a9b54bE713736&outputCurrency=0x87359b7d78b03bd81b567bf425263b453c73eeee" target="_blank" rel="noopener noreferrer" title="Trade $STARLINK on OKX DEX">$STARLINK<span class="barrow">↗</span></a><span class="hsig risk">TARGET</span><span class="hsp"></span><span class="hq">91,004</span><span class="hu">$753.50</span><span class="hs">6.6%</span></div><ul class="edges"><li>Strong community momentum, deep liquidity, meme narrative.</li></ul><div class="cabox"><span class="calabel">CONTRACT</span><a class="ca" href="https://www.oklink.com/xlayer/address/0x87359b7d78b03bd81b567bf425263b453c73eeee" target="_blank" rel="noopener noreferrer">0x87359b7d78b03bd81b567bf425263b453c73eeee</a></div></div>
   
 
   <h2>Treasury addresses — verify them yourself</h2>
   <p class="lede3">Every balance and every transaction on these two addresses is public. Open them on the explorer and check for yourself — the figure at the top of this page is the <b>treasury wallet</b>, so it reconciles against that address directly.</p>
   <div class="wal">
     <div class="wcard pend"><div class="k">TAX WALLET · NOT COUNTED ABOVE</div>
-      <div class="wv" id="wv-tax">$3,511.60</div>
+      <div class="wv" id="wv-tax">$3,875.13</div>
       <div class="r">1% of every $STERLING trade arrives here, then moves to the treasury
         in batches. Incoming, not yet allocated — so it is left out of the holdings above.</div>
       <div class="v"><a href="https://www.oklink.com/xlayer/address/0xae739b37c1329f0a682a6444cc61de4d813f829d" target="_blank" rel="noopener noreferrer">0xae739b37c1329f0a682a6444cc61de4d813f829d</a></div>
       <div class="go">OPEN ON X LAYER EXPLORER ↗</div></div>
     <div class="wcard"><div class="k">TREASURY WALLET · THE FIGURE ABOVE</div>
-      <div class="wv" id="wv-tre">$11,287.50</div>
+      <div class="wv" id="wv-tre">$11,331.45</div>
       <div class="r">Buys and yield deployment run from here.</div>
       <div class="v"><a href="https://www.oklink.com/xlayer/address/0xbf6b4d2e361bb8dee683b7d982fe3876bff4fe3b" target="_blank" rel="noopener noreferrer">0xbf6b4d2e361bb8dee683b7d982fe3876bff4fe3b</a></div>
       <div class="go">OPEN ON X LAYER EXPLORER ↗</div></div>
@@ -280,7 +321,7 @@
   same asset.
   <div class="nia"><b>Not investment advice.</b></div>
 </div></footer>
-<script type="application/json" id="pcfg">{"url": "https://raw.githubusercontent.com/HalTwin/haltwin.github.io/treasury-data/portfolio.json", "payloadVersion": 4, "everyMs": 600000, "staleMs": 1500000, "generatedAt": 1789292024, "fingerprint": "[[[\"OKB\",false],[\"NVDAx\",false],[\"USD₮0\",true],[\"aUSD₮0\",false],[\"$STERLING\",false],[\"$STARLINK\",false]],[[\"OKB strategic reserve\",false],[\"NVDA tokenized equity\",false],[\"USDT DeFi yield\",false],[\"$STERLING buyback\",false],[\"$STARLINK\",false]],[]]"}</script><script>
+<script type="application/json" id="pcfg">{"url": "https://raw.githubusercontent.com/HalTwin/haltwin.github.io/treasury-data/portfolio.json", "payloadVersion": 4, "everyMs": 600000, "staleMs": 1500000, "generatedAt": 1789293870, "fingerprint": "[[[\"OKB\",false],[\"NVDAx\",false],[\"USD₮0\",true],[\"aUSD₮0\",false],[\"$STERLING\",false],[\"$STARLINK\",false]],[[\"OKB strategic reserve\",false],[\"NVDA tokenized equity\",false],[\"USDT DeFi yield\",false],[\"$STERLING buyback\",false],[\"$STARLINK\",false]],[]]"}</script><script>
 (function(){
   "use strict";
   var cfgEl = document.getElementById("pcfg");
@@ -497,5 +538,51 @@
   pull();                          // 立刻拉,不等第一个 10 分钟周期
   setTimeout(settle, 8000);        // fetch 万一卡住不返回,8 秒后照常开始判定
   setInterval(pull, cfg.everyMs);
+})();
+</script><script>
+(function(){
+  var cv=document.getElementById('hfflow'); if(!cv) return;
+  var taxEl=document.getElementById('hftax'), totEl=document.getElementById('hftot'),
+      vend=document.getElementById('hfvault');
+  // 两端只显示页面本身的真实值:初始为渲染时的链上值,之后跟随既有的 10 分钟轮询对 #tot / #wv-tax 的更新。
+  // 不做任何加减:国库页是透明度页面,金额不能被动画改写。
+  function mirror(srcId,dst){
+    var src=document.getElementById(srcId); if(!src) return;
+    var sync=function(){ var t=(src.textContent||'').trim(); if(t) dst.textContent=t; };
+    sync();
+    if(window.MutationObserver) new MutationObserver(sync).observe(src,{childList:true,characterData:true,subtree:true});
+  }
+  mirror('tot',totEl); mirror('wv-tax',taxEl);
+  var ctx=cv.getContext('2d'), W=0,H=0,dpr=Math.min(window.devicePixelRatio||1,2);
+  function size(){var r=cv.getBoundingClientRect();W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);}
+  size(); addEventListener('resize',size);
+  var COLORS=['#25B8D8','#2FBFA3','#55C462','#9ACB3B','#D8B62B','#EE9A2F','#F26D4F','#F2439B'];
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var parts=[], t=0, bloom=0;
+  function lane(p){var mid=H*0.52, arc=Math.sin(p.x/W*Math.PI)*-H*0.12; return mid+arc+p.off*(1-p.x/W);}
+  function emit(n,burst){for(var i=0;i<n;i++)parts.push({x:burst?W*0.04+Math.random()*W*0.05:-4,off:(Math.random()-0.5)*H*0.5,vx:(burst?2.4:0.9+Math.random()*0.7),r:(burst?2.8:1.4+Math.random()*1.7),c:COLORS[(Math.random()*COLORS.length)|0],a:0,depth:Math.random()});}
+  function draw(){
+    t++; ctx.clearRect(0,0,W,H);
+    var g=ctx.createLinearGradient(0,0,W,0);
+    for(var s=0;s<COLORS.length;s++)g.addColorStop(s/(COLORS.length-1),COLORS[s]);
+    ctx.save();ctx.globalAlpha=0.10;ctx.fillStyle=g;var yb=H*0.52;
+    ctx.beginPath();ctx.moveTo(0,yb);for(var x=0;x<=W;x+=8)ctx.lineTo(x,yb+Math.sin((x*0.02)+(t*0.05))*3);
+    ctx.lineTo(W,H);ctx.lineTo(0,H);ctx.closePath();ctx.fill();ctx.restore();
+    ctx.globalAlpha=0.5;ctx.strokeStyle='#E4DDCB';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,H-3);ctx.lineTo(W,H-3);ctx.stroke();ctx.globalAlpha=1;
+    if(!reduce&&t%3===0)emit(1,false);
+    var vx=W*0.98,vy=H*0.52;
+    if(bloom>0){var rad=ctx.createRadialGradient(vx,vy,0,vx,vy,40+bloom*26);rad.addColorStop(0,'rgba(28,138,70,'+(0.5*bloom)+')');rad.addColorStop(1,'rgba(28,138,70,0)');ctx.fillStyle=rad;ctx.beginPath();ctx.arc(vx,vy,40+bloom*26,0,6.283);ctx.fill();bloom-=0.04;}
+    parts.sort(function(a,b){return a.depth-b.depth;});
+    for(var i=parts.length-1;i>=0;i--){var p=parts[i];p.x+=p.vx;p.vx*=1.004;p.a=Math.min(p.a+0.05,0.9);
+      var near=p.x/W;if(near>0.9)p.a-=0.12;var y=lane(p),rr=p.r*(0.6+p.depth*0.7);
+      ctx.globalAlpha=Math.max(p.a,0)*(0.4+p.depth*0.6);ctx.fillStyle=p.c;ctx.beginPath();ctx.arc(p.x,y,rr,0,6.283);ctx.fill();
+      ctx.globalAlpha*=0.6;ctx.fillStyle='#FFFDF7';ctx.beginPath();ctx.arc(p.x-rr*0.3,y-rr*0.3,rr*0.32,0,6.283);ctx.fill();
+      if(p.x>W+8||p.a<=0)parts.splice(i,1);}
+    ctx.globalAlpha=1;requestAnimationFrame(draw);
+  }
+  // 周期性"注入"脉冲:粒子爆发 + 光晕 + 数字弹一下,纯视觉,不改变金额
+  function pulse(){emit(20,true);bloom=1;vend.classList.add('hit');setTimeout(function(){vend.classList.remove('hit');},900);}
+  if(reduce){emit(10,true);}else{setTimeout(function(){pulse();setInterval(pulse,10240);},10240);}
+  draw();
 })();
 </script>
