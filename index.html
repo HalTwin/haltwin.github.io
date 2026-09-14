@@ -97,7 +97,30 @@
   .nav-links a:hover{color:var(--pink)}
   .langtoggle{font-family:"Silkscreen","Noto Sans SC",monospace;font-size:10px;cursor:pointer;background:var(--card);border:2px solid #111014;padding:7px 10px;color:var(--ink)}
   .langtoggle:hover{background:#111014;color:var(--paper)}
-  @media(max-width:900px){.nav-links{display:none}}
+  @media(max-width:900px){
+    /* 手机上顶栏保留两个**外链**(去别处的入口),隐藏锚点。
+       锚点在手机上没什么用 —— 往下滚就到了;而 TERMINAL / TREASURY 是
+       另外两个页面,顶栏不给入口的话,用户只能滚到页脚才找得到。
+       社交图标让位给它们 —— 页脚里已经有一组。 */
+    .nav-links{display:flex;gap:13px;font-size:9.5px;margin-left:auto;letter-spacing:.04em}
+    .nav-links a[href^="#"]{display:none}
+    nav .social{display:none}
+    nav .brand{font-size:19px}
+    nav .brand .spr{width:24px;height:24px}
+  }
+  /* iPhone SE 这类 320px 屏:品牌只留图标。
+     文字 "Sterling" 占掉近 100px,而顶栏真正要给用户的是那两个去别处的入口。
+     font-size:0 只是视觉隐藏,文字仍在 DOM 里,屏幕阅读器照样读得到。 */
+  @media(max-width:360px){
+    nav .brand{font-size:0;gap:0}
+    nav .brand .spr{width:26px;height:26px}
+    .nav-links{gap:10px;font-size:9px}
+  }
+  /* #treasury 里那只装饰吃豆人是 150px 的绝对定位元素,桌面上宽度够、不越界,
+     手机上会探出视口约 32px,于是整页可以左右滑动。只在窄屏裁掉它,
+     桌面的版面一点不动。 */
+  @media(max-width:900px){
+    .tgrow{overflow-x:hidden}}
 
   /* HERO */
   .hero{position:relative;border-bottom:3px solid #111014;overflow:hidden}
@@ -125,7 +148,7 @@
   }
 
   /* Marquee + dithered horizon */
-  .marq{position:relative;border-top:3px solid #111014;background:#111014;overflow:hidden;white-space:nowrap}
+  .marq{overflow:hidden;max-width:100vw;position:relative;border-top:3px solid #111014;background:#111014;overflow:hidden;white-space:nowrap}
   .marq .track{display:inline-block;padding:10px 0;font-family:"Silkscreen",monospace;font-size:9.5px;letter-spacing:.1em;color:var(--paper);animation:mscroll 44s steps(176) infinite}
   .marq .track span{margin:0 20px}
   .marq .track b{color:var(--green);font-weight:400}
