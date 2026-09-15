@@ -3,6 +3,8 @@
 <meta charset="utf-8">
 <title>Sterling — Yield Terminal</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 页面只连 DefiLlama 取行情;跳转是顶层导航,不受 connect-src 约束 -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://yields.llama.fi; img-src 'self' data:; base-uri 'none'; form-action 'none'">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Silkscreen:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap">
@@ -77,6 +79,9 @@
   .meta{margin-top:12px;padding-top:12px;border-top:2px solid var(--line);display:flex;justify-content:space-between;font-family:"Space Mono",monospace;font-size:11px;color:var(--ink-3)}
   .exec{margin-top:14px}
   .exec button{width:100%;font-family:"Silkscreen",monospace;font-size:10px;letter-spacing:.05em;border:2px solid #111014;background:var(--paper-2);color:var(--ink-2);padding:11px;cursor:not-allowed}
+  .exec a.live{display:block;text-align:center;text-decoration:none;box-sizing:border-box;width:100%;font-family:"Silkscreen",monospace;font-size:10px;letter-spacing:.05em;border:2px solid #111014;background:#111014;color:var(--paper);padding:11px;cursor:pointer;filter:drop-shadow(3px 3px 0 var(--teal))}
+  .exec a.live:active{transform:translate(2px,2px);filter:drop-shadow(1px 1px 0 var(--teal))}
+  .exec .why{margin-top:6px;font-family:"Space Mono",monospace;font-size:10px;line-height:1.45;color:var(--ink-3)}
 
   /* 收据 */
   .receipt{margin-top:36px;border:2px dashed #111014;background:var(--paper-2);padding:18px 20px}
@@ -112,7 +117,7 @@
 <header class="hero"><div class="wrap">
   <div class="eyebrow">Live on-chain data · X Layer · deterministic receipts</div>
   <h1>Organize your <span class="gtext">stablecoin yield.</span></h1>
-  <p class="lead">Pick your assets — Sterling scans DefiLlama in real time and ranks the mature-protocol routes that clear its allowlist + liquidity filters, by 30-day yield, splitting base interest from decaying incentives with a recomputable receipt. <b>This is a filter, not a risk score — token contracts are not identity-verified.</b> Non-custodial: it never touches your funds.</p>
+  <p class="lead">Real-time stablecoin yield rankings across DeFi, ranked by 30-day yield with a recomputable receipt. Each route links out to the protocol's own app — <b>non-custodial, Sterling never touches your funds.</b></p>
 
   <div class="panel">
     <div class="lbl">1 · Assets</div>
@@ -149,7 +154,7 @@
 
 <footer><div class="wrap">
   <div class="fband band15"></div>
-  <div class="disc">Sterling Yield Terminal is a non-custodial research tool — it returns analysis only, never custodies funds or trades on your behalf. Data from DefiLlama (industry-standard on-chain aggregator); only mature audited protocols (Aave / Compound / Morpho / Sky / Spark / Fluid / Venus) above liquidity floors are ranked — the allowlist + TVL floor is a filter, not a risk score, and no token contract is identity-verified (risk_scored: false). Yields are historical/current observations, not a promise of returns; 30-day mean is shown to flag transient spikes; base vs reward split shows how much is base interest vs decaying incentives. Cross-chain APY excludes bridge cost. Not for US / restricted-region users. Not investment advice. Prototype · engine v0.1.</div>
+  <div class="disc">Sterling Yield Terminal is a non-custodial research tool — it ranks routes and links out to each protocol's own app, where you review and sign yourself. It never custodies funds, never signs, and never trades on your behalf; the deposit link opens the protocol's own interface in a new tab. Data from DefiLlama (industry-standard on-chain aggregator); only mature audited protocols (Aave / Compound / Morpho / Sky / Spark / Fluid / Venus) above liquidity floors are ranked — the allowlist + TVL floor is a filter, not a risk score, and no token contract is identity-verified (risk_scored: false). Yields are historical/current observations, not a promise of returns; 30-day mean is shown to flag transient spikes; base vs reward split shows how much is base interest vs decaying incentives. Cross-chain APY excludes bridge cost. Not for US / restricted-region users. Not investment advice. Prototype · engine v0.1.</div>
 </div></footer>
 
 <script>
@@ -208,12 +213,64 @@
     }
     return best;
   }
+  // ── 聚合跳转:协议官方站白名单 ──────────────────────────────────────────
+  // 每张卡跳到它所属协议的**官方 app**(下面每个 URL 都 HTTP 200 实测过),
+  // 用户在那边自己审阅、连钱包、签授权。我们只做聚合跳转,不代签、不碰用户的钱。
+  //
+  // 唯一的安全约束:URL 是下面两张表里的**常量**,绝不从 DefiLlama 的行情字段拼。
+  // 币种、链名都不进 URL —— 跳的是协议 app,用户在里面自己选链选币。
+  // 覆盖 Sterling ALLOW 白名单里的全部 10 个协议,所以每张排得出的卡片都能跳。
+  var PROTO = {
+    "aave-v3":         {venue:"Aave V3",     url:"https://app.aave.com/"},
+    "aave-v4":         {venue:"Aave V4",     url:"https://app.aave.com/"},
+    "sparklend":       {venue:"SparkLend",   url:"https://spark.finance/"},
+    "spark":           {venue:"Spark",       url:"https://spark.finance/"},
+    "morpho-blue":     {venue:"Morpho",      url:"https://app.morpho.org/"},
+    "morpho-aave":     {venue:"Morpho",      url:"https://app.morpho.org/"},
+    "sky-lending":     {venue:"Sky",         url:"https://app.sky.money/"},
+    "fluid-lending":   {venue:"Fluid",       url:"https://fluid.io/"},
+    "compound-v3":     {venue:"Compound V3", url:"https://app.compound.finance/"},
+    "venus-core-pool": {venue:"Venus",       url:"https://app.venus.io/"}
+  };
+  // 特例:能精确到"具体产品页"的,优先走精确页。键 = chain::project::token(全小写)。
+  // OKX earn 每个产品是一个数字 id,拼不出来,只能人工登记 —— 和国库页 aUSD₮0 同一个页。
+  // 键里带 chain:防止 Mantle 的 USD₮0(与 X Layer 同地址)错命中 X Layer 的精确页。
+  var SPECIAL = {
+    "xlayer::aave-v3::0x779ded0c9e1022225f8e0630b35a9b54be713736":
+      {venue:"Aave V3 · X Layer", url:"https://web3.okx.com/earn/product/aave-v3-x-layer-usdt-33905"}
+  };
+  // 命中返回 {venue,url}(表里的引用),否则 null。行情只用来查表,查到之后一切来自表。
+  function matchDest(p){
+    if(!p || typeof p!=="object" || p.exposure!=="single") return null;
+    var proj=p.project;
+    // hasOwnProperty:挡住 project="__proto__"/"constructor" 命中原型链
+    if(typeof proj!=="string" || !Object.prototype.hasOwnProperty.call(PROTO, proj)) return null;
+    var ut=p.underlyingTokens;
+    if(!Array.isArray(ut)||ut.length!==1) return null;   // 多元素 = LP/套娃,跳单币页是错的
+    var t=ut[0];
+    if(typeof t!=="string"||!/^0x[0-9a-fA-F]{40}$/.test(t)) return null;
+    // 先看有没有精确的产品页(键带 chain,杜绝跨链同地址错命中),否则跳协议官方 app
+    var k=String(p.chain).toLowerCase()+"::"+proj+"::"+t.toLowerCase();
+    if(Object.prototype.hasOwnProperty.call(SPECIAL, k)) return SPECIAL[k];
+    return PROTO[proj];
+  }
+  function destReason(p){
+    if(p && Array.isArray(p.underlyingTokens) && p.underlyingTokens.length!==1)
+      return "Multi-asset pool — open the protocol directly";
+    return "No verified link for this route yet";
+  }
+
   function rd(v){ var x=f(v); return x===null?null:Math.round(x*100)/100; }
   function row(p, asset){
     var mm=m30(p);
-    return {asset: asset||String(p.symbol||""), apy: rd(p.apy), apy_30d: mm===null?null:Math.round(mm*100)/100,
+    var r={asset: asset||String(p.symbol||""), apy: rd(p.apy), apy_30d: mm===null?null:Math.round(mm*100)/100,
       apy_base: rd(p.apyBase), apy_reward: rd(p.apyReward), venue: p.project||"?", chain: p.chain||"?",
       tvl: f(p.tvlUsd), pool_id: p.pool};
+    // 落地页:命中则带上表里的 URL 与协议名(都来自表,不含行情字节),否则记禁用原因。
+    var e=matchDest(p);
+    if(e){ r.go_url=e.url; r.go_label="OPEN ON "+String(e.venue).toUpperCase(); }
+    else { r.go_reason=destReason(p); }
+    return r;
   }
   function fmtTvl(v){ if(v===null)return "n/a"; if(v>=1e9)return "$"+(v/1e9).toFixed(1)+"B"; if(v>=1e6)return "$"+(v/1e6).toFixed(1)+"M"; if(v>=1e3)return "$"+(v/1e3).toFixed(0)+"K"; return "$"+v.toFixed(0); }
   function disp(v){ return v===null||v===undefined?"n/a":Number(v).toFixed(2); }
@@ -246,7 +303,13 @@
         +'<div class="r rwd"><span class="k">reward (incentive)</span><span class="v">'+(reward?disp(r.apy_reward)+"%":"—")+'</span></div>'
       +'</div>'
       +'<div class="meta"><span>TVL '+fmtTvl(r.tvl)+'</span><span>single-sided supply</span></div>'
-      +'<div class="exec"><button disabled title="Signable execution ships in the next iteration">⚡ ONE-TAP EXECUTE — SOON</button></div>'
+      // 命中 → 跳到表里那个核对过的第三方页(https 才渲染成链接,多挡一道);
+      // 未命中 → 禁用并写明原因。href 只用表里的常量,不含任何行情字节。
+      +'<div class="exec">'
+        +((r.go_url && /^https:\/\//.test(r.go_url))
+          ? '<a class="live" href="'+esc(r.go_url)+'" target="_blank" rel="noopener noreferrer">⚡ '+esc(r.go_label||"OPEN")+' ↗</a>'
+          : '<button disabled>⚡ ONE-TAP EXECUTE</button><div class="why">'+esc(r.go_reason||"Unavailable")+'</div>')
+      +'</div>'
       +'</div></div>';
   }
 

@@ -1,0 +1,20 @@
+{
+  // Sterling website on Cloudflare Workers (static assets) under the Ryanmo account.
+  // Deploy: cloudflare/build.sh && (cd cloudflare && wrangler deploy)
+  // Workers "custom domains": wrangler creates the DNS records and certificates for the apex and
+  // www on deploy (the zone sterlingai.net is in the same account). Do NOT add manual A/AAAA/CNAME
+  // records for these two names — the custom-domain API refuses hostnames that already have
+  // externally managed records (error 100117).
+  // run_worker_first: assets would otherwise be served before the script runs, so the www/http ->
+  // https://sterlingai.net redirects in worker.js would not apply to asset paths.
+  "name": "sterlingai",
+  "account_id": "f2a1cb443cfb87b526fac0886f1b34c8",
+  "main": "worker.js",
+  "compatibility_date": "2026-09-10",
+  "workers_dev": false,
+  "assets": { "directory": "./dist", "binding": "ASSETS", "run_worker_first": true },
+  "routes": [
+    { "pattern": "sterlingai.net", "custom_domain": true },
+    { "pattern": "www.sterlingai.net", "custom_domain": true }
+  ]
+}
